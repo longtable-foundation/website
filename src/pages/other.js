@@ -121,7 +121,6 @@ ${[[cfg.links.tabbArticle, 'Equity Tokens Need Netting Not Instant Settlement', 
 }
 
 function getInvolved() {
-  const roleOpts = C.ROLES.map(r => `<option>${r}</option>`).join('');
   const hp = '<input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">';
   const body = `<section class="sec first" style="padding-bottom:48px">
 ${secL('§8', 'Get involved')}
@@ -134,21 +133,17 @@ ${secL('§8.1', 'Choose a path')}
 <div class="pform">
 <form class="pane" id="pane-follow" role="tabpanel" aria-labelledby="tab-follow" data-form="follow" novalidate>${hp}
 <span class="tt">Get progress updates</span><span class="ds">Milestones, publications and open calls for comment.</span>
-<label><span>WORK EMAIL</span><input class="field" type="email" name="email" required placeholder="name@organization.com" autocomplete="email"></label>
-<label><span>I AM A…</span><select class="field" name="role">${roleOpts}</select></label>
+<div class="g2"><label><span>WORK EMAIL</span><input class="field" type="email" name="email" required placeholder="name@organization.com" autocomplete="email"></label><label><span>ORGANIZATION</span><input class="field" name="organization" required autocomplete="organization"></label></div>
 <button class="btn" type="submit">Subscribe</button><span class="note" data-msg>Milestones and publications only. Unsubscribe any time.</span>
 </form>
 <form class="pane" id="pane-join" role="tabpanel" aria-labelledby="tab-join" data-form="join" novalidate hidden>${hp}
 <span class="tt">Join the initiative</span>
-<div class="g2"><label><span>ORGANIZATION</span><input class="field" name="organization" required autocomplete="organization"></label><label><span>WORK EMAIL</span><input class="field" type="email" name="email" required autocomplete="email"></label></div>
-<fieldset style="border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:10px"><legend class="fl" style="padding:0;margin-bottom:10px">MEMBER CLASS</legend><div class="pills">${C.MCL.map((c, i) => `<label><input type="radio" name="memberClass" value="${c}"${i === 0 ? ' checked' : ''}><span>${c}</span></label>`).join('')}</div></fieldset>
-<label><span>JURISDICTION</span><select class="field" name="jurisdiction"><option>United States</option><option>European Union</option><option>United Kingdom</option><option>ADGM</option><option>Other</option></select></label>
+<div class="g2"><label><span>WORK EMAIL</span><input class="field" type="email" name="email" required placeholder="name@organization.com" autocomplete="email"></label><label><span>ORGANIZATION</span><input class="field" name="organization" required autocomplete="organization"></label></div>
 <button class="btn" type="submit">Submit application</button><span class="note" data-msg></span>
 </form>
 <form class="pane" id="pane-fund" role="tabpanel" aria-labelledby="tab-fund" data-form="fund" novalidate hidden>${hp}
 <span class="tt">Help fund the Foundation</span><span class="ds">The Foundation is funded by member dues. Governance and funding details are to be announced.</span>
-<div class="g2"><label><span>ORGANIZATION</span><input class="field" name="organization" required autocomplete="organization"></label><label><span>WORK EMAIL</span><input class="field" type="email" name="email" required autocomplete="email"></label></div>
-<label><span>MESSAGE</span><textarea class="field" name="message" rows="4"></textarea></label>
+<div class="g2"><label><span>WORK EMAIL</span><input class="field" type="email" name="email" required placeholder="name@organization.com" autocomplete="email"></label><label><span>ORGANIZATION</span><input class="field" name="organization" required autocomplete="organization"></label></div>
 <button class="btn" type="submit">Start a conversation</button><span class="note" data-msg></span>
 </form>
 <div class="pane" id="pane-build" role="tabpanel" aria-labelledby="tab-build" hidden>

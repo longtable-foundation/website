@@ -71,7 +71,7 @@ ${canon}
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css?v=${BUILD_ID}">
 </head>
-<body data-base="${esc(cfg.basePath)}" data-form-endpoint="${esc(cfg.formEndpoint)}" data-gform="${esc(cfg.googleForm.action ? JSON.stringify(cfg.googleForm) : '')}">
+<body data-base="${esc(cfg.basePath)}" data-form-endpoint="${esc(cfg.formEndpoint)}" data-sheet="${esc(cfg.sheetEndpoint)}">
 ${header({ doc, docShort, active })}
 <main id="main">
 ${body}

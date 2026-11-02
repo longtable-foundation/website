@@ -8,23 +8,12 @@ const cfg = {
   // '' for a custom domain. Set by the GitHub Pages workflow.
   basePath: (process.env.BASE_PATH || '').replace(/\/$/, ''),
 
-  // Sign-up forms go to one Google Form (see README). action is the form's /formResponse URL;
-  // each field is a question's entry id, from a pre-filled link
-  // (three dots > Get pre-filled link > fill every field > Get link).
-  // Empty action = forms show a 'sign-ups open soon' note.
-  googleForm: {
-    action: process.env.GOOGLE_FORM_ACTION || '', // https://docs.google.com/forms/d/e/<FORM_ID>/formResponse
-    fields: {
-      type: '',          // 'Form' (short answer): follow, join or fund
-      email: '',         // 'Work email'
-      organization: '',  // 'Organization'
-      role: '',          // 'I am a'
-      memberClass: '',   // 'Member class'
-      jurisdiction: '',  // 'Jurisdiction'
-      message: '',       // 'Message' (paragraph)
-      page: '',          // 'Page'
-    },
-  },
+  // Sign-up forms (work email + organization) are added as rows to the Google Sheet
+  // "Longtable newsletter capture database" through a small Apps Script web app.
+  // Paste tools/google-sheet-capture.gs into the sheet (Extensions > Apps Script), deploy it
+  // as a web app (Execute as: Me, Who has access: Anyone) and put its /exec URL here.
+  // Empty = forms show a 'sign-ups open soon' note.
+  sheetEndpoint: process.env.SHEET_ENDPOINT || '',
 
   // For local testing with server.js only: POST JSON here instead of the Google Form.
   formEndpoint: process.env.FORM_ENDPOINT || '',

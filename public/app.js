@@ -5,17 +5,16 @@
   var pad = function (x) { return String(x).padStart(2, '0'); };
   var BASE = document.body.getAttribute('data-base') || '';
   var FORM_URL = document.body.getAttribute('data-form-endpoint') || '';
-  var GFORM = null; try { GFORM = JSON.parse(document.body.getAttribute('data-gform') || 'null'); } catch (e) {}
-  // Google Forms accepts a plain form POST from any site but gives no readable answer (no-cors).
-  function sendGoogle(data) {
-    var body = new URLSearchParams();
-    Object.keys(GFORM.fields).forEach(function (k) { if (GFORM.fields[k] && data[k]) body.append(GFORM.fields[k], data[k]); });
-    return fetch(GFORM.action, { method: 'POST', mode: 'no-cors', body: body }).then(function () { return {}; });
+  var SHEET = document.body.getAttribute('data-sheet') || '';
+  // The Apps Script web app takes a plain form POST from any site but gives no readable answer (no-cors).
+  function sendSheet(data) {
+    var body = new URLSearchParams({ email: data.email || '', organization: data.organization || '', interest: data.type || '', page: data.page || '' });
+    return fetch(SHEET, { method: 'POST', mode: 'no-cors', body: body }).then(function () { return {}; });
   }
   function send(data) {
     if (FORM_URL) return fetch(FORM_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data) })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw new Error(j.error || 'Something went wrong. Try again.'); return j; }); });
-    if (GFORM && GFORM.action) return sendGoogle(data);
+    if (SHEET) return sendSheet(data);
     return Promise.reject(new Error('Sign-ups open soon. Try again later.'));
   }
 
@@ -117,7 +116,7 @@
       e.preventDefault();
       var data = {}; new FormData(f).forEach(function (v, k) { data[k] = String(v).trim(); });
       data.type = f.getAttribute('data-form'); data.page = location.pathname;
-      var bad = !emailOk(data.email || '') ? 'Enter a valid work email.' : ('organization' in data && !data.organization) ? 'Enter your organization.' : '';
+      var bad = !emailOk(data.email || '') ? 'Enter a valid work email.' : !data.organization ? 'Enter your organization.' : '';
       if (bad) { if (msg) { msg.textContent = bad; msg.classList.add('err'); } return; }
       if (data.website) { f.reset(); return; } // honeypot: bots fill the hidden field
       delete data.website;

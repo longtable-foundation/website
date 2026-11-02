@@ -130,7 +130,7 @@ ${secL('§8', 'Participate')}
 <div class="gi4">${C.INT.map(g => `<div><span class="eyebrow">${g.k}</span><b>${g.t}</b><span class="d">${g.d}</span>${g.id === 'build' ? `<a class="u" ${ext(cfg.githubUrl)}>${g.c} →</a>` : `<a class="u" href="/get-involved/?path=${g.id}">${g.c} →</a>`}</div>`).join('')}</div>
 <div class="split">
 <div class="subbox"><span class="tt">Get progress updates</span>
-<form data-form="follow" novalidate><input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><input class="field" type="email" name="email" required placeholder="name@organization.com" aria-label="Work email" autocomplete="email"><select class="field" name="role" aria-label="I am a…"><option value="">I am a…</option>${C.ROLES.map(r => `<option>${r}</option>`).join('')}</select><button class="btn" type="submit" style="height:44px;padding:0 18px;font-size:14px">Subscribe</button></form>
+<form data-form="follow" novalidate><input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><input class="field" type="email" name="email" required placeholder="name@organization.com" aria-label="Work email" autocomplete="email"><input class="field" name="organization" required placeholder="Organization" aria-label="Organization" autocomplete="organization"><button class="btn" type="submit" style="height:44px;padding:0 18px;font-size:14px">Subscribe</button></form>
 <span class="note" data-msg>Milestones and publications only. Unsubscribe any time.</span></div>
 ${proposalCard()}
 </div>

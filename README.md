@@ -17,16 +17,15 @@ npm run dev        # builds to dist/ and serves on http://localhost:3000 (forms 
 2. The site is then at `https://longtable-foundation.github.io/website/`.
 3. Custom domain: add a repo variable `CUSTOM_DOMAIN` (Settings → Secrets and variables → Actions → Variables), for example `longtable.org`, then point the domain's DNS at GitHub Pages. The workflow writes the CNAME file and builds the site for the domain root.
 
-## Sign-up forms (Google Forms)
+## Sign-up forms (Google Sheet)
 
-The news, join and fund forms all post to one Google Form.
+The news, join and fund forms ask for work email and organization only. Each sign-up becomes a row in the Google Sheet "Longtable newsletter capture database" (columns: Timestamp, Work email, Organization, Interest, Page).
 
-1. Make a Google Form with these short-answer questions (none required except Work email): Form, Work email, Organization, I am a, Member class, Jurisdiction, Message (paragraph), Page.
-2. Get the entry ids: three dots → Get pre-filled link → type any text in every field → Get link. The link has `entry.123456=...` for each question.
-3. In `src/config.js`, set `googleForm.action` to `https://docs.google.com/forms/d/e/<FORM_ID>/formResponse` (the id from the form's share link, the one with `/d/e/`) and each field's `entry.` id.
-4. Responses arrive in the form's Responses tab. Link it to a Google Sheet to work with them.
+1. Open the sheet → Extensions → Apps Script. Paste `tools/google-sheet-capture.gs` and save.
+2. Deploy → New deployment → Web app. Execute as: Me. Who has access: Anyone.
+3. Put the web app URL (ends in `/exec`) in `src/config.js` → `sheetEndpoint`, or in the repo variable `SHEET_ENDPOINT`.
 
-Until `googleForm.action` is set, the forms show "Sign-ups open soon".
+Until it is set, the forms show "Sign-ups open soon".
 
 ## Edit content
 
