@@ -40,7 +40,7 @@ function footer({ compact } = {}) {
 <div class="cols">
 <div class="c c0"><span class="brand">${mark()}<span class="name">Longtable</span></span><p>An open source foundation for multimodal clearing. Incubated by Alpaca.</p></div>
 <div class="c"><span class="h">FOUNDATION</span><a href="/#foundation">Structure</a><a href="/#roadmap">Roadmap</a><a href="/signatories/">Signatories</a><a href="/about/">About</a></div>
-<div class="c"><span class="h">RESOURCES</span><a href="/use-cases/01/">Use cases</a><a href="${esc(cfg.proposal.href)}" download>Proposal (PDF)</a><a href="/press/#talks">Talks &amp; interviews</a><a ${ext(cfg.githubUrl)}>GitHub ↗</a></div>
+<div class="c"><span class="h">RESOURCES</span><a href="/use-cases/01/">Use cases</a><a href="${esc(cfg.proposal.href)}" data-proposal>Proposal (PDF)</a><a href="/press/#talks">Talks &amp; interviews</a><a ${ext(cfg.githubUrl)}>GitHub ↗</a></div>
 <div class="c"><span class="h">PRESS</span><span class="t">Media inquiries are handled by the Alpaca media team.</span><a class="w" href="mailto:${esc(cfg.pressEmail)}">${esc(cfg.pressEmail)}</a><a href="/press/">Press page →</a></div>
 </div>
 <div class="bot"><span>© 2026 LONGTABLE FOUNDATION</span><span>LT-0001 · DRAFT FOR COMMENT</span></div>
@@ -77,6 +77,7 @@ ${header({ doc, docShort, active })}
 ${body}
 </main>
 ${footer({ compact: compactFooter })}
+${path === '/proposal/' ? '' : require('./components').proposalDialog()}
 <script src="/app.js?v=${BUILD_ID}" defer></script>
 </body>
 </html>

@@ -96,7 +96,7 @@ module.exports = function usecase(i) {
 <aside aria-label="Use cases">
 <span class="eyebrow">§3 Use cases</span>
 ${nav}
-<a class="pp" href="${esc(cfg.proposal.href)}" download><span class="eyebrow" style="margin:0">In the proposal</span><b>pp. ${u.pp} · PDF ↓</b></a>
+<a class="pp" href="${esc(cfg.proposal.href)}" data-proposal><span class="eyebrow" style="margin:0">In the proposal</span><b>pp. ${u.pp} · PDF by email →</b></a>
 </aside>
 <div class="main">
 <a class="eyebrow back" href="/#use-cases">← §3 Use cases · ${u.n} of 06</a>

@@ -1,6 +1,6 @@
 # Longtable Foundation website
 
-Static site. Hosted on Cloudflare Pages (DigitalOcean App Platform also works). Built from the Claude Design mockups (direction 1a, build-out 2).
+Static site, published with GitHub Pages. Built from the Claude Design mockups (direction 1a, build-out 2).
 
 ## Run locally
 
@@ -9,34 +9,21 @@ npm install
 npm run dev        # builds to dist/ and serves on http://localhost:3000 (forms save to data/submissions.jsonl)
 ```
 
-## Publish on Cloudflare Pages
+## Publish on GitHub Pages
 
-The site is a static build (`npm run build` writes `dist/`). Cloudflare Pages hosts it free, from the private repo.
+The repo is public, so GitHub Pages is free. `.github/workflows/pages.yml` builds and publishes the site on each push to `main`.
 
-1. Cloudflare dashboard → Workers & Pages → Create → Pages → Connect to Git. Give the Cloudflare GitHub app access to the `longtable-foundation` org, then pick `longtable-foundation/website`, branch `main`.
-2. Framework preset: None. Build command `npm ci && npm run build`. Build output directory `dist`.
-3. Environment variables (optional): `SHEET_ENDPOINT` = the Apps Script `/exec` URL.
-4. Each push to `main` deploys again. The site gets a `*.pages.dev` URL. Add a custom domain under Custom domains.
+1. Repo Settings → Pages → Source: **GitHub Actions**.
+2. The site is then at `https://longtable-foundation.github.io/website/`.
+3. Custom domain: add a repo variable `CUSTOM_DOMAIN` (Settings → Secrets and variables → Actions → Variables), for example `longtable.org`, then point the domain's DNS at GitHub Pages. The workflow writes the CNAME file and builds the site for the domain root.
 
-`dist/404.html` is used for missing pages. `.node-version` sets Node 22 for the build.
+## Sign-ups and the proposal (Google Sheet + Apps Script)
 
-## Publish on DigitalOcean
+Two forms ask for work email and organization only: the sign-up on Get involved, and the proposal request (a dialog on every page, and the `/proposal/` page). Each one adds a row to the Google Sheet "Longtable newsletter capture database". A proposal request also emails the PDF.
 
-The site is a static build (`npm run build` writes `dist/`). It runs as a free App Platform static site. The spec is `.do/app.yaml`.
+**The proposal PDF is never in this repo or on the site.** It stays private in Google Drive. The Apps Script attaches it to the email.
 
-1. DigitalOcean → Apps → Create App → GitHub. Give the DigitalOcean GitHub app access to the `longtable-foundation` org, then pick `longtable-foundation/website`, branch `main`.
-2. Set the component type to **Static Site**. Build command `npm ci && npm run build`. Output directory `dist`. Error document `404.html`.
-3. Each push to `main` deploys again. The site gets a `*.ondigitalocean.app` URL. Add a custom domain under Settings → Domains.
-
-With `doctl`: `doctl apps create --spec .do/app.yaml`.
-
-## Sign-up forms (Google Sheet)
-
-One sign-up form on the Get involved page asks for work email and organization only. Each sign-up becomes a row in the Google Sheet "Longtable newsletter capture database" (columns: Timestamp, Work email, Organization, Page).
-
-1. Open the sheet → Extensions → Apps Script. Paste `tools/google-sheet-capture.gs` and save.
-2. Deploy → New deployment → Web app. Execute as: Me. Who has access: Anyone.
-3. Put the web app URL (ends in `/exec`) in `src/config.js` → `sheetEndpoint`, or in the app's build-time variable `SHEET_ENDPOINT`.
+Setup steps are at the top of `tools/google-sheet-capture.gs`. In short: paste the script into the sheet (Extensions → Apps Script), set the script property `PROPOSAL_FILE_ID`, deploy as a Web app (Execute as: Me, access: Anyone), and put the `/exec` URL in `src/config.js` → `sheetEndpoint` or the repo variable `SHEET_ENDPOINT`.
 
 Until it is set, the forms show "Sign-ups open soon".
 
@@ -44,7 +31,7 @@ Until it is set, the forms show "Sign-ups open soon".
 
 - `src/config.js`: YouTube video ids, press email, GitHub URL, signatories and logos, external links, 3D colour mode.
 - `src/content.js`: use cases, roadmap, figures and other copy.
-- `public/assets/`: proposal PDF, press kit ZIP, logos, Open Graph image.
+- `public/assets/`: press kit ZIP, logos, Open Graph image. Do not add the proposal PDF here.
 
 ## Structure
 

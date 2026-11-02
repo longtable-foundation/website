@@ -30,7 +30,7 @@ const SECURITY = {
   'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://i.ytimg.com; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'",
 };
 
-const REDIRECTS = { '/use-cases': '/use-cases/01/', '/use-cases/': '/use-cases/01/', '/proposal': '/assets/longtable-multimodal-clearing-proposal.pdf', '/github': 'https://github.com/longtable-foundation' };
+const REDIRECTS = { '/use-cases': '/use-cases/01/', '/use-cases/': '/use-cases/01/', '/github': 'https://github.com/longtable-foundation' };
 
 /* ---------- storage ---------- */
 let pool = null;
@@ -93,7 +93,7 @@ async function handleSubmit(req, res) {
   let d;
   try { d = JSON.parse(await readBody(req)); } catch { return json(res, 400, { error: 'Invalid request.' }); }
   if (d.website) return json(res, 200, { ok: true }); // honeypot
-  const type = ['follow', 'join', 'fund', 'signup'].includes(d.type) ? d.type : null;
+  const type = ['follow', 'join', 'fund', 'signup', 'proposal'].includes(d.type) ? d.type : null;
   const email = clip(d.email, 254);
   if (!type) return json(res, 400, { error: 'Invalid form.' });
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json(res, 400, { error: 'Enter a valid work email.' });

@@ -731,3 +731,12 @@ a.lcard:hover { border-color: var(--ink); opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+
+/* proposal email dialog */
+.pdlg { padding: 0; border: 0; background: transparent; width: min(560px, calc(100vw - 32px)); max-height: calc(100vh - 32px); overflow: auto; }
+.pdlg::backdrop { background: rgba(17,17,17,.55); }
+.pdlg .pform { min-height: 0; padding-top: 44px; }
+.pdlg .pform .g2 { grid-template-columns: 1fr; }
+.pdlg .x { position: absolute; top: 10px; right: 10px; z-index: 1; width: 36px; height: 36px; border: 0; background: transparent; font: 400 16px/1 var(--mono); color: var(--ink); cursor: pointer; }
+.pdlg .x:hover { background: var(--line-2); }
+.pform .done b { color: var(--ink); font-weight: 600; word-break: break-all; }

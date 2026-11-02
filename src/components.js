@@ -14,13 +14,13 @@ function video({ id, label, dur, durLeft, small, start }) {
 
 const link = (href, inner, cls = 'u') => (href ? `<a class="${cls}" ${ext(href)}>${inner}</a>` : `<span class="${cls}" style="opacity:.5" title="Link coming soon">${inner}</span>`);
 
-const proposalBtn = (label = 'Download the proposal') =>
-  `<a class="btn" href="${esc(cfg.proposal.href)}" download>${label} <span class="meta">PDF · ${cfg.proposal.pages} pp</span></a>`;
+const proposalBtn = (label = 'Get the proposal') =>
+  `<a class="btn" href="${esc(cfg.proposal.href)}" data-proposal>${label} <span class="meta">PDF · ${cfg.proposal.pages} pp · by email</span></a>`;
 
-const proposalCard = () => `<a class="pdfcard" href="${esc(cfg.proposal.href)}" download>
+const proposalCard = () => `<a class="pdfcard" href="${esc(cfg.proposal.href)}" data-proposal>
 <span class="eyebrow">LT-0001 · External proposal</span>
 <b>${esc(cfg.proposal.title)}</b>
-<span class="ft"><span>PDF · ${cfg.proposal.pages} pages · ${esc(cfg.proposal.date)}</span><span>Download ↓</span></span>
+<span class="ft"><span>PDF · ${cfg.proposal.pages} pages · ${esc(cfg.proposal.date)}</span><span>Get it by email →</span></span>
 </a>`;
 
 const cap = (no, text) => `<p class="cap"><span class="figno">${esc(no)}</span>${text}</p>`;
@@ -51,4 +51,30 @@ function stepper({ scene, fig, title, skip = 0 }) {
 const hex = (c = '') => `<span class="hex${c ? ' ' + c : ''}" aria-hidden="true"></span>`;
 const share = (c = '') => `<span class="shr${c ? ' ' + c : ''}" aria-hidden="true"></span>`;
 
-module.exports = { video, link, proposalBtn, proposalCard, cap, stepper, hex, share };
+// One form: work email + organization. On success the form hides and the done pane shows.
+const hp = '<input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">';
+const formBox = ({ type, id, title, desc, button, note, doneTitle, doneText }) => `<div class="pform" data-box>
+<form class="pane" id="${id}" data-form="${type}" novalidate>${hp}
+<span class="tt"${id ? ` id="${id}-t"` : ''}>${title}</span><span class="ds">${desc}</span>
+<div class="g2"><label><span>WORK EMAIL</span><input class="field" type="email" name="email" required placeholder="name@organization.com" autocomplete="email"></label><label><span>ORGANIZATION</span><input class="field" name="organization" required autocomplete="organization"></label></div>
+<button class="btn" type="submit">${button}</button><span class="note" data-msg>${note}</span>
+</form>
+<div class="done" data-done hidden tabindex="-1"><span class="ok" aria-hidden="true">✓</span><span class="tt">${doneTitle}</span><span class="ds">${doneText}</span><button class="btn-sm" type="button" data-reset>Back to the form</button></div>
+</div>`;
+
+const proposalForm = (id = 'proposal-form') => formBox({
+  type: 'proposal', id,
+  title: 'Get the proposal',
+  desc: `${esc(cfg.proposal.title)}. PDF, ${cfg.proposal.pages} pages, ${esc(cfg.proposal.date)}. Leave your work email and organization and we will email it to you.`,
+  button: 'Email me the proposal',
+  note: 'We will also send you progress updates. Unsubscribe any time.',
+  doneTitle: 'Check your inbox',
+  doneText: 'The proposal is on its way to <b data-done-email></b>. It can take a few minutes. Look in your spam folder if it does not arrive.',
+});
+
+const proposalDialog = () => `<dialog class="pdlg" id="proposal-dialog" aria-labelledby="proposal-dialog-form-t">
+<button class="x" type="button" data-close aria-label="Close">✕</button>
+${proposalForm('proposal-dialog-form')}
+</dialog>`;
+
+module.exports = { formBox, proposalForm, proposalDialog, video, link, proposalBtn, proposalCard, cap, stepper, hex, share };

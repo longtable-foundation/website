@@ -8,7 +8,7 @@
   var SHEET = document.body.getAttribute('data-sheet') || '';
   // The Apps Script web app takes a plain form POST from any site but gives no readable answer (no-cors).
   function sendSheet(data) {
-    var body = new URLSearchParams({ email: data.email || '', organization: data.organization || '', page: data.page || '' });
+    var body = new URLSearchParams({ type: data.type || 'signup', email: data.email || '', organization: data.organization || '', page: data.page || '' });
     return fetch(SHEET, { method: 'POST', mode: 'no-cors', body: body }).then(function () { return {}; });
   }
   function send(data) {
@@ -80,12 +80,29 @@
     inp.addEventListener('input', draw); draw();
   });
 
-  /* ---------- get involved: one form, then a thank-you pane ---------- */
-  var paths = $('[data-paths]');
-  if (paths) {
-    var done = $('[data-done]', paths), pane = $('#pane-signup', paths);
-    $('[data-reset]', paths).addEventListener('click', function () { done.hidden = true; pane.hidden = false; $('input[name=email]', pane).focus(); });
-    paths.addEventListener('lt-sent', function () { pane.hidden = true; done.hidden = false; done.focus(); });
+  /* ---------- form boxes: the form, then a done pane ---------- */
+  $$('[data-box]').forEach(function (box) {
+    var done = $('[data-done]', box), form = $('form', box);
+    $('[data-reset]', box).addEventListener('click', function () { done.hidden = true; form.hidden = false; $('input[name=email]', form).focus(); });
+    box.addEventListener('lt-sent', function (e) {
+      $$('[data-done-email]', box).forEach(function (el) { el.textContent = e.detail.email; });
+      form.hidden = true; done.hidden = false; done.focus();
+    });
+  });
+
+  /* ---------- proposal: ask for email + organization in a dialog ---------- */
+  var dlg = $('#proposal-dialog');
+  if (dlg && typeof dlg.showModal === 'function') {
+    $$('[data-proposal]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        var mn = $('#mnav'); if (mn && !mn.hidden) { var mb = $('.menu-btn'); if (mb) mb.click(); }
+        dlg.showModal();
+        var inp = $('input[name=email]', dlg); if (inp && !$('form', dlg).hidden) inp.focus();
+      });
+    });
+    $('[data-close]', dlg).addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
   }
 
   /* ---------- forms ---------- */
@@ -105,7 +122,8 @@
       send(data)
         .then(function () {
           f.reset(); if (msg) { msg.classList.remove('err'); msg.textContent = base; }
-          if (paths && paths.contains(f)) paths.dispatchEvent(new CustomEvent('lt-sent', { detail: data.type }));
+          var box = f.closest('[data-box]');
+          if (box) box.dispatchEvent(new CustomEvent('lt-sent', { detail: data }));
           else if (msg) msg.textContent = 'Thank you. You are subscribed.';
         })
         .catch(function (err) { if (msg) { msg.textContent = err.message; msg.classList.add('err'); } })

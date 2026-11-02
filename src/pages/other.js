@@ -1,7 +1,7 @@
 const cfg = require('../config');
 const C = require('../content');
 const { esc, ext } = require('../layout');
-const { video, link, proposalCard } = require('../components');
+const { video, link, proposalCard, formBox, proposalForm } = require('../components');
 
 const secL = (no, nm) => `<div class="sec-l"><span class="no">${no}</span><span class="nm">${nm}</span></div>`;
 
@@ -77,7 +77,7 @@ ${secL('Appendix B', 'Press')}
 <div class="col"><h1 class="h1 page">Press</h1><p class="lead">Media inquiries are handled by the Alpaca media team.</p>
 <div class="presskeys">
 <div><span class="eyebrow">Media contact</span><b>Alpaca media team</b><a class="em" href="mailto:${esc(cfg.pressEmail)}">${esc(cfg.pressEmail)}</a></div>
-<div><span class="eyebrow">Press kit</span><b>Logos, proposal, boilerplate</b><a class="u" href="/assets/longtable-press-kit.zip" download>Download ZIP ↓</a></div>
+<div><span class="eyebrow">Press kit</span><b>Logos, boilerplate, Open Graph image</b><a class="u" href="/assets/longtable-press-kit.zip" download>Download ZIP ↓</a></div>
 <div><span class="eyebrow">Speaker</span><b>${esc(cfg.speaker.name)}</b><span class="r">${esc(cfg.speaker.role)}</span></div>
 </div></div>
 </section>
@@ -121,7 +121,6 @@ ${[[cfg.links.tabbArticle, 'Equity Tokens Need Netting Not Instant Settlement', 
 }
 
 function getInvolved() {
-  const hp = '<input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">';
   const body = `<section class="sec first" style="padding-bottom:48px">
 ${secL('§8', 'Get involved')}
 <div class="col g20"><h1 class="h1 page">Get involved</h1><p class="lead">Follow our progress, join the initiative, help fund the Foundation or contribute open source code.</p></div>
@@ -130,14 +129,7 @@ ${secL('§8', 'Get involved')}
 ${secL('§8.1', 'Sign up')}
 <div class="paths">
 <div class="opts">${C.INT.map(x => `<div class="opt info"><span class="k">${x.k}</span><b>${x.t}</b><span class="d">${x.d}</span>${x.id === 'build' ? `<a class="u" style="margin-top:6px" ${ext(cfg.githubUrl)}>Open GitHub ↗</a>` : ''}</div>`).join('')}</div>
-<div class="pform" data-paths>
-<form class="pane" id="pane-signup" data-form="signup" novalidate>${hp}
-<span class="tt">Get involved</span><span class="ds">Leave your work email and organization. We will send progress updates and contact you about joining, funding or contributing.</span>
-<div class="g2"><label><span>WORK EMAIL</span><input class="field" type="email" name="email" required placeholder="name@organization.com" autocomplete="email"></label><label><span>ORGANIZATION</span><input class="field" name="organization" required autocomplete="organization"></label></div>
-<button class="btn" type="submit">Sign up</button><span class="note" data-msg>Milestones and publications only. Unsubscribe any time.</span>
-</form>
-<div class="done" data-done hidden tabindex="-1"><span class="ok" aria-hidden="true">✓</span><span class="tt">Thank you</span><span class="ds">We’ll be in touch at the email you provided.</span><button class="btn-sm" type="button" data-reset>Back to the form</button></div>
-</div>
+${formBox({ type: 'signup', id: 'pane-signup', title: 'Get involved', desc: 'Leave your work email and organization. We will send progress updates and contact you about joining, funding or contributing.', button: 'Sign up', note: 'Milestones and publications only. Unsubscribe any time.', doneTitle: 'Thank you', doneText: 'We’ll be in touch at <b data-done-email></b>.' })}
 </div>
 </section>
 <section class="sec end">
@@ -150,6 +142,18 @@ ${proposalCard()}
   return { title: 'Get involved', description: 'Follow our progress, join the initiative, help fund the Foundation or contribute open source code.', doc: 'LT-0001 · §8 · Get involved', docShort: 'LT-0001 · §8', active: 'get-involved', body };
 }
 
+function proposal() {
+  const body = `<section class="sec first" style="padding-bottom:48px">
+${secL('LT-0001', 'Proposal')}
+<div class="col g20"><h1 class="h1 page">${esc(cfg.proposal.title)}</h1><p class="lead">The external proposal: the need for multimodal clearing, the six use cases and the roadmap. ${cfg.proposal.pages} pages, ${esc(cfg.proposal.date)}.</p></div>
+</section>
+<section class="sec flush end" style="padding-bottom:64px">
+${secL('PDF', 'By email')}
+<div style="max-width:620px">${proposalForm('proposal-page-form')}</div>
+</section>`;
+  return { title: 'Proposal', description: 'Get the Longtable multimodal clearing proposal by email.', doc: 'LT-0001 · Proposal', docShort: 'LT-0001 · PDF', active: '', body };
+}
+
 function notFound() {
   const body = `<section class="sec first end">
 ${secL('404', 'Not found')}
@@ -158,4 +162,4 @@ ${secL('404', 'Not found')}
   return { title: 'Page not found', doc: 'LT-0001 · 404', docShort: 'LT-0001 · 404', active: '', body };
 }
 
-module.exports = { signatories, about, press, getInvolved, notFound };
+module.exports = { signatories, about, press, getInvolved, proposal, notFound };

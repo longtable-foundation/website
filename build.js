@@ -33,10 +33,11 @@ write('signatories', other.signatories());
 write('about', other.about());
 write('press', other.press());
 write('get-involved', other.getInvolved());
+write('proposal', other.proposal());
 write('404', other.notFound());
 
 // Static redirects (the Node server also does these)
-for (const [from, to] of [['use-cases', '/use-cases/01/'], ['proposal', '/assets/longtable-multimodal-clearing-proposal.pdf']]) {
+for (const [from, to] of [['use-cases', '/use-cases/01/']]) {
   fs.mkdirSync(path.join(OUT, from), { recursive: true });
   fs.writeFileSync(path.join(OUT, from, 'index.html'), redirect(to));
 }

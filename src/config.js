@@ -4,7 +4,8 @@
 const cfg = {
   siteUrl: process.env.SITE_URL || '',
 
-  // Path the site lives under. '' when the site is at the domain root (DigitalOcean).
+  // Path the site lives under. '/website' for https://longtable-foundation.github.io/website/,
+  // '' for a custom domain. Set by the GitHub Pages workflow.
   basePath: (process.env.BASE_PATH || '').replace(/\/$/, ''),
 
   // Sign-up forms (work email + organization) are added as rows to the Google Sheet
@@ -22,9 +23,10 @@ const cfg = {
   githubUrl: 'https://github.com/longtable-foundation',
   contributingUrl: 'https://github.com/longtable-foundation', // contribution guide
 
-  // Proposal download (file lives in public/assets/)
+  // The proposal PDF is never in this repo. Readers ask for it with work email + organization,
+  // and the Apps Script (tools/google-sheet-capture.gs) emails it from Google Drive.
   proposal: {
-    href: '/assets/longtable-multimodal-clearing-proposal.pdf',
+    href: '/proposal/',
     pages: 45,
     date: 'Oct 2026',
     title: 'Multimodal Clearing: a technology layer for licensed clearinghouses',
