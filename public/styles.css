@@ -579,6 +579,8 @@ a.lcard:hover { border-color: var(--ink); opacity: 1; }
 .paths .opt .k { font: 500 11px/1 var(--mono); letter-spacing: .06em; color: var(--muted); text-transform: uppercase; }
 .paths .opt b { font: 600 17px/1.25 var(--sans); }
 .paths .opt .d { font: 400 13px/1.45 var(--sans); color: var(--t3); }
+.paths .opt.info { cursor: default; align-items: flex-start; }
+.paths .opt.info:hover { border-color: var(--line); }
 .paths .opt[aria-selected="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
 .paths .opt[aria-selected="true"] .k { color: #9a9a9a; }
 .paths .opt[aria-selected="true"] .d { color: #cfcfcf; }

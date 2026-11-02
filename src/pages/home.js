@@ -127,11 +127,9 @@ ${secL('§7', 'Signatories')}
 ${secL('§8', 'Participate')}
 <div class="col">
 <h2 class="h2">Participate</h2>
-<div class="gi4">${C.INT.map(g => `<div><span class="eyebrow">${g.k}</span><b>${g.t}</b><span class="d">${g.d}</span>${g.id === 'build' ? `<a class="u" ${ext(cfg.githubUrl)}>${g.c} →</a>` : `<a class="u" href="/get-involved/?path=${g.id}">${g.c} →</a>`}</div>`).join('')}</div>
+<div class="gi4">${C.INT.map(g => `<div><span class="eyebrow">${g.k}</span><b>${g.t}</b><span class="d">${g.d}</span>${g.id === 'build' ? `<a class="u" ${ext(cfg.githubUrl)}>${g.c} →</a>` : `<a class="u" href="/get-involved/#sign-up">${g.c} →</a>`}</div>`).join('')}</div>
 <div class="split">
-<div class="subbox"><span class="tt">Get progress updates</span>
-<form data-form="follow" novalidate><input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><input class="field" type="email" name="email" required placeholder="name@organization.com" aria-label="Work email" autocomplete="email"><input class="field" name="organization" required placeholder="Organization" aria-label="Organization" autocomplete="organization"><button class="btn" type="submit" style="height:44px;padding:0 18px;font-size:14px">Subscribe</button></form>
-<span class="note" data-msg>Milestones and publications only. Unsubscribe any time.</span></div>
+<a class="boxlink" href="/get-involved/#sign-up"><span class="eyebrow">§8 · Sign up</span><b>Get progress updates, join, fund or contribute</b><span class="d body-s">One form: your work email and organization.</span><span class="go">Sign up →</span></a>
 ${proposalCard()}
 </div>
 </div>

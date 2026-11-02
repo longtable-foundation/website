@@ -8,7 +8,7 @@
   var SHEET = document.body.getAttribute('data-sheet') || '';
   // The Apps Script web app takes a plain form POST from any site but gives no readable answer (no-cors).
   function sendSheet(data) {
-    var body = new URLSearchParams({ email: data.email || '', organization: data.organization || '', interest: data.type || '', page: data.page || '' });
+    var body = new URLSearchParams({ email: data.email || '', organization: data.organization || '', page: data.page || '' });
     return fetch(SHEET, { method: 'POST', mode: 'no-cors', body: body }).then(function () { return {}; });
   }
   function send(data) {
@@ -80,38 +80,18 @@
     inp.addEventListener('input', draw); draw();
   });
 
-  /* ---------- get involved tabs ---------- */
+  /* ---------- get involved: one form, then a thank-you pane ---------- */
   var paths = $('[data-paths]');
   if (paths) {
-    var tabs = $$('[data-path]', paths), done = $('[data-done]', paths), cur = 'follow';
-    var show = function (id, focus) {
-      cur = id; done.hidden = true;
-      tabs.forEach(function (t) {
-        var on = t.getAttribute('data-path') === id;
-        t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1;
-        document.getElementById('pane-' + t.getAttribute('data-path')).hidden = !on;
-        if (on && focus) t.focus();
-      });
-    };
-    tabs.forEach(function (t, i) {
-      t.addEventListener('click', function () { show(t.getAttribute('data-path')); });
-      t.addEventListener('keydown', function (e) {
-        var k = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : e.key === 'ArrowUp' || e.key === 'ArrowLeft' ? -1 : 0;
-        if (k) { e.preventDefault(); show(tabs[(i + k + tabs.length) % tabs.length].getAttribute('data-path'), true); }
-      });
-    });
-    var q = new URLSearchParams(location.search).get('path');
-    show(tabs.some(function (t) { return t.getAttribute('data-path') === q; }) ? q : 'follow');
-    $('[data-reset]', paths).addEventListener('click', function () { show(cur); });
-    paths.addEventListener('lt-sent', function (e) {
-      document.getElementById('pane-' + e.detail).hidden = true; done.hidden = false; done.focus();
-    });
+    var done = $('[data-done]', paths), pane = $('#pane-signup', paths);
+    $('[data-reset]', paths).addEventListener('click', function () { done.hidden = true; pane.hidden = false; $('input[name=email]', pane).focus(); });
+    paths.addEventListener('lt-sent', function () { pane.hidden = true; done.hidden = false; done.focus(); });
   }
 
   /* ---------- forms ---------- */
   var emailOk = function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); };
   $$('form[data-form]').forEach(function (f) {
-    var msg = $('[data-msg]', f.parentNode.classList.contains('subbox') ? f.parentNode : f), base = msg ? msg.textContent : '';
+    var msg = $('[data-msg]', f), base = msg ? msg.textContent : '';
     f.addEventListener('submit', function (e) {
       e.preventDefault();
       var data = {}; new FormData(f).forEach(function (v, k) { data[k] = String(v).trim(); });

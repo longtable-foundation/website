@@ -14,13 +14,13 @@ ${secL('§7', 'Signatories')}
 ${secL('§7.1', 'Founding signatories')}
 <div class="col" style="gap:16px">
 <div class="sig3">${cfg.publicSignatories.map(g => `<div><div class="logo${g.logo ? ' img' : ''}">${g.logo ? `<img src="${esc(g.logo)}" alt="${esc(g.name)} logo">` : 'LOGO'}</div><div class="nm"><b>${esc(g.name)}</b><span>${g.tba ? 'ANNOUNCEMENT PENDING' : 'FOUNDING SIGNATORY'}</span></div></div>`).join('')}</div>
-<a class="dash-cta" href="/get-involved/?path=join"><span><b>Your organization</b><span class="d">Membership is open to issuers, clearing members, venues, vaults, oracles and CSDs.</span></span><span class="u">Become a signatory →</span></a>
+<a class="dash-cta" href="/get-involved/#sign-up"><span><b>Your organization</b><span class="d">Membership is open to issuers, clearing members, venues, vaults, oracles and CSDs.</span></span><span class="u">Become a signatory →</span></a>
 </div>
 </section>
 <section class="sec end">
 ${secL('§7.2', 'Signing')}
 <div class="cards2 w" style="max-width:940px">
-<div class="dcard"><span class="eyebrow">Statement of intent</span><span class="tt">Become a signatory</span><p>Foundation membership must be open for any new issuers to join while keeping out bad actors.</p><a class="wbtn" href="/get-involved/?path=join">Request the statement of intent</a></div>
+<div class="dcard"><span class="eyebrow">Statement of intent</span><span class="tt">Become a signatory</span><p>Foundation membership must be open for any new issuers to join while keeping out bad actors.</p><a class="wbtn" href="/get-involved/#sign-up">Request the statement of intent</a></div>
 <div class="lcard"><span class="eyebrow">Press</span><span class="tt">Covering the initiative?</span><p>Media inquiries are handled by the Alpaca media team.</p><a class="u" href="/press/">Press page →</a></div>
 </div>
 </section>`;
@@ -56,7 +56,7 @@ ${secL('A.3', 'Membership')}
 <div><span>02</span><span>Members may donate open source software to the Foundation under an irrevocable license.</span></div>
 <div><span>03</span><span>Foundation membership must be open for any new issuers to join while keeping out bad actors.</span></div>
 </div>
-<div class="classes"><span class="eyebrow">Member classes</span><div class="ls">${C.MCL.map(m => `<span>${m}s</span>`).join('').replace('CSDs', 'CSDs')}</div><a class="u" style="margin-top:6px" href="/get-involved/?path=join">Apply to join →</a></div>
+<div class="classes"><span class="eyebrow">Member classes</span><div class="ls">${C.MCL.map(m => `<span>${m}s</span>`).join('').replace('CSDs', 'CSDs')}</div><a class="u" style="margin-top:6px" href="/get-involved/#sign-up">Apply to join →</a></div>
 </div>
 </section>
 <section class="sec end">
@@ -126,32 +126,16 @@ function getInvolved() {
 ${secL('§8', 'Get involved')}
 <div class="col g20"><h1 class="h1 page">Get involved</h1><p class="lead">Follow our progress, join the initiative, help fund the Foundation or contribute open source code.</p></div>
 </section>
-<section class="sec flush" style="padding-bottom:64px">
-${secL('§8.1', 'Choose a path')}
-<div class="paths" data-paths>
-<div class="opts" role="tablist" aria-label="Ways to get involved">${C.INT.map((x, i) => `<button class="opt" type="button" role="tab" id="tab-${x.id}" aria-controls="pane-${x.id}" aria-selected="${i === 0}" data-path="${x.id}"><span class="k">${x.k}</span><b>${x.t}</b><span class="d">${x.d}</span></button>`).join('')}</div>
-<div class="pform">
-<form class="pane" id="pane-follow" role="tabpanel" aria-labelledby="tab-follow" data-form="follow" novalidate>${hp}
-<span class="tt">Get progress updates</span><span class="ds">Milestones, publications and open calls for comment.</span>
+<section class="sec flush" style="padding-bottom:64px" id="sign-up">
+${secL('§8.1', 'Sign up')}
+<div class="paths">
+<div class="opts">${C.INT.map(x => `<div class="opt info"><span class="k">${x.k}</span><b>${x.t}</b><span class="d">${x.d}</span>${x.id === 'build' ? `<a class="u" style="margin-top:6px" ${ext(cfg.githubUrl)}>Open GitHub ↗</a>` : ''}</div>`).join('')}</div>
+<div class="pform" data-paths>
+<form class="pane" id="pane-signup" data-form="signup" novalidate>${hp}
+<span class="tt">Get involved</span><span class="ds">Leave your work email and organization. We will send progress updates and contact you about joining, funding or contributing.</span>
 <div class="g2"><label><span>WORK EMAIL</span><input class="field" type="email" name="email" required placeholder="name@organization.com" autocomplete="email"></label><label><span>ORGANIZATION</span><input class="field" name="organization" required autocomplete="organization"></label></div>
-<button class="btn" type="submit">Subscribe</button><span class="note" data-msg>Milestones and publications only. Unsubscribe any time.</span>
+<button class="btn" type="submit">Sign up</button><span class="note" data-msg>Milestones and publications only. Unsubscribe any time.</span>
 </form>
-<form class="pane" id="pane-join" role="tabpanel" aria-labelledby="tab-join" data-form="join" novalidate hidden>${hp}
-<span class="tt">Join the initiative</span>
-<div class="g2"><label><span>WORK EMAIL</span><input class="field" type="email" name="email" required placeholder="name@organization.com" autocomplete="email"></label><label><span>ORGANIZATION</span><input class="field" name="organization" required autocomplete="organization"></label></div>
-<button class="btn" type="submit">Submit application</button><span class="note" data-msg></span>
-</form>
-<form class="pane" id="pane-fund" role="tabpanel" aria-labelledby="tab-fund" data-form="fund" novalidate hidden>${hp}
-<span class="tt">Help fund the Foundation</span><span class="ds">The Foundation is funded by member dues. Governance and funding details are to be announced.</span>
-<div class="g2"><label><span>WORK EMAIL</span><input class="field" type="email" name="email" required placeholder="name@organization.com" autocomplete="email"></label><label><span>ORGANIZATION</span><input class="field" name="organization" required autocomplete="organization"></label></div>
-<button class="btn" type="submit">Start a conversation</button><span class="note" data-msg></span>
-</form>
-<div class="pane" id="pane-build" role="tabpanel" aria-labelledby="tab-build" hidden>
-<span class="tt">Contribute open source code</span>
-<p class="body-s">Members contribute this software under the irrevocable license so participants can trust that it is a protocol they can build their business on without fear of it being taken away.</p>
-<div class="tree"><div>${esc(cfg.githubUrl.replace(/^https?:\/\//, ''))}</div><div>├── solvers/        1inch Fusion · LI.FI · Across · 0x · CoW Swap</div><div>└── vault-adapters/ Aave v4 · Gauntlet Aera · Morpho</div></div>
-<div class="btn-row" style="gap:10px"><a class="btn" style="height:46px;padding:0 20px" ${ext(cfg.githubUrl)}>Open GitHub ↗</a><a class="btn-o" style="height:46px;padding:0 20px" ${ext(cfg.contributingUrl)}>Contribution guide</a></div>
-</div>
 <div class="done" data-done hidden tabindex="-1"><span class="ok" aria-hidden="true">✓</span><span class="tt">Thank you</span><span class="ds">We’ll be in touch at the email you provided.</span><button class="btn-sm" type="button" data-reset>Back to the form</button></div>
 </div>
 </div>

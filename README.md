@@ -19,7 +19,7 @@ npm run dev        # builds to dist/ and serves on http://localhost:3000 (forms 
 
 ## Sign-up forms (Google Sheet)
 
-The news, join and fund forms ask for work email and organization only. Each sign-up becomes a row in the Google Sheet "Longtable newsletter capture database" (columns: Timestamp, Work email, Organization, Interest, Page).
+One sign-up form on the Get involved page asks for work email and organization only. Each sign-up becomes a row in the Google Sheet "Longtable newsletter capture database" (columns: Timestamp, Work email, Organization, Page).
 
 1. Open the sheet → Extensions → Apps Script. Paste `tools/google-sheet-capture.gs` and save.
 2. Deploy → New deployment → Web app. Execute as: Me. Who has access: Anyone.

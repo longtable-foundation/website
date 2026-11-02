@@ -93,7 +93,7 @@ async function handleSubmit(req, res) {
   let d;
   try { d = JSON.parse(await readBody(req)); } catch { return json(res, 400, { error: 'Invalid request.' }); }
   if (d.website) return json(res, 200, { ok: true }); // honeypot
-  const type = ['follow', 'join', 'fund'].includes(d.type) ? d.type : null;
+  const type = ['follow', 'join', 'fund', 'signup'].includes(d.type) ? d.type : null;
   const email = clip(d.email, 254);
   if (!type) return json(res, 400, { error: 'Invalid form.' });
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json(res, 400, { error: 'Enter a valid work email.' });

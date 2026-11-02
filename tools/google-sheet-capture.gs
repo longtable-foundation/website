@@ -14,7 +14,7 @@
  * After a code change here, use Deploy > Manage deployments > Edit > New version,
  * so the URL stays the same.
  */
-var HEADERS = ['Timestamp', 'Work email', 'Organization', 'Interest', 'Page'];
+var HEADERS = ['Timestamp', 'Work email', 'Organization', 'Page'];
 
 function doPost(e) {
   var p = (e && e.parameter) || {};
@@ -29,7 +29,7 @@ function doPost(e) {
     if (sheet.getLastRow() === 0) sheet.appendRow(HEADERS);
     // A leading quote stops a value from running as a formula.
     var safe = function (v) { return /^[=+\-@]/.test(v) ? "'" + v : v; };
-    sheet.appendRow([new Date(), safe(email), safe(org), safe(String(p.interest || '').slice(0, 20)), safe(String(p.page || '').slice(0, 200))]);
+    sheet.appendRow([new Date(), safe(email), safe(org), safe(String(p.page || '').slice(0, 200))]);
   } finally {
     lock.releaseLock();
   }
