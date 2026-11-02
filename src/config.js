@@ -8,8 +8,8 @@ const cfg = {
   // '' for a custom domain. Set by the GitHub Pages workflow.
   basePath: (process.env.BASE_PATH || '').replace(/\/$/, ''),
 
-  // Sign-up forms go to one Google Form. In the form: Send button > link icon is not it;
-  // use the form's /formResponse URL, and each question's entry id from a prefilled link
+  // Sign-up forms go to one Google Form (see README). action is the form's /formResponse URL;
+  // each field is a question's entry id, from a pre-filled link
   // (three dots > Get pre-filled link > fill every field > Get link).
   // Empty action = forms show a 'sign-ups open soon' note.
   googleForm: {
