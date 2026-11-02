@@ -91,7 +91,7 @@ ${secL('§4', 'The Foundation')}
 </div>
 <div class="panel pad24" style="display:flex;flex-direction:column;gap:10px">
 <span class="eyebrow">Clearinghouses worldwide</span>
-<div class="juris"><span>US</span><span>EU</span><span>UK</span><span>ADGM</span></div>
+<div class="juris"><span>US</span><span>EU</span><span>UK</span><span>...</span></div>
 <div class="tl"><div class="hd"><b>Multimodal clearing <span class="y">OPEN SOURCE TECHNOLOGY</span></b><span class="g">REFERENCE IMPLEMENTATION · ALPACA</span></div><div class="cells">${C.TL.map(c => `<div class="cell"><b>${c.t}</b><span>${c.d}</span></div>`).join('')}</div></div>
 <div class="ybar"><b>Post-trade settlement of tokenized equities</b><span>ONCHAIN AND OFFCHAIN</span></div>
 </div>
