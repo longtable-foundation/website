@@ -11,11 +11,23 @@ npm run dev        # builds to dist/ and serves on http://localhost:3000 (forms 
 
 ## Publish on GitHub Pages
 
-The repo is public, so GitHub Pages is free. `.github/workflows/pages.yml` builds and publishes the site on each push to `main`.
+`.github/workflows/pages.yml` builds and publishes the site on each push to `main`. **While the site is a draft, every HTML page is AES-encrypted with [StatiCrypt](https://github.com/robinmoisson/staticrypt)** before deploy. Visitors see a password prompt; decryption happens in the browser.
 
-1. Repo Settings → Pages → Source: **GitHub Actions**.
-2. The site is then at `https://longtable-foundation.github.io/website/`.
-3. Custom domain: add a repo variable `CUSTOM_DOMAIN` (Settings → Secrets and variables → Actions → Variables), for example `longtable.org`, then point the domain's DNS at GitHub Pages. The workflow writes the CNAME file and builds the site for the domain root.
+1. Repo Settings → Secrets and variables → Actions → Secrets → add `STATICRYPT_PASSWORD` (the shared draft password).
+2. Repo Settings → Pages → Source: **GitHub Actions**.
+3. The site is then at `https://longtable-foundation.github.io/website/`.
+4. Custom domain: add a repo variable `CUSTOM_DOMAIN` (Settings → Secrets and variables → Actions → Variables), for example `longtable.org`, then point the domain's DNS at GitHub Pages. The workflow writes the CNAME file and builds the site for the domain root.
+
+Local unprotected preview stays `npm run build` / `npm run dev`. To preview the lock screen locally:
+
+```sh
+STATICRYPT_PASSWORD='your-draft-password' npm run build:protected
+npm start
+```
+
+Commit `.staticrypt.json` (salt only — not the password) so “Remember me” and share links stay valid across deploys.
+
+**Limits:** GitHub Pages has no real server-side auth. StatiCrypt encrypts the HTML; `app.js`, CSS, and assets under `public/` are still fetchable. The GitHub **repo** also still shows source unless you make it private. When you are ready to go fully public, remove the `protect` step from the workflow (or stop setting the secret and revert to `npm run build`).
 
 ## Sign-ups and the proposal (Google Sheet + Apps Script)
 
