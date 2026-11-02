@@ -77,7 +77,7 @@ ${secL('§3', 'Use cases')}
 <p class="body-l">Without liquidity, trading venues cannot function. Since we are now seeing great growth of tokenized equities trading, the need to solve the liquidity problem is becoming increasingly urgent.</p>
 <div class="acc" data-acc>
 ${C.UC.map((u, i) => `<div class="acc-i">
-<button class="acc-b" type="button" aria-expanded="${i === 0}" aria-controls="uc-p-${u.n}" id="uc-b-${u.n}"><span class="n">${u.n}</span><span class="tt"><span class="t">${u.t}</span><span class="s">${u.s}</span></span><span class="v">${u.video ? '<span>▶ VIDEO</span>' : ''}</span><span class="sg" aria-hidden="true">${i === 0 ? '−' : '+'}</span></button>
+<button class="acc-b" type="button" aria-expanded="${i === 0}" aria-controls="uc-p-${u.n}" id="uc-b-${u.n}"><span class="n">${u.n}</span><span class="tt"><span class="t">${u.t}</span><span class="s">${u.s}</span></span><span class="v">${u.video ? '<span>Video</span>' : ''}</span><span class="sg" aria-hidden="true">${i === 0 ? '−' : '+'}</span></button>
 <div class="acc-p" id="uc-p-${u.n}" role="region" aria-labelledby="uc-b-${u.n}"${i === 0 ? '' : ' hidden'}><span></span><p class="body">${u.d}</p><div class="r"><div class="chips">${u.p.map(p => `<span class="chip">${p}</span>`).join('')}</div><a class="u" href="/use-cases/${u.slug}/">Read use case ${u.n} →</a></div></div>
 </div>`).join('')}
 </div>
