@@ -35,7 +35,11 @@ const cfg = {
   // YouTube video IDs (the part after watch?v=). Empty = placeholder thumbnail.
   videos: {
     summitTalk: '',        // 7 min Alpaca Summit talk, homepage hero
-    rollupInterview: '',   // The Rollup, live from DAS Asia 2026
+    rollupInterview: '2peRyv_iX5A',   // The Rollup, live from DAS Asia 2026
+    // SIFMA Ops 2026 full panel — clips use start offsets (seconds) into this video
+    sifmaPanel: 'mX1syigQ0iY',
+    sifmaClip1Start: 460,   // ~7:40 · transfer-agent / “nobody wants to pre-fund”
+    sifmaClip2Start: 1922,  // ~32:02 · ITN / deep liquidity as TradFi
     useCase01: '',
     useCase02: '',
     useCase03: '',
@@ -43,8 +47,8 @@ const cfg = {
 
   // Other external links. Empty = rendered without a link.
   links: {
-    sifmaClip1: '',
-    sifmaClip2: '',
+    sifmaClip1: 'https://www.youtube.com/watch?v=mX1syigQ0iY&t=460s',
+    sifmaClip2: 'https://www.youtube.com/watch?v=mX1syigQ0iY&t=1922s',
     tabbArticle: '',
     taylorArticle: '',
   },

@@ -90,7 +90,23 @@ const INT = [
   { id: 'build', k: 'Build', t: 'Contribute open source code', d: 'Template contracts and adapters under an irrevocable open source license.', c: 'GitHub' },
 ];
 
-const CH = [['00:00', 'Intro'], ['01:21', 'What ITN Actually Is'], ['04:07', 'The Slow Rail Fast Rail Problem'], ['07:21', 'Locates And Naked Shorting'], ['09:19', 'The Multimodal Equities Era'], ['12:06', 'Transfer Agents Are A Crazy World'], ['14:54', 'The Token Is Not The Share'], ['17:25', 'How The AMC Weekend Worked'], ['23:08', 'Expanding Beyond Alpaca'], ['28:22', 'Multilateral Netting Explained'], ['31:06', 'What’s Live Versus What’s Coming'], ['35:09', 'The 24/7 Markets Question']];
+const CH = [
+  ['00:00', 'Intro'],
+  ['02:03', 'ITN Hit $5B In Flows Already'],
+  ['05:21', 'Why Tokenized Spot Is Harder Than Perps'],
+  ['07:24', 'TradFi Market Makers Cannot Naked Short'],
+  ['09:13', 'Multimodal Equities Era Has Begun'],
+  ['11:46', 'Transfer Agent Is The Source Of Truth'],
+  ['13:53', 'Token Is The Share Is A False Narrative'],
+  ['17:29', 'AMC Weekend Price Dislocation Explained'],
+  ['19:35', 'Market Makers Beg For Weekend Minting'],
+  ['23:37', 'Multilateral Clearing The Next Frontier'],
+  ['28:53', 'NSCC Clears 4.6 Quadrillion Annually'],
+  ['30:02', 'Digital Assets Operates On Debit Cards'],
+  ['33:09', 'Retail Gets ITN Access Via Facilitating AP'],
+  ['36:03', 'Banks Forced Into 24/7 By Their Executives'],
+  ['38:07', 'OKX Partners With NYSE Parent On 24/7'],
+];
 
 const DUES = [['C1', 'Receives', 50, 19, 'r'], ['C2', 'Pays', 38, 12, 'p'], ['C3', 'Receives', 50, 7, 'r'], ['C4', 'Pays', 34, 16, 'p'], ['C5', 'Rolls over', 50, 10, 'o']];
 

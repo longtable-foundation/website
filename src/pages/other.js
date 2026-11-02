@@ -85,17 +85,30 @@ ${secL('Appendix B', 'Press')}
 ${secL('B.1', 'Talks &amp; interviews')}
 <div class="col" style="gap:48px">
 <div class="talk">
-${video({ id: v.summitTalk, label: 'Summit talk', dur: '7 MIN', small: true })}
+${video({ id: v.summitTalk, label: 'Summit talk', dur: '7 MIN', small: true, embed: !!v.summitTalk })}
 <div class="meta"><span class="eyebrow">The Alpaca Summit · October 2026</span><b>Multimodal Clearing</b><span class="by">${esc(cfg.speaker.name)}, ${esc(cfg.speaker.role)}</span>${v.summitTalk ? link('https://www.youtube.com/watch?v=' + v.summitTalk, 'Watch on YouTube ↗') : ''}</div>
 </div>
 <div class="talk" data-chapters data-yt="${esc(v.rollupInterview)}">
 <div class="l">
-<div data-chapvid>${video({ id: v.rollupInterview, label: 'The Rollup interview', dur: `STARTS AT ${C.CH[4][0]} · ${C.CH[4][1]}`, durLeft: true, small: true, start: chapStart(C.CH[4][0]) })}</div>
+<div data-chapvid>${video({ id: v.rollupInterview, label: 'The Rollup interview', dur: `STARTS AT ${C.CH[4][0]} · ${C.CH[4][1]}`, durLeft: true, small: true, start: chapStart(C.CH[4][0]), embed: !!v.rollupInterview })}</div>
 <span class="eyebrow">The Rollup · Live from DAS Asia 2026</span><span class="ttl">Introducing “Multimodal” Equities</span><p class="body-s">Equities now exist in many forms simultaneously, only a multimodal clearinghouse can solve liquidity across all modalities while preserving capital efficiency.</p>
+${v.rollupInterview ? `<a class="u" ${ext('https://www.youtube.com/watch?v=' + v.rollupInterview + '&t=' + chapStart(C.CH[4][0]) + 's')}>Watch on YouTube ↗</a>` : ''}
 </div>
 <div class="panel chaps"><div class="hd"><span>CHAPTERS</span><span>PICK ONE</span></div>${C.CH.map(([ts, t], i) => `<button type="button" aria-pressed="${i === 4}" data-ts="${ts}" data-s="${chapStart(ts)}" data-t="${esc(t)}"><span>${ts}</span><span>${t}</span></button>`).join('')}</div>
 </div>
-<div class="qband"><div><span class="eyebrow">SIFMA Ops 2026</span><p class="q">“Crypto technology allows pre-funded trades to settle atomically… but that’s not how trading works in the real world. Nobody wants to pre-fund their trades.”</p></div><div class="ls">${link(cfg.links.sifmaClip1, 'Watch clip [1] ↗')}${link(cfg.links.sifmaClip2, 'Watch clip [2] ↗')}</div></div>
+<div class="sifma">
+<div class="qband"><div><span class="eyebrow">SIFMA Ops 2026</span><p class="q">“Crypto technology allows pre-funded trades to settle atomically… but that’s not how trading works in the real world. Nobody wants to pre-fund their trades.”</p></div></div>
+<div class="clips2">
+<figure class="clip">
+${video({ id: v.sifmaPanel, label: 'Clip [1] · Prefunding vs atomic settlement', dur: 'CLIP 1', embed: !!v.sifmaPanel, start: v.sifmaClip1Start })}
+<figcaption><span class="eyebrow">Clip [1]</span><b>Prefunding vs atomic settlement</b><span class="by">${esc(cfg.speaker.name)} at SIFMA Ops 2026</span>${cfg.links.sifmaClip1 ? `<a class="u" ${ext(cfg.links.sifmaClip1)}>Open on YouTube ↗</a>` : ''}</figcaption>
+</figure>
+<figure class="clip">
+${video({ id: v.sifmaPanel, label: 'Clip [2] · ITN and deep liquidity', dur: 'CLIP 2', embed: !!v.sifmaPanel, start: v.sifmaClip2Start })}
+<figcaption><span class="eyebrow">Clip [2]</span><b>ITN and deep liquidity as TradFi</b><span class="by">${esc(cfg.speaker.name)} at SIFMA Ops 2026</span>${cfg.links.sifmaClip2 ? `<a class="u" ${ext(cfg.links.sifmaClip2)}>Open on YouTube ↗</a>` : ''}</figcaption>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section class="sec">

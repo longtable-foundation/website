@@ -1,10 +1,15 @@
 const cfg = require('./config');
 const { esc, ext } = require('./layout');
 
-// Video thumbnail. With a YouTube id it links out; without one it shows a "coming soon" placeholder.
-function video({ id, label, dur, durLeft, small, start }) {
-  const cls = 'vid' + (small ? ' sm' : '');
+// Video thumbnail. With a YouTube id it links out (or click-to-play embeds when embed:true);
+// without one it shows a "coming soon" placeholder.
+function video({ id, label, dur, durLeft, small, start, embed }) {
+  const cls = 'vid' + (small ? ' sm' : '') + (embed && id ? ' embed' : '');
   const durHtml = dur ? `<span class="dur${durLeft ? ' l' : ''}"${durLeft ? ' data-chap-badge' : ''}>${esc(dur)}</span>` : '';
+  if (id && embed) {
+    const s = start ? Number(start) : 0;
+    return `<div class="${cls} has-img" data-yt-embed="${esc(id)}" data-start="${s}" role="button" tabindex="0" aria-label="Play ${esc(label)}"><img src="https://i.ytimg.com/vi/${encodeURIComponent(id)}/hqdefault.jpg" alt="" loading="lazy"><span class="play" aria-hidden="true"></span>${durHtml}<span class="lbl">${esc(label)}</span></div>`;
+  }
   if (id) {
     const href = `https://www.youtube.com/watch?v=${encodeURIComponent(id)}${start ? `&t=${start}s` : ''}`;
     return `<a class="${cls} has-img" ${ext(href)} data-yt="${esc(id)}" aria-label="${esc(label)} (opens YouTube)"><img src="https://i.ytimg.com/vi/${encodeURIComponent(id)}/hqdefault.jpg" alt="" loading="lazy"><span class="play" aria-hidden="true"></span>${durHtml}</a>`;

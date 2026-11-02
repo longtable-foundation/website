@@ -131,14 +131,42 @@
     });
   });
 
+  /* ---------- YouTube click-to-play embeds ---------- */
+  function ytSrc(id, start, autoplay) {
+    return 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(id)
+      + '?rel=0&modestbranding=1&playsinline=1'
+      + (start ? '&start=' + encodeURIComponent(start) : '')
+      + (autoplay ? '&autoplay=1' : '');
+  }
+  function playEmbed(el, autoplay) {
+    var id = el.getAttribute('data-yt-embed'); if (!id) return;
+    var start = el.getAttribute('data-start') || '0';
+    el.classList.add('playing');
+    el.innerHTML = '<iframe src="' + ytSrc(id, start, autoplay) + '" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>';
+  }
+  $$('[data-yt-embed]').forEach(function (el) {
+    var go = function (e) { if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return; e.preventDefault(); if (!el.classList.contains('playing')) playEmbed(el, true); };
+    el.addEventListener('click', go);
+    el.addEventListener('keydown', go);
+  });
+
   /* ---------- press: chapters and boilerplate ---------- */
   $$('[data-chapters]').forEach(function (box) {
     var yt = box.getAttribute('data-yt');
     $$('button[data-ts]', box).forEach(function (b, _, all) {
       b.addEventListener('click', function () {
         all.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+        var start = b.getAttribute('data-s') || '0';
         var badge = $('[data-chap-badge]', box); if (badge) badge.textContent = 'STARTS AT ' + b.getAttribute('data-ts') + ' · ' + b.getAttribute('data-t');
-        var a = $('a.vid', box); if (a && yt) a.href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(yt) + '&t=' + b.getAttribute('data-s') + 's';
+        var a = $('a.vid', box); if (a && yt) a.href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(yt) + '&t=' + start + 's';
+        var emb = $('[data-yt-embed]', box);
+        if (emb && yt) {
+          emb.setAttribute('data-yt-embed', yt);
+          emb.setAttribute('data-start', start);
+          if (emb.classList.contains('playing')) playEmbed(emb, true);
+        }
+        var out = box.querySelector('a.u[href*="youtube.com"]');
+        if (out && yt) out.href = 'https://www.youtube.com/watch?v=' + encodeURIComponent(yt) + '&t=' + start + 's';
       });
     });
   });
