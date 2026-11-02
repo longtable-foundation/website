@@ -1,6 +1,6 @@
 # Longtable Foundation website
 
-Static site, hosted on DigitalOcean App Platform. Built from the Claude Design mockups (direction 1a, build-out 2).
+Static site. Hosted on Cloudflare Pages (DigitalOcean App Platform also works). Built from the Claude Design mockups (direction 1a, build-out 2).
 
 ## Run locally
 
@@ -8,6 +8,17 @@ Static site, hosted on DigitalOcean App Platform. Built from the Claude Design m
 npm install
 npm run dev        # builds to dist/ and serves on http://localhost:3000 (forms save to data/submissions.jsonl)
 ```
+
+## Publish on Cloudflare Pages
+
+The site is a static build (`npm run build` writes `dist/`). Cloudflare Pages hosts it free, from the private repo.
+
+1. Cloudflare dashboard → Workers & Pages → Create → Pages → Connect to Git. Give the Cloudflare GitHub app access to the `longtable-foundation` org, then pick `longtable-foundation/website`, branch `main`.
+2. Framework preset: None. Build command `npm ci && npm run build`. Build output directory `dist`.
+3. Environment variables (optional): `SHEET_ENDPOINT` = the Apps Script `/exec` URL.
+4. Each push to `main` deploys again. The site gets a `*.pages.dev` URL. Add a custom domain under Custom domains.
+
+`dist/404.html` is used for missing pages. `.node-version` sets Node 22 for the build.
 
 ## Publish on DigitalOcean
 
