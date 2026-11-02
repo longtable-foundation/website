@@ -37,8 +37,13 @@ ${secL('§1', 'The problem')}
 </div>
 ${cap('FIG. 1', 'Bilateral agreements can allow a participant to exchange a specific token for its underlying traditional share. They do not create general settlement interoperability among every token format, issuer, custodian, venue and counterparty.')}
 <div class="blk">
+<p class="statement">Equity markets run on credit. Onchain markets run on a debit card.</p>
+<p class="body-l">When a broker buys a share, nobody pays at the moment of the trade. The clearinghouse guarantees the trade, nets each member’s buys against its sells, and only the difference settles a day later. A market maker can sell first and source the share before settlement. That is how the NSCC clears $4.6 quadrillion of trades a year without anyone holding $4.6 quadrillion.</p>
+<p class="body-l">Tokenized equities settle the other way. A blockchain trade is atomic: the token and the stablecoin change hands in the same transaction, or not at all. There is no credit and no later. The seller must already hold the token and the buyer must already hold the cash. That is pre-funding.</p>
+</div>
+<div class="blk">
 <p class="statement">Pre-funding $4.6 quadrillion of trading flow a year is impossible.</p>
-<p class="body-l">The NSCC clears $4.6 quadrillion of trades every year. Tokenized venues settle atomically, so a market maker has to hold the token before it can quote the offer. A pre-funded ATS requires that inventory up front. Onchain RFQ is the same constraint: the solver must deliver the token at trade time. No serious institution will pre-fund a year’s flow at that scale.</p>
+<p class="body-l">On a pre-funded ATS, a market maker has to buy the token before it can quote the offer. On onchain RFQ, the solver must deliver the token at trade time. Either way the inventory is bought up front, before any customer has asked for it. No serious institution will pre-fund a year’s flow at that scale.</p>
 <p class="body-l">Until post-trade settlement is solved, growth in tokenized equities is limited by market makers’ balance sheets. Capital has to sit on every venue, and then again for every chain and every flavor of the same stock. It scales with venues, not with risk. Cash proceeds cannot pay for the share, so the industry cannot grow past the inventory those balance sheets can carry.</p>
 </div>
 ${stepper({ scene: 'prefund', fig: 'FIG. 2', title: 'Without clearing, market makers pre-fund every venue' })}
