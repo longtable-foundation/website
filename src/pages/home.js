@@ -119,7 +119,7 @@ ${secL('§6', 'Open source')}
 ${secL('§7', 'Signatories')}
 <div class="col g24">
 <div class="row-h"><h2 class="h2">Signatories</h2><a class="u" href="/signatories/">All signatories →</a></div>
-<div class="sig6">${cfg.signatories.map(g => `<div>${g.logo ? `<img src="${esc(g.logo)}" alt="">` : '<span class="lg">LOGO</span>'}<b>${esc(g.name)}</b></div>`).join('')}</div>
+<div class="sig6">${cfg.publicSignatories.map(g => `<div>${g.logo ? `<img src="${esc(g.logo)}" alt="">` : '<span class="lg">LOGO</span>'}<b>${esc(g.name)}</b></div>`).join('')}</div>
 </div>
 </section>`;
 

@@ -13,7 +13,7 @@ ${secL('§7', 'Signatories')}
 <section class="sec flush" style="padding-bottom:64px">
 ${secL('§7.1', 'Founding signatories')}
 <div class="col" style="gap:16px">
-<div class="sig3">${cfg.signatories.map(g => `<div><div class="logo${g.logo ? ' img' : ''}">${g.logo ? `<img src="${esc(g.logo)}" alt="${esc(g.name)} logo">` : 'LOGO'}</div><div class="nm"><b>${esc(g.name)}</b><span>FOUNDING SIGNATORY</span></div></div>`).join('')}</div>
+<div class="sig3">${cfg.publicSignatories.map(g => `<div><div class="logo${g.logo ? ' img' : ''}">${g.logo ? `<img src="${esc(g.logo)}" alt="${esc(g.name)} logo">` : 'LOGO'}</div><div class="nm"><b>${esc(g.name)}</b><span>${g.tba ? 'ANNOUNCEMENT PENDING' : 'FOUNDING SIGNATORY'}</span></div></div>`).join('')}</div>
 <a class="dash-cta" href="/get-involved/?path=join"><span><b>Your organization</b><span class="d">Membership is open to issuers, clearing members, venues, vaults, oracles and CSDs.</span></span><span class="u">Become a signatory →</span></a>
 </div>
 </section>

@@ -1,13 +1,13 @@
 // Site settings. Edit this file to swap placeholders for real values.
 // A null or empty value renders as a placeholder on the site.
 
-module.exports = {
+const cfg = {
   siteUrl: process.env.SITE_URL || '',
 
   // Contact and links
   pressEmail: 'press@alpaca.markets',
-  githubUrl: 'https://github.com/longtable',
-  contributingUrl: 'https://github.com/longtable', // contribution guide
+  githubUrl: 'https://github.com/longtable-foundation',
+  contributingUrl: 'https://github.com/longtable-foundation', // contribution guide
 
   // Proposal download (file lives in public/assets/)
   proposal: {
@@ -35,7 +35,9 @@ module.exports = {
   },
 
   // Founding signatories. logo: path under public/, or '' for a placeholder.
-  // PLACEHOLDER LIST FROM THE MOCKUPS. Confirm before launch.
+  // PLACEHOLDER LIST FROM THE MOCKUPS. While signatoriesConfirmed is false the site
+  // shows unnamed 'To be announced' slots instead of these names.
+  signatoriesConfirmed: false,
   signatories: [
     { name: 'Aave', logo: '' },
     { name: 'Bullish', logo: '' },
@@ -52,3 +54,10 @@ module.exports = {
   // Black document bar above the header
   docBar: true,
 };
+
+// What the pages render: the real list once confirmed, otherwise unnamed slots.
+cfg.publicSignatories = cfg.signatoriesConfirmed
+  ? cfg.signatories
+  : cfg.signatories.map(() => ({ name: 'To be announced', logo: '', tba: true }));
+
+module.exports = cfg;

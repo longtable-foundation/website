@@ -30,7 +30,7 @@ const SECURITY = {
   'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://i.ytimg.com; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'",
 };
 
-const REDIRECTS = { '/use-cases': '/use-cases/01/', '/use-cases/': '/use-cases/01/', '/proposal': '/assets/longtable-multimodal-clearing-proposal.pdf', '/github': 'https://github.com/longtable' };
+const REDIRECTS = { '/use-cases': '/use-cases/01/', '/use-cases/': '/use-cases/01/', '/proposal': '/assets/longtable-multimodal-clearing-proposal.pdf', '/github': 'https://github.com/longtable-foundation' };
 
 /* ---------- storage ---------- */
 let pool = null;
