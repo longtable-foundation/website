@@ -23,7 +23,20 @@ ${video({ id: cfg.videos.summitTalk, label: 'Alpaca Summit 2026 talk', dur: '7 M
   const problem = `<section class="sec" id="problem">
 ${secL('§1', 'The problem')}
 <div class="col">
-<h2 class="h2">Tokenized assets are not bearer assets like crypto tokens. They are a new modality for the same underlying asset.</h2>
+<h2 class="h2">Pre-funding was the solution. Now it’s the problem.</h2>
+<div class="blk">
+<p class="statement">Atomic settlement removes risk, but it needs every trade funded in advance.</p>
+<p class="body-l">Onchain, a trade is atomic. The token and the stablecoin change hands in the same transaction, and if one leg fails the whole trade rolls back. That is a real reduction in systemic risk. It also means the seller must already hold the token and the buyer must already hold the cash, before the trade. That is pre-funding, and it is how every onchain venue works today.</p>
+<p class="body-l">It is not how trading works in the real world. Pre-funding is balance-sheet intensive, and nobody wants to pre-fund their trades.</p>
+</div>
+<div class="blk">
+<p class="statement">Equity markets trade first and settle later.</p>
+<p class="body-l">In US equities, venues and members subscribe to rules set by a clearinghouse, the NSCC: delayed settlement, netting, margin and risk management. Those rules give the system slack. A market maker can sell first and source the share before settlement, and each member’s buys are netted against its sells, so only a small fraction of trades ever move. That is how the NSCC clears $4.6 quadrillion of trades a year without anyone pre-funding them.</p>
+</div>
+<div class="blk">
+<p class="statement">Tokenization unbundled custody. It did not unbundle clearing.</p>
+<p class="body-l">Tokenized equities are not bearer assets like crypto tokens. They are a new modality for the same underlying share. Next to the traditional share, the SEC recognizes three token models: issuer-sponsored, third-party custodial and third-party linked security tokens. In DTCC terms, the industry has rebuilt the depository, the DTC, onchain, but there is no NSCC. Without a clearinghouse, one form of a stock cannot settle an obligation in another without a bilateral agreement between the two parties.</p>
+</div>
 <div class="panel modal">
 <span class="pill-dark">One economic exposure · the same underlying share</span>
 <div class="mods">
@@ -37,13 +50,8 @@ ${secL('§1', 'The problem')}
 </div>
 ${cap('FIG. 1', 'Bilateral agreements can allow a participant to exchange a specific token for its underlying traditional share. They do not create general settlement interoperability among every token format, issuer, custodian, venue and counterparty.')}
 <div class="blk">
-<p class="statement">Equity markets run on credit. Onchain markets run on a debit card.</p>
-<p class="body-l">When a broker buys a share, nobody pays at the moment of the trade. The clearinghouse guarantees the trade, nets each member’s buys against its sells, and only the difference settles a day later. A market maker can sell first and source the share before settlement. That is how the NSCC clears $4.6 quadrillion of trades a year without anyone holding $4.6 quadrillion.</p>
-<p class="body-l">Tokenized equities settle the other way. A blockchain trade is atomic: the token and the stablecoin change hands in the same transaction, or not at all. There is no credit and no later. The seller must already hold the token and the buyer must already hold the cash. That is pre-funding.</p>
-</div>
-<div class="blk">
 <p class="statement">Pre-funding $4.6 quadrillion of trading flow a year is impossible.</p>
-<p class="body-l">On a pre-funded ATS, a market maker has to buy the token before it can quote the offer. On onchain RFQ, the solver must deliver the token at trade time. Either way the inventory is bought up front, before any customer has asked for it. No serious institution will pre-fund a year’s flow at that scale.</p>
+<p class="body-l">The market has filled the gap by asking market makers to pre-fund liquidity on every venue. On a pre-funded ATS, a market maker has to buy the token before it can quote the offer. On onchain RFQ, the solver must deliver the token at trade time. Either way the inventory is bought up front, before any customer has asked for it. No serious institution will pre-fund a year’s flow at that scale.</p>
 <p class="body-l">Until post-trade settlement is solved, growth in tokenized equities is limited by market makers’ balance sheets. Capital has to sit on every venue, and then again for every chain and every flavor of the same stock. It scales with venues, not with risk. Cash proceeds cannot pay for the share, so the industry cannot grow past the inventory those balance sheets can carry.</p>
 </div>
 ${stepper({ scene: 'prefund', fig: 'FIG. 2', title: 'Without clearing, market makers pre-fund every venue' })}
