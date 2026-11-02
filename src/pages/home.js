@@ -36,8 +36,11 @@ ${secL('§1', 'The problem')}
 <div class="dashed-note">No common clearing mechanism · not automatically fungible</div>
 </div>
 ${cap('FIG. 1', 'Bilateral agreements can allow a participant to exchange a specific token for its underlying traditional share. They do not create general settlement interoperability among every token format, issuer, custodian, venue and counterparty.')}
-<div class="stats">${C.ST.map(s => `<div class="stat"><span class="v">${s.v}${s.u ? `<small>${s.u}</small>` : ''}</span><span class="l">${s.l}</span></div>`).join('')}</div>
-<p class="statement">Today, tokenized equities settlement is scattered across venues, chains, and token standards with no NSCC equivalent.</p>
+<div class="blk">
+<p class="statement">Pre-funding $300 trillion of equities is impossible.</p>
+<p class="body-l">Tokenized venues settle atomically, so a market maker has to hold the token before it can quote the offer. A pre-funded ATS requires that inventory up front. Onchain RFQ is the same constraint: the solver must deliver the token at trade time. No serious institution will pre-fund the global equity market at that scale.</p>
+<p class="body-l">Until post-trade settlement is solved, growth in tokenized equities is limited by market makers’ balance sheets. Capital has to sit on every venue, and then again for every chain and every flavor of the same stock. It scales with venues, not with risk. Cash proceeds cannot pay for the share, so the industry cannot grow past the inventory those balance sheets can carry.</p>
+</div>
 ${stepper({ scene: 'prefund', fig: 'FIG. 2', title: 'Without clearing, market makers pre-fund every venue' })}
 </div>
 </section>`;
