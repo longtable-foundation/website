@@ -13,7 +13,7 @@ const cfg = {
   // Paste tools/google-sheet-capture.gs into the sheet (Extensions > Apps Script), deploy it
   // as a web app (Execute as: Me, Who has access: Anyone) and put its /exec URL here.
   // Empty = forms show a 'sign-ups open soon' note.
-  sheetEndpoint: process.env.SHEET_ENDPOINT || '',
+  sheetEndpoint: process.env.SHEET_ENDPOINT || 'https://script.google.com/macros/s/AKfycbwbK4TRBqpcMdvHg72OtgWCHFOUBL-TBFzYr39Rmf9LoG-vQQDJmvoP7xfQvYc3Ick/exec',
 
   // For local testing with server.js only: POST JSON here instead of the Google Form.
   formEndpoint: process.env.FORM_ENDPOINT || '',
