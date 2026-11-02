@@ -4,6 +4,31 @@
 const cfg = {
   siteUrl: process.env.SITE_URL || '',
 
+  // Path the site lives under. '/website' for https://longtable-foundation.github.io/website/,
+  // '' for a custom domain. Set by the GitHub Pages workflow.
+  basePath: (process.env.BASE_PATH || '').replace(/\/$/, ''),
+
+  // Sign-up forms go to one Google Form. In the form: Send button > link icon is not it;
+  // use the form's /formResponse URL, and each question's entry id from a prefilled link
+  // (three dots > Get pre-filled link > fill every field > Get link).
+  // Empty action = forms show a 'sign-ups open soon' note.
+  googleForm: {
+    action: process.env.GOOGLE_FORM_ACTION || '', // https://docs.google.com/forms/d/e/<FORM_ID>/formResponse
+    fields: {
+      type: '',          // 'Form' (short answer): follow, join or fund
+      email: '',         // 'Work email'
+      organization: '',  // 'Organization'
+      role: '',          // 'I am a'
+      memberClass: '',   // 'Member class'
+      jurisdiction: '',  // 'Jurisdiction'
+      message: '',       // 'Message' (paragraph)
+      page: '',          // 'Page'
+    },
+  },
+
+  // For local testing with server.js only: POST JSON here instead of the Google Form.
+  formEndpoint: process.env.FORM_ENDPOINT || '',
+
   // Contact and links
   pressEmail: 'press@alpaca.markets',
   githubUrl: 'https://github.com/longtable-foundation',

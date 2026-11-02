@@ -3,6 +3,21 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var pad = function (x) { return String(x).padStart(2, '0'); };
+  var BASE = document.body.getAttribute('data-base') || '';
+  var FORM_URL = document.body.getAttribute('data-form-endpoint') || '';
+  var GFORM = null; try { GFORM = JSON.parse(document.body.getAttribute('data-gform') || 'null'); } catch (e) {}
+  // Google Forms accepts a plain form POST from any site but gives no readable answer (no-cors).
+  function sendGoogle(data) {
+    var body = new URLSearchParams();
+    Object.keys(GFORM.fields).forEach(function (k) { if (GFORM.fields[k] && data[k]) body.append(GFORM.fields[k], data[k]); });
+    return fetch(GFORM.action, { method: 'POST', mode: 'no-cors', body: body }).then(function () { return {}; });
+  }
+  function send(data) {
+    if (FORM_URL) return fetch(FORM_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw new Error(j.error || 'Something went wrong. Try again.'); return j; }); });
+    if (GFORM && GFORM.action) return sendGoogle(data);
+    return Promise.reject(new Error('Sign-ups open soon. Try again later.'));
+  }
 
   /* ---------- doc bar clock and settlement cycle ---------- */
   function tick() {
@@ -104,10 +119,11 @@
       data.type = f.getAttribute('data-form'); data.page = location.pathname;
       var bad = !emailOk(data.email || '') ? 'Enter a valid work email.' : ('organization' in data && !data.organization) ? 'Enter your organization.' : '';
       if (bad) { if (msg) { msg.textContent = bad; msg.classList.add('err'); } return; }
+      if (data.website) { f.reset(); return; } // honeypot: bots fill the hidden field
+      delete data.website;
       var btn = $('button[type=submit]', f), label = btn.textContent;
       btn.disabled = true; btn.textContent = 'Sending…';
-      fetch('/api/submit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
-        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw new Error(j.error || 'Something went wrong. Try again.'); return j; }); })
+      send(data)
         .then(function () {
           f.reset(); if (msg) { msg.classList.remove('err'); msg.textContent = base; }
           if (paths && paths.contains(f)) paths.dispatchEvent(new CustomEvent('lt-sent', { detail: data.type }));
@@ -142,7 +158,7 @@
     dark: { base: 'rgb(242 240 234 / 0.07)', highlight: 'rgb(242 240 234 / 0.12)' },
     radius: '2px', animation: 'shimmer', speed: 'slow'
   };
-  var sk = import('/vendor/skullet/index.mjs').then(function (m) { m.applyTheme(THEME, 'light'); return m; })
+  var sk = import(BASE + '/vendor/skullet/index.mjs').then(function (m) { m.applyTheme(THEME, 'light'); return m; })
     .catch(function (e) { console.warn('skullet unavailable: ' + e); return null; });
   var frag = function (html) { var t = document.createElement('template'); t.innerHTML = html; return t.content; };
   var vars = function (el, v) { Object.keys(v).forEach(function (k) { el.style.setProperty(k, v[k]); }); };
@@ -237,13 +253,13 @@
     this.initing = true;
     var self = this, msg = $('[data-msg]', this.root);
     var pr = Math.min(1, Math.max(0.4, (this.stageEl.clientWidth || 928) * (window.devicePixelRatio || 1) / 1920));
-    import('/anim/stage3d.js').then(function (m) {
+    import(BASE + '/anim/stage3d.js').then(function (m) {
       self.stage = m.createStage($('[data-gl]', self.root), $('[data-lab]', self.root), { pixelRatio: pr });
       self.stage.onTime(function (t, playing) {
         var now = performance.now();
         if (now - self.lastUi > 80 || playing !== self.playing) { self.lastUi = now; self.playing = playing; self.render(t); }
       });
-      return import('/anim/' + FILES[self.scene]);
+      return import(BASE + '/anim/' + FILES[self.scene]);
     }).then(function (mod) {
       return self.skReady.then(function () { return mod; });
     }).then(function (mod) {

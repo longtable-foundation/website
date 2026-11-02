@@ -10,7 +10,7 @@
   "scripts": {
     "build": "node build.js",
     "start": "node server.js",
-    "dev": "node build.js && node server.js"
+    "dev": "FORM_ENDPOINT=/api/submit node build.js && node server.js"
   },
   "dependencies": {
     "pg": "^8.13.1",

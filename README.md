@@ -1,23 +1,32 @@
 # Longtable Foundation website
 
-Static site with a small Node server for Railway. Built from the Claude Design mockups (direction 1a, build-out 2).
+Static site, published with GitHub Pages. Built from the Claude Design mockups (direction 1a, build-out 2).
 
 ## Run locally
 
 ```sh
 npm install
-npm run dev        # builds to dist/ and serves on http://localhost:3000
+npm run dev        # builds to dist/ and serves on http://localhost:3000 (forms save to data/submissions.jsonl)
 ```
 
-## Deploy on Railway
+## Publish on GitHub Pages
 
-1. New Project → Deploy from GitHub repo → pick this repo. `railway.json` sets the build (`npm run build`), the start command and a `/healthz` health check.
-2. Forms (news, join, fund) need storage. Pick one:
-   - Add a Postgres service and reference its `DATABASE_URL` in this service. Submissions go to the `submissions` table.
-   - Or attach a volume at `/data` and set `DATA_DIR=/data`. Submissions go to `/data/submissions.jsonl`.
-3. Set `ADMIN_TOKEN` to a long random string. Export submissions at `/api/submissions.csv?token=<ADMIN_TOKEN>`.
-4. Optional: `NOTIFY_WEBHOOK_URL` (Slack, Zapier, Make) receives each submission as JSON. `SITE_URL` sets canonical and Open Graph URLs.
-5. Settings → Networking → add your custom domain.
+`.github/workflows/pages.yml` builds and publishes the site on each push to `main`.
+
+1. Repo Settings → Pages → Source: **GitHub Actions**.
+2. The site is then at `https://longtable-foundation.github.io/website/`.
+3. Custom domain: add a repo variable `CUSTOM_DOMAIN` (Settings → Secrets and variables → Actions → Variables), for example `longtable.org`, then point the domain's DNS at GitHub Pages. The workflow writes the CNAME file and builds the site for the domain root.
+
+## Sign-up forms (Google Forms)
+
+The news, join and fund forms all post to one Google Form.
+
+1. Make a Google Form with these short-answer questions (none required except Work email): Form, Work email, Organization, I am a, Member class, Jurisdiction, Message (paragraph), Page.
+2. Get the entry ids: three dots → Get pre-filled link → type any text in every field → Get link. The link has `entry.123456=...` for each question.
+3. In `src/config.js`, set `googleForm.action` to `https://docs.google.com/forms/d/e/<FORM_ID>/formResponse` (the id from the form's share link, the one with `/d/e/`) and each field's `entry.` id.
+4. Responses arrive in the form's Responses tab. Link it to a Google Sheet to work with them.
+
+Until `googleForm.action` is set, the forms show "Sign-ups open soon".
 
 ## Edit content
 
@@ -30,4 +39,4 @@ npm run dev        # builds to dist/ and serves on http://localhost:3000
 - `build.js` renders `src/pages/*` into `dist/`.
 - `public/app.js` runs the interactive parts: 3D step-through explainers (`public/anim/`, three.js), sliders, accordion, forms, chapters.
 - Loading states use [Skullet](https://skullet.lochie.me/) (vendored into `dist/vendor/skullet/` at build time).
-- `server.js` serves `dist/` and handles `POST /api/submit`.
+- `server.js` is for local preview only: it serves `dist/` and takes form posts at `/api/submit`.
