@@ -73,12 +73,6 @@ const NT = [
   { u: 'CLS · FX', w: 'Payment legs in 18 currencies', r: '>96% funding reduction', x: 'On over $8T settled daily.' },
 ];
 
-const ST = [
-  { v: '$100T', u: '', l: 'in assets custodied at the DTC' },
-  { v: '$4.6', u: 'quadrillion', l: 'in trades cleared every year by the NSCC' },
-  { v: '98%', u: '', l: 'of trades are netted down. Only 2% result in settled movements.' },
-];
-
 const TC = ['1inch Fusion solver', 'LI.FI solver', 'Across solver', '0x solver', 'CoW Swap solver', 'Aave v4 vault adapter', 'Gauntlet Aera vault adapter', 'Morpho vault adapter'];
 
 const MCL = ['Issuer', 'Clearing member', 'Venue', 'Vault', 'Oracle', 'CSD'];
@@ -114,4 +108,4 @@ const BOILER = 'The Longtable Foundation is a foundation and a global network of
 
 const ROLES = ['Issuer', 'Clearing member', 'Venue', 'Vault or oracle', 'CSD', 'Media', 'Other'];
 
-module.exports = { UC, GOAL1, PH, TL, NT, ST, TC, MCL, INT, CH, DUES, BOILER, ROLES };
+module.exports = { UC, GOAL1, PH, TL, NT, TC, MCL, INT, CH, DUES, BOILER, ROLES };
