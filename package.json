@@ -1,0 +1,19 @@
+{
+  "name": "longtable-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website for the Longtable Foundation",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node build.js",
+    "start": "node server.js",
+    "dev": "node build.js && node server.js"
+  },
+  "dependencies": {
+    "pg": "^8.13.1",
+    "skullet": "^0.0.3"
+  }
+}
