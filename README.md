@@ -1,6 +1,6 @@
 # Longtable Foundation website
 
-Static site, published with GitHub Pages. Built from the Claude Design mockups (direction 1a, build-out 2).
+Static site, hosted on DigitalOcean App Platform. Built from the Claude Design mockups (direction 1a, build-out 2).
 
 ## Run locally
 
@@ -9,13 +9,15 @@ npm install
 npm run dev        # builds to dist/ and serves on http://localhost:3000 (forms save to data/submissions.jsonl)
 ```
 
-## Publish on GitHub Pages
+## Publish on DigitalOcean
 
-`.github/workflows/pages.yml` builds and publishes the site on each push to `main`.
+The site is a static build (`npm run build` writes `dist/`). It runs as a free App Platform static site. The spec is `.do/app.yaml`.
 
-1. Repo Settings → Pages → Source: **GitHub Actions**.
-2. The site is then at `https://longtable-foundation.github.io/website/`.
-3. Custom domain: add a repo variable `CUSTOM_DOMAIN` (Settings → Secrets and variables → Actions → Variables), for example `longtable.org`, then point the domain's DNS at GitHub Pages. The workflow writes the CNAME file and builds the site for the domain root.
+1. DigitalOcean → Apps → Create App → GitHub. Give the DigitalOcean GitHub app access to the `longtable-foundation` org, then pick `longtable-foundation/website`, branch `main`.
+2. Set the component type to **Static Site**. Build command `npm ci && npm run build`. Output directory `dist`. Error document `404.html`.
+3. Each push to `main` deploys again. The site gets a `*.ondigitalocean.app` URL. Add a custom domain under Settings → Domains.
+
+With `doctl`: `doctl apps create --spec .do/app.yaml`.
 
 ## Sign-up forms (Google Sheet)
 
@@ -23,7 +25,7 @@ One sign-up form on the Get involved page asks for work email and organization o
 
 1. Open the sheet → Extensions → Apps Script. Paste `tools/google-sheet-capture.gs` and save.
 2. Deploy → New deployment → Web app. Execute as: Me. Who has access: Anyone.
-3. Put the web app URL (ends in `/exec`) in `src/config.js` → `sheetEndpoint`, or in the repo variable `SHEET_ENDPOINT`.
+3. Put the web app URL (ends in `/exec`) in `src/config.js` → `sheetEndpoint`, or in the app's build-time variable `SHEET_ENDPOINT`.
 
 Until it is set, the forms show "Sign-ups open soon".
 

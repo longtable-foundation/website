@@ -4,8 +4,7 @@
 const cfg = {
   siteUrl: process.env.SITE_URL || '',
 
-  // Path the site lives under. '/website' for https://longtable-foundation.github.io/website/,
-  // '' for a custom domain. Set by the GitHub Pages workflow.
+  // Path the site lives under. '' when the site is at the domain root (DigitalOcean).
   basePath: (process.env.BASE_PATH || '').replace(/\/$/, ''),
 
   // Sign-up forms (work email + organization) are added as rows to the Google Sheet
