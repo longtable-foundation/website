@@ -115,17 +115,8 @@ ${video({ id: v.sifmaPanel, label: 'Clip [2] · ITN and deep liquidity', dur: 'C
 ${secL('B.2', 'Boilerplate')}
 <div class="col" style="gap:14px"><div class="boiler"><span class="eyebrow">About the Longtable Foundation</span><p data-boiler>${C.BOILER}</p><button class="btn-sm" type="button" data-copy>Copy text</button></div></div>
 </section>
-<section class="sec">
-${secL('B.3', 'Key figures')}
-<div class="stats four" style="max-width:940px">
-<div class="stat"><span class="v">$300T</span><span class="l">Global equities market</span></div>
-<div class="stat"><span class="v">$100T</span><span class="l">In assets custodied at the DTC</span></div>
-<div class="stat"><span class="v">$4.6<small>quadrillion</small></span><span class="l">In trades cleared every year by the NSCC</span></div>
-<div class="stat"><span class="v">98%</span><span class="l">Of US equity trades are netted down</span></div>
-</div>
-</section>
 <section class="sec end">
-${secL('B.4', 'Further reading')}
+${secL('B.3', 'Further reading')}
 <div class="reading">
 ${[[cfg.links.tabbArticle, 'Equity Tokens Need Netting Not Instant Settlement', 'Larry Tabb, Bloomberg Intelligence · May 20, 2026'], [cfg.links.taylorArticle, 'Netting is All You Need', 'Simon Taylor, Tempo Blockchain · Aug 7, 2026']].map(([h, t, b]) => h ? `<a ${ext(h)}><span><b>${t}</b><span class="by">${b}</span></span><span class="ar">↗</span></a>` : `<div><span><b>${t}</b><span class="by">${b}</span></span><span></span></div>`).join('')}
 </div>
