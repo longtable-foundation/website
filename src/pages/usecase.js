@@ -43,11 +43,11 @@ const fig2 = {
 <div class="shared"><b>INTER-AGENCY AGREEMENT · SHARED CREDITS</b><span>Members of one agency can use their credits in another.</span></div>
 <div class="g5"><span></span><span></span><span class="vline"><span class="numc">01</span></span><span></span><span></span></div>
 <div class="g5" style="align-items:stretch">
-<div class="box"><small>CLEARING MEMBER</small><b>ABN AMRO</b></div>
+<div class="box"><small>CLEARING MEMBER</small><b>Broker A</b></div>
 <span class="hline"><span class="numc">03</span></span>
 <div class="ch"><b>Clearinghouse</b><small>UNDERWRITES THE MINT AT T</small></div>
 <span class="hline"><span class="numc">02</span></span>
-<div class="box"><small>CLEARING MEMBER</small><b>Alpaca</b></div>
+<div class="box"><small>CLEARING MEMBER</small><b>Broker B</b></div>
 </div>
 <div class="g5"><span></span><span></span><span class="vline"><span class="numc">05</span></span><span></span><span class="vline"><span class="numc">04</span></span></div>
 <div class="g5"><span></span><span></span><div class="box bs"><small>BACKSTOP</small><b>Lines of credit</b></div><span></span><div class="box fo"><small>FAIL OBLIGATION</small><b>DTC box</b></div></div>

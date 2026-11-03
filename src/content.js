@@ -4,8 +4,8 @@ const UC = [
   { n: '01', slug: '01', t: 'The Saturday-morning mint', s: 'Share-for-token CSD interop', video: 'useCase01', pp: '21–22',
     p: ['Clearing members', 'CSDs', 'Market makers', 'Stablecoin LoCs', 'Tokenization agents'],
     d: 'A market maker wants to mint a token on Saturday morning while the DTCC is closed. A clearinghouse backstop covers the gap from T to T+1.',
-    prob: 'A market maker holds GME inventory at ABN AMRO and wants to mint a GMEx token on Alpaca’s ITN on Saturday morning. The DTCC is closed; no locate, no borrow because LoanNet is offline. RWAs settle at tradfi speed while tokens settle at blockchain speed, and nothing bridges the gap.',
-    goal: ['A clearinghouse where both Alpaca and ABN AMRO are clearing members can depend on its backstop to execute a Saturday morning mint, with limits set by the clearinghouse.'],
+    prob: 'A market maker holds GME inventory at Broker A and wants to mint a GMEx token through Broker B on Saturday morning. The DTCC is closed; no locate, no borrow because LoanNet is offline. RWAs settle at tradfi speed while tokens settle at blockchain speed, and nothing bridges the gap.',
+    goal: ['A clearinghouse where both Broker A and Broker B are clearing members can depend on its backstop to execute a Saturday morning mint, with limits set by the clearinghouse.'],
     cap1: 'Fast rail and slow rail. The backstop is the clearing member’s pledged collateral plus a deposit sized to overnight gap risk.',
     cap2: 'The clearinghouse has an inter-agency agreement with the NSCC, OCC, FICC and various CFTC licensed DCOs in order to share credits between the agencies. This allows members of one to use their credits in another.' },
   { n: '02', slug: '02', t: 'Many-to-many settlement', s: 'Multilateral netting', video: 'useCase02', pp: '23–24',
@@ -44,11 +44,11 @@ const UC = [
 ];
 
 const GOAL1 = [
-  'ABN AMRO uses its credits at the NSCC, OCC, FICC or a DCO, shared under the inter-agency agreement.',
+  'Broker A uses its credits at the NSCC, OCC, FICC or a DCO, shared under the inter-agency agreement.',
   'The clearinghouse underwrites the mint at time T for a fee of notional.',
-  'ABN AMRO and the clearinghouse generate a revenue-share on the locate.',
-  'Alpaca credits the share position based on the clearinghouse’s backstop and creates a fail obligation at DTC box.',
-  'If ABN falls below maintenance margin, the clearinghouse automatically draws down on lines of credit to backstop the defaulting party, giving time to resolve the contractual pledges offline.',
+  'Broker A and the clearinghouse generate a revenue-share on the locate.',
+  'Broker B credits the share position based on the clearinghouse’s backstop and creates a fail obligation at DTC box.',
+  'If Broker A falls below maintenance margin, the clearinghouse automatically draws down on lines of credit to backstop the defaulting party, giving time to resolve the contractual pledges offline.',
 ];
 
 const PH = [
