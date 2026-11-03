@@ -36,11 +36,20 @@ ${heading ? '<h2 class="h2">Five phases, from a reference implementation to clea
 </section>`;
 }
 
-function openSourceBlock({ id = 'open-source', no = '§6' } = {}) {
+function openSourceBlock({ id = 'open-source', no = '§6', compact = false } = {}) {
+  const intro = `<h2 class="h2">A protocol participants can build their business on</h2><p class="body">Members contribute this software under the irrevocable license so participants can trust that it is a protocol they can build their business on without fear of it being taken away.</p>`;
+  const repo = `<a class="btn-mono" ${ext(cfg.githubUrl)}>${esc(cfg.githubUrl.replace(/^https?:\/\//, ''))} ↗</a>`;
+  // Homepage: no list of 'planned' rows. One line names what is planned; the repo is the place to watch.
+  if (compact) {
+    return `<section class="sec" id="${id}">
+${secL(no, 'Open source')}
+<div class="col g20 os-c">${intro}<p class="body planned"><b>Planned template contracts and adapters:</b> ${C.TC.join(', ')}.</p>${repo}</div>
+</section>`;
+  }
   return `<section class="sec" id="${id}">
 ${secL(no, 'Open source')}
 <div class="os">
-<div class="l"><h2 class="h2">A protocol participants can build their business on</h2><p class="body">Members contribute this software under the irrevocable license so participants can trust that it is a protocol they can build their business on without fear of it being taken away.</p><a class="btn-mono" ${ext(cfg.githubUrl)}>${esc(cfg.githubUrl.replace(/^https?:\/\//, ''))} ↗</a></div>
+<div class="l">${intro}${repo}</div>
 <div class="panel"><div class="list-h"><span>TEMPLATE CONTRACTS · EXAMPLES</span><span>STATUS</span></div>${C.TC.map(t => `<div class="list-r"><span>${t}</span><span>planned</span></div>`).join('')}</div>
 </div>
 </section>`;
