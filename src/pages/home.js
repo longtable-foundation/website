@@ -143,7 +143,7 @@ module.exports = function home() {
   const hero = `<section class="hero">
 <div class="l">
 <h1 class="h1">Multimodal clearing is the missing infrastructure.</h1>
-<div class="abstract"><span class="eyebrow">Abstract</span><p>Longtable is a foundation and a global network of clearinghouses that use open source technology for post-trade settlement of tokenized equities, across tradfi and defi, and across every flavor of token and venue.</p></div>
+<div class="abstract"><span class="eyebrow">Abstract</span><p>Longtable is a foundation that stewards open source infrastructure to support multimodal clearing of tokenized assets by licensed clearinghouses worldwide.</p></div>
 <div class="btn-row">${proposalBtn()}<a class="btn-o" href="/get-involved/">Get updates</a></div>
 </div>
 <figure>
