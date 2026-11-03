@@ -13,9 +13,9 @@
   }
   function send(data) {
     if (FORM_URL) return fetch(FORM_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data) })
-      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw new Error(j.error || 'Something went wrong. Try again.'); return j; }); });
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) throw new Error(j.error || 'We could not save that. Try again in a minute.'); return j; }); });
     if (SHEET) return sendSheet(data);
-    return Promise.reject(new Error('Sign-ups open soon. Try again later.'));
+    return Promise.reject(new Error('Sign-up is not open yet. Try again later.'));
   }
 
   /* ---------- doc bar clock and settlement cycle ---------- */
@@ -109,24 +109,38 @@
   var emailOk = function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); };
   $$('form[data-form]').forEach(function (f) {
     var msg = $('[data-msg]', f), base = msg ? msg.textContent : '';
+    if (msg) msg.setAttribute('aria-live', 'polite');
+    function clearErr() {
+      if (msg && msg.classList.contains('err')) { msg.classList.remove('err'); msg.textContent = base; }
+      $$('[aria-invalid]', f).forEach(function (el) { el.removeAttribute('aria-invalid'); });
+    }
+    function showErr(text, field) {
+      if (msg) { msg.textContent = text; msg.classList.add('err'); }
+      if (field) { field.setAttribute('aria-invalid', 'true'); field.focus(); }
+    }
+    f.addEventListener('input', clearErr);
     f.addEventListener('submit', function (e) {
       e.preventDefault();
+      clearErr();
       var data = {}; new FormData(f).forEach(function (v, k) { data[k] = String(v).trim(); });
       data.type = f.getAttribute('data-form'); data.page = location.pathname;
-      var bad = !emailOk(data.email || '') ? 'Enter a valid work email.' : !data.organization ? 'Enter your organization.' : '';
-      if (bad) { if (msg) { msg.textContent = bad; msg.classList.add('err'); } return; }
+      if (!emailOk(data.email || '')) return showErr('Enter a work email like name@organization.com.', $('input[name=email]', f));
+      if (!data.organization) return showErr('Enter your organization.', $('input[name=organization]', f));
       if (data.website) { f.reset(); return; } // honeypot: bots fill the hidden field
       delete data.website;
       var btn = $('button[type=submit]', f), label = btn.textContent;
       btn.disabled = true; btn.textContent = 'Sending…';
       send(data)
         .then(function () {
-          f.reset(); if (msg) { msg.classList.remove('err'); msg.textContent = base; }
+          f.reset(); clearErr();
           var box = f.closest('[data-box]');
           if (box) box.dispatchEvent(new CustomEvent('lt-sent', { detail: data }));
-          else if (msg) msg.textContent = 'Thank you. You are subscribed.';
+          else if (msg) msg.textContent = 'You’re signed up. Updates will go to ' + data.email + '.';
         })
-        .catch(function (err) { if (msg) { msg.textContent = err.message; msg.classList.add('err'); } })
+        .catch(function (err) {
+          // fetch rejects with a TypeError ("Failed to fetch") when the request never reaches the server.
+          showErr(err instanceof TypeError ? 'That did not go through. Check your connection and try again.' : err.message);
+        })
         .then(function () { btn.disabled = false; btn.textContent = label; });
     });
   });
@@ -173,7 +187,7 @@
   var cp = $('[data-copy]');
   if (cp) cp.addEventListener('click', function () {
     var t = $('[data-boiler]').textContent;
-    var ok = function () { cp.textContent = 'Copied ✓'; clearTimeout(cp._t); cp._t = setTimeout(function () { cp.textContent = 'Copy text'; }, 1800); };
+    var ok = function () { cp.textContent = 'Copied ✓'; clearTimeout(cp._t); cp._t = setTimeout(function () { cp.textContent = 'Copy boilerplate'; }, 1800); };
     if (navigator.clipboard) navigator.clipboard.writeText(t).then(ok, ok); else ok();
   });
 
@@ -300,7 +314,9 @@
       setTimeout(syncAll, 450);
     }).catch(function (err) {
       console.error('Longtable stepper: ' + err);
-      msg.textContent = '3D scene unavailable in this browser'; msg.hidden = false;
+      msg.textContent = 'This 3D scene could not load. Reload the page, or try another browser.'; msg.hidden = false;
+      $$('[data-label]', self.root).forEach(function (e) { e.textContent = 'Unavailable'; });
+      $$('[data-cue]', self.root).forEach(function (e) { e.textContent = 'The step-through could not start in this browser. Reload the page to try again.'; });
     }).then(function () { self.initing = false; });
   };
   Stepper.prototype.count = function () { return this.def ? this.def.beats.length - this.skip : 0; };

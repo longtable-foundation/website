@@ -14,7 +14,7 @@ function video({ id, label, dur, durLeft, small, start, embed }) {
     const href = `https://www.youtube.com/watch?v=${encodeURIComponent(id)}${start ? `&t=${start}s` : ''}`;
     return `<a class="${cls} has-img" ${ext(href)} data-yt="${esc(id)}" aria-label="${esc(label)} (opens YouTube)"><img src="https://i.ytimg.com/vi/${encodeURIComponent(id)}/hqdefault.jpg" alt="" loading="lazy"><span class="play" aria-hidden="true"></span>${durHtml}</a>`;
   }
-  return `<div class="${cls} soon" role="img" aria-label="${esc(label)}: video coming soon"><span class="lbl">${esc(label)} · Video coming soon</span><span class="play" aria-hidden="true"></span>${durHtml}</div>`;
+  return `<div class="${cls} soon" role="img" aria-label="${esc(label)}: video not yet published"><span class="lbl">${esc(label)} · Video coming soon</span><span class="play" aria-hidden="true"></span>${durHtml}</div>`;
 }
 
 const link = (href, inner, cls = 'u') => (href ? `<a class="${cls}" ${ext(href)}>${inner}</a>` : `<span class="${cls}" style="opacity:.5" title="Link coming soon">${inner}</span>`);
@@ -58,13 +58,13 @@ const share = (c = '') => `<span class="shr${c ? ' ' + c : ''}" aria-hidden="tru
 
 // One form: work email + organization. On success the form hides and the done pane shows.
 const hp = '<input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">';
-const formBox = ({ type, id, title, desc, button, note, doneTitle, doneText }) => `<div class="pform" data-box>
+const formBox = ({ type, id, title, desc, button, note, doneTitle, doneText, resetLabel = 'Use another email' }) => `<div class="pform" data-box>
 <form class="pane" id="${id}" data-form="${type}" novalidate>${hp}
 <span class="tt"${id ? ` id="${id}-t"` : ''}>${title}</span><span class="ds">${desc}</span>
 <div class="g2"><label><span>WORK EMAIL</span><input class="field" type="email" name="email" required placeholder="name@organization.com" autocomplete="email"></label><label><span>ORGANIZATION</span><input class="field" name="organization" required autocomplete="organization"></label></div>
 <button class="btn" type="submit">${button}</button><span class="note" data-msg>${note}</span>
 </form>
-<div class="done" data-done hidden tabindex="-1"><span class="ok" aria-hidden="true">✓</span><span class="tt">${doneTitle}</span><span class="ds">${doneText}</span><button class="btn-sm" type="button" data-reset>Back to the form</button></div>
+<div class="done" data-done hidden tabindex="-1"><span class="ok" aria-hidden="true">✓</span><span class="tt">${doneTitle}</span><span class="ds">${doneText}</span><button class="btn-sm" type="button" data-reset>${resetLabel}</button></div>
 </div>`;
 
 const proposalForm = (id = 'proposal-form') => formBox({
@@ -74,7 +74,8 @@ const proposalForm = (id = 'proposal-form') => formBox({
   button: 'Email me the proposal',
   note: 'We will also send you progress updates. Unsubscribe any time.',
   doneTitle: 'Check your inbox',
-  doneText: 'The proposal is on its way to <b data-done-email></b>. It can take a few minutes. Look in your spam folder if it does not arrive.',
+  doneText: 'The proposal is on its way to <b data-done-email></b>. It can take a few minutes. If it has not arrived, check your spam folder.',
+  resetLabel: 'Send to another email',
 });
 
 const proposalDialog = () => `<dialog class="pdlg" id="proposal-dialog" aria-labelledby="proposal-dialog-form-t">

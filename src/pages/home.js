@@ -144,7 +144,7 @@ module.exports = function home() {
 <div class="l">
 <h1 class="h1">Multimodal clearing is the missing infrastructure.</h1>
 <div class="abstract"><span class="eyebrow">Abstract</span><p>Longtable is a foundation that stewards open source infrastructure to support multimodal clearing of tokenized assets by licensed clearinghouses worldwide.</p></div>
-<div class="btn-row">${proposalBtn()}<a class="btn-o" href="/get-involved/">Get updates</a></div>
+<div class="btn-row">${proposalBtn()}<a class="btn-o" href="/get-involved/#sign-up">Get progress updates</a></div>
 </div>
 <figure>
 ${video({ id: cfg.videos.summitTalk, label: 'Alpaca Summit 2026 talk', dur: '7 MIN' })}
@@ -177,7 +177,6 @@ ${secL('§3', 'Multimodal equities')}
 <p class="body-l">Today, tokenized security markets operate across several representations of the same economic exposure:</p>
 ${figModalities()}
 ${cap('FIG. 1', 'These representations can trade on different venues and blockchain networks, but they do not share a common clearing mechanism. Bilateral agreements do not create general settlement interoperability.')}
-<h2 class="h2">Multimodal clearing is the missing infrastructure</h2>
 ${figUnbundle()}
 ${cap('FIG. 2', 'In DTCC terms: custody unbundled; clearing not yet rebuilt.')}
 </div>
@@ -209,8 +208,8 @@ ${cap('FIG. 4', 'Collateral stays where it is productive. Nothing sits idle on t
 </div>
 </section>`;
 
-  const conclusion = `<section class="sec" id="conclusion">
-${secL('§5', 'Conclusion')}
+  const implications = `<section class="sec" id="implications">
+${secL('§5', 'Implications')}
 <div class="col">
 <h2 class="h2">Tokenized assets are not bearer assets like crypto tokens. They are a new modality for the same underlying asset.</h2>
 <div class="tri">
@@ -225,18 +224,23 @@ ${secL('§5', 'Conclusion')}
 </div>
 <h2 class="h2">Implications on clearing</h2>
 <div class="cards2">
-<div class="icard"><span class="n">1</span><b>In-kind convertibility</b><p class="body">Unifying liquidity and prices requires instant and frictionless in-kind creation and redemption between tradfi and defi versions of assets. <a class="u" ${ext('https://docs.alpaca.markets/us/docs/tokenization-guide-for-authorized-participant')}>Alpaca’s ITN</a> does this in a limited way today; it must scale beyond Alpaca to other broker-dealers and multiple onchain and offchain venues.</p></div>
+<div class="icard"><span class="n">1</span><b>In-kind convertibility</b><p class="body">Unifying liquidity and prices requires instant and frictionless in-kind creation and redemption between tradfi and defi versions of assets. Alpaca’s ITN does this in a limited way today; it must scale beyond Alpaca to other broker-dealers and multiple onchain and offchain venues.</p></div>
 <div class="icard"><span class="n">2</span><b>Post-trade settlement</b><p class="body">Delayed settlement is a feature, not a bug, and it creates the need for clearing. Self-clearing DEXs are a genuine innovation, but they are not a solution for multi-lateral netting between venues, or for clearing a traditional share against its tokenized version when the tradfi leg settles T+1.</p></div>
 </div>
-<p class="markline">Tokens outside of DTCC custody have no clearing mechanism whatsoever. Even DTC’s own entitlement tokens are not yet compatible with NSCC clearing.</p>
+</div>
+</section>`;
+
+  const whyNow = `<section class="sec" id="why-now">
+${secL('§6', 'Why now')}
+<div class="col">
 <h2 class="h2">Why now?</h2>
 <div class="tri">
 <div><span class="eyebrow">01</span><b class="th">It is now Day 2 for tokenized stocks</b><p class="body">Custody was the necessary first step. For bearer crypto tokens this is where the story ends, but tokenized equities are different. We are entering an era of onchain credit, and for tokenized equities that means post-trade settlement, which requires clearing.</p></div>
 <div><span class="eyebrow">02</span><b class="th">The need for clearing has not been well understood</b><p class="body">Atomic settlement works when both legs are pre-funded. There is no concept of post-trade settlement on any tokenized equities trading venue today, so there was no need for a multimodal clearinghouse until tradfi institutional adoption entered the zeitgeist.</p></div>
-<div><span class="eyebrow">03</span><b class="th">Every new clearinghouse needs to beat the chicken &amp; egg problem</b><p class="body">Most fail due to not achieving critical mass. <a class="u" ${ext('https://docs.alpaca.markets/us/docs/tokenization-guide-for-authorized-participant')}>Alpaca’s ITN</a> is the only example that has beaten the chicken &amp; egg problem.</p></div>
+<div><span class="eyebrow">03</span><b class="th">Every new clearinghouse needs to beat the chicken &amp; egg problem</b><p class="body">Most fail due to not achieving critical mass. Alpaca’s ITN is the only example that has beaten the chicken &amp; egg problem.</p></div>
 </div>
 <h2 class="h2">The Alpaca MVP: ITN</h2>
-<p class="body-l">Alpaca built <a class="u" ${ext('https://docs.alpaca.markets/us/docs/tokenization-guide-for-authorized-participant')}>Alpaca’s ITN</a> as an MVP for how post-trade settlement and clearing can work for tokenized equities. Participants can mint unsettled share positions at time T because Alpaca underwrites itself for potential T+1 failures, but only in a closed system where both the issuer and the minting participant custody the traditional asset at Alpaca. This is how the NSCC started: as a single-venue clearinghouse inside the NYSE.</p>
+<p class="body-l">Alpaca built <a class="u" ${ext('https://docs.alpaca.markets/us/docs/tokenization-guide-for-authorized-participant')}>ITN</a> as an MVP for how post-trade settlement and clearing can work for tokenized equities. Participants can mint unsettled share positions at time T because Alpaca underwrites itself for potential T+1 failures, but only in a closed system where both the issuer and the minting participant custody the traditional asset at Alpaca. This is how the NSCC started: as a single-venue clearinghouse inside the NYSE.</p>
 ${figItn()}
 ${cap('FIG. 5', 'ITN works today inside Alpaca’s closed loop. Inventory custodied elsewhere, and issuers not on Alpaca, remain outside.')}
 <h2 class="h2">Liquidity challenges remaining</h2>
@@ -249,7 +253,7 @@ ${cap('FIG. 5', 'ITN works today inside Alpaca’s closed loop. Inventory custod
 </section>`;
 
   const useCases = `<section class="sec" id="use-cases">
-${secL('§6', 'Use cases')}
+${secL('§7', 'Use cases')}
 <div class="col">
 <div class="row-h"><h2 class="h2">Six use cases</h2><a class="u" href="/use-cases/01/">All use cases →</a></div>
 <p class="body-l">Without liquidity, trading venues cannot function. As tokenized equities trading grows, the need to solve the liquidity problem is becoming urgent.</p>
@@ -259,29 +263,27 @@ ${C.UC.map(u => `<a class="uc-tile" href="/use-cases/${u.slug}/"><span class="n"
 </div>
 </section>`;
 
-  const foundation = foundationBlock({ no: '§7' });
-  const roadmap = roadmapBlock({ no: '§8' });
-  const os = openSourceBlock({ no: '§9' });
+  const foundation = foundationBlock({ no: '§8' });
+  const roadmap = roadmapBlock({ no: '§9' });
+  const os = openSourceBlock({ no: '§10' });
 
   const sigs = `<section class="sec" id="signatories">
-${secL('§10', 'Signatories')}
+${secL('§11', 'Signatories')}
 <div class="col g24">
 <div class="row-h"><h2 class="h2">Signatories</h2><a class="u" href="/signatories/">All signatories →</a></div>
+${cfg.signatoriesConfirmed ? '' : '<p class="body">Founding signatories will be announced here. <a class="u" href="/get-involved/#sign-up">Apply to join →</a></p>'}
 <div class="sig6">${cfg.publicSignatories.map(g => `<div>${g.logo ? `<img src="${esc(g.logo)}" alt="">` : '<span class="lg">LOGO</span>'}<b>${esc(g.name)}</b></div>`).join('')}</div>
 </div>
 </section>`;
 
   const participate = `<section class="sec end" id="participate">
-${secL('§11', 'Participate')}
+${secL('§12', 'Participate')}
 <div class="col">
 <h2 class="h2">Participate</h2>
 <div class="gi4">${C.INT.map(g => `<div><span class="eyebrow">${g.k}</span><b>${g.t}</b><span class="d">${g.d}</span>${g.id === 'build' ? `<a class="u" ${ext(cfg.githubUrl)}>${g.c} →</a>` : `<a class="u" href="/get-involved/#sign-up">${g.c} →</a>`}</div>`).join('')}</div>
-<div class="split">
-<a class="boxlink" href="/get-involved/#sign-up"><span class="eyebrow">§11 · Sign up</span><b>Get progress updates, join, fund or contribute</b><span class="d body-s">One form: your work email and organization.</span><span class="go">Sign up →</span></a>
-${proposalCard()}
-</div>
+<div class="part-pdf">${proposalCard()}</div>
 </div>
 </section>`;
 
-  return { body: hero + exec + bench + multimodal + prefund + conclusion + useCases + foundation + roadmap + os + sigs + participate };
+  return { body: hero + exec + bench + multimodal + prefund + implications + whyNow + useCases + foundation + roadmap + os + sigs + participate };
 };

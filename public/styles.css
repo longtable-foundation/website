@@ -309,7 +309,8 @@ textarea.field { height: auto; padding: 12px; line-height: 1.5; resize: vertical
 .boxlink b { font: 600 20px/1.25 var(--sans); }
 .boxlink .go { margin-top: auto; font: 600 14px/1 var(--sans); }
 .form-msg { font: 400 13px/1.4 var(--mono); }
-.form-msg.err { color: #8a1c1c; }
+.form-msg.err, .note.err { color: #8a1c1c; }
+.field[aria-invalid="true"] { border-color: #8a1c1c; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 /* footer */
@@ -707,12 +708,8 @@ a.lcard:hover { border-color: var(--ink); opacity: 1; }
   .acc-p { grid-template-columns: 1fr; padding: 0 0 24px; }
   .acc-p > span:first-child { display: none; }
   .acc-p .r { padding-left: 0; }
-  .fgrid, .os, .split, .cards2, .cards2.w, .why, .inc, .mem, .talk, .presskeys, .clips2, .split-call, .stat-band, .tri, .two-txt, .uc-grid, .ub-grid, .itn-xrow, .sf-row.venues, .sf-row.prod { grid-template-columns: 1fr; }
-  .split-call .sc + .sc { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); padding-top: 24px; }
-  .punch { font-size: 22px; padding: 24px 0; }
-  .stat-band-aside .v { font-size: 48px; }
-  .sf-ch { flex-direction: column; align-items: flex-start; }
-  .uc-grid { grid-template-columns: 1fr; }
+  .fgrid, .os, .split, .cards2.w, .why, .inc, .mem, .talk, .presskeys, .clips2 { grid-template-columns: 1fr; }
+  /* Homepage grid overrides live in the phone block at the end of this file, after their base rules. */
   .presskeys > div, .presskeys > div:first-child, .presskeys > div:last-child { padding: 16px 0; }
   .presskeys > div + div { border-left: 0; border-top: 1px solid var(--line); }
   .juris { grid-template-columns: repeat(2, 1fr); }
@@ -859,3 +856,20 @@ a.lcard:hover { border-color: var(--ink); opacity: 1; }
 .pdlg .x { position: absolute; top: 10px; right: 10px; z-index: 1; width: 36px; height: 36px; border: 0; background: transparent; font: 400 16px/1 var(--mono); color: var(--ink); cursor: pointer; }
 .pdlg .x:hover { background: var(--line-2); }
 .pform .done b { color: var(--ink); font-weight: 600; word-break: break-all; }
+.part-pdf { max-width: 560px; }
+
+/* Phone overrides for the homepage. Their base rules are declared after the main 720px block,
+   so the overrides must come after them to win. */
+@media (max-width: 720px) {
+  .cards2, .split-call, .stat-band, .tri, .two-txt, .uc-grid, .ub-grid, .itn-xrow, .sf-row.prod { grid-template-columns: 1fr; }
+  .sf-row.venues { grid-template-columns: 1fr 1fr; }
+  .split-call .sc { padding-right: 0; }
+  .split-call .sc + .sc { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); padding-top: 24px; }
+  .punch { font-size: 22px; padding: 24px 0; }
+  .stat-band-aside { min-height: 0; }
+  .stat-band-aside .v { font-size: 48px; }
+  .sf-ch { flex-direction: column; align-items: flex-start; }
+  .itn-row .itn-arr { display: none; }
+  .sf-card.x { justify-content: flex-start; text-align: left; }
+  .part-pdf { max-width: none; }
+}

@@ -130,7 +130,7 @@ ${video({ id: v.sifmaPanel, label: 'Clip [2] · ITN and deep liquidity', dur: 'C
 </section>
 <section class="sec">
 ${secL('B.2', 'Boilerplate')}
-<div class="col" style="gap:14px"><div class="boiler"><span class="eyebrow">About the Longtable Foundation</span><p data-boiler>${C.BOILER}</p><button class="btn-sm" type="button" data-copy>Copy text</button></div></div>
+<div class="col" style="gap:14px"><div class="boiler"><span class="eyebrow">About the Longtable Foundation</span><p data-boiler>${C.BOILER}</p><button class="btn-sm" type="button" data-copy>Copy boilerplate</button></div></div>
 </section>
 <section class="sec end">
 ${secL('B.3', 'Further reading')}
@@ -150,7 +150,7 @@ ${secL('§8', 'Get involved')}
 ${secL('§8.1', 'Sign up')}
 <div class="paths">
 <div class="opts">${C.INT.map(x => `<div class="opt info"><span class="k">${x.k}</span><b>${x.t}</b><span class="d">${x.d}</span>${x.id === 'build' ? `<a class="u" style="margin-top:6px" ${ext(cfg.githubUrl)}>Open GitHub ↗</a>` : ''}</div>`).join('')}</div>
-${formBox({ type: 'signup', id: 'pane-signup', title: 'Get involved', desc: 'Leave your work email and organization. We will send progress updates and contact you about joining, funding or contributing.', button: 'Sign up', note: 'Milestones and publications only. Unsubscribe any time.', doneTitle: 'Thank you', doneText: 'We’ll be in touch at <b data-done-email></b>.' })}
+${formBox({ type: 'signup', id: 'pane-signup', title: 'Sign up', desc: 'Leave your work email and organization. We will send progress updates and contact you about joining, funding or contributing.', button: 'Sign up', note: 'Updates cover milestones, publications and open calls for comment. Unsubscribe any time.', doneTitle: 'You’re signed up', doneText: 'Progress updates will go to <b data-done-email></b>. We will contact you there about joining, funding or contributing.' })}
 </div>
 </section>
 <section class="sec end">

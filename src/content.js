@@ -78,7 +78,7 @@ const TC = ['1inch Fusion solver', 'LI.FI solver', 'Across solver', '0x solver',
 const MCL = ['Issuer', 'Clearing member', 'Venue', 'Vault', 'Oracle', 'CSD'];
 
 const INT = [
-  { id: 'follow', k: 'Follow', t: 'Get progress updates', d: 'Milestones, publications and open calls for comment.', c: 'Subscribe' },
+  { id: 'follow', k: 'Follow', t: 'Get progress updates', d: 'Milestones, publications and open calls for comment.', c: 'Get updates' },
   { id: 'join', k: 'Join', t: 'Join the initiative', d: 'Membership is open to issuers, clearing members, venues, vaults, oracles and CSDs.', c: 'Apply' },
   { id: 'fund', k: 'Fund', t: 'Help fund the Foundation', d: 'Support the open standard and its reference implementation.', c: 'Talk to us' },
   { id: 'build', k: 'Build', t: 'Contribute open source code', d: 'Template contracts and adapters under an irrevocable open source license.', c: 'GitHub' },
