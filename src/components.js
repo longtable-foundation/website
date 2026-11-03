@@ -62,9 +62,19 @@ const formBox = ({ type, id, title, desc, button, note, doneTitle, doneText }) =
 <form class="pane" id="${id}" data-form="${type}" novalidate>${hp}
 <span class="tt"${id ? ` id="${id}-t"` : ''}>${title}</span><span class="ds">${desc}</span>
 <div class="g2"><label><span>WORK EMAIL</span><input class="field" type="email" name="email" required placeholder="name@organization.com" autocomplete="email"></label><label><span>ORGANIZATION</span><input class="field" name="organization" required autocomplete="organization"></label></div>
-<button class="btn" type="submit">${button}</button><span class="note" data-msg>${note}</span>
+<button class="btn" type="submit">${button}</button><span class="note err" data-err role="alert" hidden></span><span class="note" data-msg>${note}</span>
 </form>
 <div class="done" data-done hidden tabindex="-1"><span class="ok" aria-hidden="true">✓</span><span class="tt">${doneTitle}</span><span class="ds">${doneText}</span><button class="btn-sm" type="button" data-reset>Back to the form</button></div>
+</div>`;
+
+// Inline Follow form for the homepage: the site's primary action. Same sign-up type as Get involved.
+const followForm = ({ id, title }) => `<div class="follow" data-box>
+<form id="${id}" data-form="signup" novalidate aria-labelledby="${id}-t">${hp}
+<span class="tt" id="${id}-t">${title}</span>
+<div class="fr"><label><span>Work email</span><input class="field" type="email" name="email" required placeholder="name@organization.com" autocomplete="email"></label><label><span>Organization</span><input class="field" name="organization" required autocomplete="organization"></label><button class="btn" type="submit">Follow progress</button></div>
+<span class="note err" data-err role="alert" hidden></span><span class="note" data-msg>Milestones, publications and open calls for comment. Unsubscribe any time.</span>
+</form>
+<div class="done" data-done hidden tabindex="-1"><span class="ok" aria-hidden="true">✓</span><span class="tt">You’re following Longtable</span><span class="ds">Updates will go to <b data-done-email></b>.</span><button class="btn-sm" type="button" data-reset>Use another email</button></div>
 </div>`;
 
 const proposalForm = (id = 'proposal-form') => formBox({
@@ -82,4 +92,4 @@ const proposalDialog = () => `<dialog class="pdlg" id="proposal-dialog" aria-lab
 ${proposalForm('proposal-dialog-form')}
 </dialog>`;
 
-module.exports = { formBox, proposalForm, proposalDialog, video, link, proposalBtn, proposalCard, cap, stepper, hex, share };
+module.exports = { formBox, followForm, proposalForm, proposalDialog, video, link, proposalBtn, proposalCard, cap, stepper, hex, share };

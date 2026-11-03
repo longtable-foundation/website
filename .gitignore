@@ -2,7 +2,20 @@ node_modules/
 dist/
 data/
 .env
+
+# Agent skill installs (reinstall with: bunx impeccable install)
 .agents/
+.cursor/
+.codex/
+.github/skills/
+.github/agents/
+.github/hooks/
+skills-lock.json
+
+# Impeccable local/ephemeral state (keep config.json + PRODUCT.md if useful)
+.impeccable/config.local.json
+.impeccable/hook.cache.json
+.impeccable/critique/
 
 # The proposal PDF must never be committed. It is emailed from Google Drive.
 *.pdf

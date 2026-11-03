@@ -6,10 +6,17 @@
   var BASE = document.body.getAttribute('data-base') || '';
   var FORM_URL = document.body.getAttribute('data-form-endpoint') || '';
   var SHEET = document.body.getAttribute('data-sheet') || '';
-  // The Apps Script web app takes a plain form POST from any site but gives no readable answer (no-cors).
+  // Post to the Apps Script web app as a simple (no-preflight) request and read its JSON
+  // answer when the browser allows it. If the reply is unreadable (CORS) the row was still
+  // posted, so treat that as sent rather than posting twice. Offline is a real failure.
+  var OFFLINE = 'You appear to be offline. Check your connection and try again.';
   function sendSheet(data) {
     var body = new URLSearchParams({ type: data.type || 'signup', email: data.email || '', organization: data.organization || '', page: data.page || '' });
-    return fetch(SHEET, { method: 'POST', mode: 'no-cors', body: body }).then(function () { return {}; });
+    if (navigator.onLine === false) return Promise.reject(new Error(OFFLINE));
+    return fetch(SHEET, { method: 'POST', body: body })
+      .then(function (r) { return r.json().catch(function () { return {}; }); },
+        function () { if (navigator.onLine === false) throw new Error(OFFLINE); return {}; })
+      .then(function (j) { if (j && j.ok === false) throw new Error('We could not save that. Check your work email and organization, then try again.'); return j; });
   }
   function send(data) {
     if (FORM_URL) return fetch(FORM_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(data) })
@@ -108,25 +115,37 @@
   /* ---------- forms ---------- */
   var emailOk = function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); };
   $$('form[data-form]').forEach(function (f) {
-    var msg = $('[data-msg]', f), base = msg ? msg.textContent : '';
+    var msg = $('[data-msg]', f), errEl = $('[data-err]', f);
+    // Errors get their own announced line so the consent note stays visible.
+    function showErr(text, field) {
+      if (errEl) { errEl.textContent = text; errEl.hidden = false; }
+      else if (msg) { msg.textContent = text; msg.classList.add('err'); }
+      if (field) { field.setAttribute('aria-invalid', 'true'); if (errEl) { errEl.id = errEl.id || (f.id || 'f') + '-err'; field.setAttribute('aria-describedby', errEl.id); } field.focus(); }
+    }
+    function clearErr() {
+      if (errEl) { errEl.hidden = true; errEl.textContent = ''; }
+      $$('[aria-invalid]', f).forEach(function (el) { el.removeAttribute('aria-invalid'); el.removeAttribute('aria-describedby'); });
+    }
+    $$('input.field', f).forEach(function (el) { el.addEventListener('input', function () { if (el.hasAttribute('aria-invalid')) clearErr(); }); });
     f.addEventListener('submit', function (e) {
       e.preventDefault();
+      clearErr();
       var data = {}; new FormData(f).forEach(function (v, k) { data[k] = String(v).trim(); });
       data.type = f.getAttribute('data-form'); data.page = location.pathname;
-      var bad = !emailOk(data.email || '') ? 'Enter a valid work email.' : !data.organization ? 'Enter your organization.' : '';
-      if (bad) { if (msg) { msg.textContent = bad; msg.classList.add('err'); } return; }
+      if (!emailOk(data.email || '')) { showErr('Enter a work email like name@organization.com.', $('input[name=email]', f)); return; }
+      if (!data.organization) { showErr('Enter your organization.', $('input[name=organization]', f)); return; }
       if (data.website) { f.reset(); return; } // honeypot: bots fill the hidden field
       delete data.website;
       var btn = $('button[type=submit]', f), label = btn.textContent;
       btn.disabled = true; btn.textContent = 'Sending…';
       send(data)
         .then(function () {
-          f.reset(); if (msg) { msg.classList.remove('err'); msg.textContent = base; }
+          f.reset(); clearErr();
           var box = f.closest('[data-box]');
           if (box) box.dispatchEvent(new CustomEvent('lt-sent', { detail: data }));
           else if (msg) msg.textContent = 'Thank you. You are subscribed.';
         })
-        .catch(function (err) { if (msg) { msg.textContent = err.message; msg.classList.add('err'); } })
+        .catch(function (err) { showErr(err && err.message && !/fetch|network/i.test(err.message) ? err.message : 'That did not go through. Check your connection and try again.'); })
         .then(function () { btn.disabled = false; btn.textContent = label; });
     });
   });
