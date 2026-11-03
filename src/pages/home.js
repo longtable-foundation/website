@@ -192,7 +192,7 @@ ${secL('§4', 'Pre-funding')}
 <p class="statement">These isolated onchain venues require a centralized clearing layer that provides post-trade settlement and multi-lateral netting in order for tradfi flows to actually move to blockchain rails.</p>
 </div>
 <aside class="stat-band-aside" aria-label="Market scale">
-<span class="eyebrow">Global equities market</span>
+<span class="eyebrow">Global capital markets</span>
 <span class="v">$300T</span>
 <p>The fabled “trillions” in tokenized equities will not move onchain until we build post-trade settlement infrastructure.</p>
 </aside>
