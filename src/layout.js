@@ -6,11 +6,10 @@ const ext = href => `href="${esc(href)}" target="_blank" rel="noopener"`;
 const mark = () => '<span class="mark" aria-hidden="true"><span class="top"></span><span class="legs"><i></i><i></i></span></span>';
 
 const NAV = [
+  ['foundation', 'Foundation', '/foundation/'],
+  ['roadmap', 'Roadmap', '/roadmap/'],
   ['use-cases', 'Use cases', '/use-cases/01/'],
-  ['foundation', 'Foundation', '/#foundation'],
-  ['roadmap', 'Roadmap', '/#roadmap'],
   ['signatories', 'Signatories', '/signatories/'],
-  ['about', 'About', '/about/'],
   ['press', 'Press', '/press/'],
 ];
 
@@ -39,11 +38,11 @@ function footer({ compact } = {}) {
   return `<footer class="ftr">
 <div class="cols">
 <div class="c c0"><span class="brand">${mark()}<span class="name">Longtable</span></span><p>An open source foundation for multimodal clearing. Incubated by Alpaca.</p></div>
-<div class="c"><span class="h">FOUNDATION</span><a href="/#foundation">Structure</a><a href="/#roadmap">Roadmap</a><a href="/signatories/">Signatories</a><a href="/about/">About</a></div>
+<div class="c"><span class="h">FOUNDATION</span><a href="/foundation/">Structure</a><a href="/roadmap/">Roadmap</a><a href="/signatories/">Signatories</a><a href="/foundation/#incubation">Incubation</a></div>
 <div class="c"><span class="h">RESOURCES</span><a href="/use-cases/01/">Use cases</a><a href="${esc(cfg.proposal.href)}" data-proposal>Proposal (PDF)</a><a href="/press/#talks">Talks &amp; interviews</a><a ${ext(cfg.githubUrl)}>GitHub ↗</a></div>
 <div class="c"><span class="h">PRESS</span><span class="t">Media inquiries are handled by the Alpaca media team.</span><a class="w" href="mailto:${esc(cfg.pressEmail)}">${esc(cfg.pressEmail)}</a><a href="/press/">Press page →</a></div>
 </div>
-<div class="bot"><span>© 2026 LONGTABLE FOUNDATION</span><span>LT-0001 · DRAFT FOR COMMENT</span></div>
+<div class="bot"><span>© 2026 LONGTABLE FOUNDATION</span></div>
 </footer>`;
 }
 

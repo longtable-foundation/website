@@ -1,9 +1,68 @@
 const cfg = require('../config');
 const C = require('../content');
 const { esc, ext } = require('../layout');
-const { video, link, proposalCard, formBox, proposalForm } = require('../components');
+const { video, link, proposalCard, formBox, proposalForm, proposalBtn } = require('../components');
+const { secL, foundationBlock, roadmapBlock, openSourceBlock } = require('../sections');
 
-const secL = (no, nm) => `<div class="sec-l"><span class="no">${no}</span><span class="nm">${nm}</span></div>`;
+function foundation() {
+  const kv = [['Incubator', 'Alpaca'], ['Reference impl.', 'Alpaca'], ['Phase 1 backstop', 'Alpaca'], ['Legal status', 'Legally independent'], ['Funding', 'Member dues'], ['Protocol IP', 'Irrevocable open source license'], ['Governance', 'To be announced']];
+  const body = `<section class="sec first" style="padding-bottom:48px">
+${secL('§4', 'The Foundation')}
+<div class="col g20"><h1 class="h1 page">The Foundation</h1><p class="lead" style="max-width:760px">A legally independent foundation that sets the open standard, and a global network of clearinghouses that mitigate settlement failures of tokenized equities onchain and offchain.</p></div>
+</section>
+${foundationBlock({ id: 'structure', heading: false })}
+${openSourceBlock({ no: '§4.2' })}
+<section class="sec" id="why-now">
+${secL('§4.3', 'Why now')}
+<div class="why">
+<div><span class="n">01</span><b>It is now Day 2 for tokenized stocks</b><p>Custody was the foundation and was the necessary first step for the industry. For bearer crypto tokens this is where the story ends, but tokenized equities are different. We are now entering a new era of “onchain credit”, which for tokenized equities means post-trade settlement, which requires clearing.</p></div>
+<div><span class="n">02</span><b>The need for clearing has not been well understood</b><p>Crypto is typically instantly and atomically settled, and atomic settlement works fine when both legs of the trade are pre-funded. There is no concept of post-trade settlement on any tokenized equities trading venue today, so there was no need for a multimodal clearinghouse until tradfi institutional adoption entered the zeitgeist.</p></div>
+<div><span class="n">03</span><b>Every new clearinghouse needs to beat the chicken &amp; egg problem</b><p>Most fail due to not achieving critical mass. Alpaca’s ITN is the only example that has beaten the chicken &amp; egg problem.</p></div>
+</div>
+</section>
+<section class="sec" id="incubation">
+${secL('§4.4', 'Incubation')}
+<div class="inc">
+<div class="l"><h2 class="h2">Incubated by Alpaca</h2><p>Today, Alpaca has built an internal clearinghouse, ITN (Instant Tokenization Network), as an MVP of how post-trade settlement and clearing can work for tokenized equities.</p><p>ITN can be considered the world’s first ever implementation of tokenized stocks clearing, but it only works where both issuer and minting participant custody the traditional asset at Alpaca. A closed system.</p><p class="pull">Interestingly, this is exactly how the NSCC started, as a single-venue clearinghouse inside the NYSE.</p></div>
+<div class="panel kv"><div class="hd eyebrow">Foundation · at a glance</div>${kv.map(([a, b]) => `<div class="r"><span>${a}</span><span>${b}</span></div>`).join('')}</div>
+</div>
+</section>
+<section class="sec" id="membership">
+${secL('§4.5', 'Membership')}
+<div class="mem">
+<div class="numlist">
+<div><span>01</span><span>All ITN issuers are invited as Longtable Foundation members to come to an agreement on token minting standards.</span></div>
+<div><span>02</span><span>Members may donate open source software to the Foundation under an irrevocable license.</span></div>
+<div><span>03</span><span>Foundation membership must be open for any new issuers to join while keeping out bad actors.</span></div>
+</div>
+<div class="classes"><span class="eyebrow">Member classes</span><div class="ls">${C.MCL.map(m => `<span>${m}s</span>`).join('')}</div><a class="u" style="margin-top:6px" href="/get-involved/#sign-up">Apply to join →</a></div>
+</div>
+</section>
+<section class="sec end" id="contact">
+${secL('§4.6', 'Next')}
+<div class="cards2 w" style="max-width:940px">
+<a class="boxlink" href="/roadmap/"><span class="eyebrow">§5 · Roadmap</span><b>Five phases, from a reference implementation to clearinghouses worldwide</b><span class="go">Read the roadmap →</span></a>
+<a class="lcard p24" href="/get-involved/"><span class="eyebrow">Partnerships</span><span class="tt">Join, fund or contribute</span><span class="u" style="margin-top:8px;text-decoration:none">Get involved →</span></a>
+<div class="lcard p24"><span class="eyebrow">Press</span><span class="tt">Alpaca media team</span><a class="em" href="mailto:${esc(cfg.pressEmail)}">${esc(cfg.pressEmail)}</a><a class="u" style="margin-top:8px;text-decoration:none" href="/press/">Press page →</a></div>
+</div>
+</section>`;
+  return { title: 'Foundation', description: 'The Longtable Foundation sets the open source protocol standards for multimodal clearing. A global network of clearinghouses mitigates settlement failures of tokenized equities.', doc: 'LT-0001 · §4 · The Foundation', docShort: 'LT-0001 · §4', active: 'foundation', body };
+}
+
+function roadmap() {
+  const body = `<section class="sec first" style="padding-bottom:48px">
+${secL('§5', 'Roadmap')}
+<div class="col g20"><h1 class="h1 page">Roadmap</h1><p class="lead" style="max-width:760px">Five phases, from an open source reference implementation to licensed clearinghouses worldwide.</p></div>
+</section>
+${roadmapBlock({ id: 'phases', heading: false })}
+<section class="sec end">
+${secL('§5.1', 'Next')}
+<div class="col" style="max-width:940px">
+<div class="btn-row">${proposalBtn()}<a class="btn-o" href="/use-cases/01/">Read the use cases</a><a class="btn-o" href="/get-involved/">Get involved</a></div>
+</div>
+</section>`;
+  return { title: 'Roadmap', description: 'Longtable roadmap: from an open source reference implementation to multimodal clearinghouses worldwide.', doc: 'LT-0001 · §5 · Roadmap', docShort: 'LT-0001 · §5', active: 'roadmap', body };
+}
 
 function signatories() {
   const body = `<section class="sec first">
@@ -25,48 +84,6 @@ ${secL('§7.2', 'Signing')}
 </div>
 </section>`;
   return { title: 'Signatories', description: 'Founding signatories of the Longtable Initiative statement of intent.', doc: 'LT-0001 · §7 · Signatories', docShort: 'LT-0001 · §7', active: 'signatories', body };
-}
-
-function about() {
-  const kv = [['Incubator', 'Alpaca'], ['Reference impl.', 'Alpaca'], ['Phase 1 backstop', 'Alpaca'], ['Legal status', 'Legally independent'], ['Funding', 'Member dues'], ['Protocol IP', 'Irrevocable open source license'], ['Governance', 'To be announced']];
-  const body = `<section class="sec first" style="padding-bottom:64px">
-${secL('Appendix A', 'About')}
-<div class="col g20"><h1 class="h1 page">About the Longtable Foundation</h1><p class="lead" style="max-width:760px">Longtable is incubated by Alpaca. The Foundation is legally independent, funded by member dues, and holds the protocol IP under an irrevocable open source license.</p></div>
-</section>
-<section class="sec">
-${secL('A.1', 'Why now')}
-<div class="why">
-<div><span class="n">01</span><b>It is now Day 2 for tokenized stocks</b><p>Custody was the foundation and was the necessary first step for the industry. For bearer crypto tokens this is where the story ends, but tokenized equities are different. We are now entering a new era of “onchain credit”, which for tokenized equities means post-trade settlement, which requires clearing.</p></div>
-<div><span class="n">02</span><b>The need for clearing has not been well understood</b><p>Crypto is typically instantly and atomically settled, and atomic settlement works fine when both legs of the trade are pre-funded. There is no concept of post-trade settlement on any tokenized equities trading venue today, so there was no need for a multimodal clearinghouse until tradfi institutional adoption entered the zeitgeist.</p></div>
-<div><span class="n">03</span><b>Every new clearinghouse needs to beat the chicken &amp; egg problem</b><p>Most fail due to not achieving critical mass. Alpaca’s ITN is the only example that has beaten the chicken &amp; egg problem.</p></div>
-</div>
-</section>
-<section class="sec">
-${secL('A.2', 'Incubation')}
-<div class="inc">
-<div class="l"><h2 class="h2">Incubated by Alpaca</h2><p>Today, Alpaca has built an internal clearinghouse, ITN (Instant Tokenization Network), as an MVP of how post-trade settlement and clearing can work for tokenized equities.</p><p>ITN can be considered the world’s first ever implementation of tokenized stocks clearing, but it only works where both issuer and minting participant custody the traditional asset at Alpaca. A closed system.</p><p class="pull">Interestingly, this is exactly how the NSCC started, as a single-venue clearinghouse inside the NYSE.</p></div>
-<div class="panel kv"><div class="hd eyebrow">Foundation · at a glance</div>${kv.map(([a, b]) => `<div class="r"><span>${a}</span><span>${b}</span></div>`).join('')}</div>
-</div>
-</section>
-<section class="sec">
-${secL('A.3', 'Membership')}
-<div class="mem">
-<div class="numlist">
-<div><span>01</span><span>All ITN issuers are invited as Longtable Foundation members to come to an agreement on token minting standards.</span></div>
-<div><span>02</span><span>Members may donate open source software to the Foundation under an irrevocable license.</span></div>
-<div><span>03</span><span>Foundation membership must be open for any new issuers to join while keeping out bad actors.</span></div>
-</div>
-<div class="classes"><span class="eyebrow">Member classes</span><div class="ls">${C.MCL.map(m => `<span>${m}s</span>`).join('').replace('CSDs', 'CSDs')}</div><a class="u" style="margin-top:6px" href="/get-involved/#sign-up">Apply to join →</a></div>
-</div>
-</section>
-<section class="sec end">
-${secL('A.4', 'Contact')}
-<div class="cards2" style="max-width:940px">
-<a class="lcard p24" href="/get-involved/"><span class="eyebrow">Partnerships</span><span class="tt">Join, fund or contribute</span><span class="u" style="margin-top:8px;text-decoration:none">Get involved →</span></a>
-<div class="lcard p24"><span class="eyebrow">Press</span><span class="tt">Alpaca media team</span><a class="em" href="mailto:${esc(cfg.pressEmail)}">${esc(cfg.pressEmail)}</a><a class="u" style="margin-top:8px;text-decoration:none" href="/press/">Press page →</a></div>
-</div>
-</section>`;
-  return { title: 'About', description: 'Longtable is incubated by Alpaca. The Foundation is legally independent, funded by member dues, and holds the protocol IP under an irrevocable open source license.', doc: 'LT-0001 · Appendix A · About', docShort: 'LT-0001 · App. A', active: 'about', body };
 }
 
 function press() {
@@ -166,4 +183,4 @@ ${secL('404', 'Not found')}
   return { title: 'Page not found', doc: 'LT-0001 · 404', docShort: 'LT-0001 · 404', active: '', body };
 }
 
-module.exports = { signatories, about, press, getInvolved, proposal, notFound };
+module.exports = { foundation, roadmap, signatories, press, getInvolved, proposal, notFound };

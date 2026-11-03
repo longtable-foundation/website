@@ -21,23 +21,27 @@ const BASE = cfg.basePath;
 const rebase = html => (BASE ? html.replace(/(href|src)="\/(?!\/)/g, `$1="${BASE}/`) : html);
 const redirect = to => `<!doctype html><meta charset="utf-8"><title>Redirecting</title><meta http-equiv="refresh" content="0; url=${BASE}${to}"><link rel="canonical" href="${BASE}${to}"><a href="${BASE}${to}">Continue</a>`;
 
+// `npm run dev` sets LIVE_RELOAD so pages pick up the reload client served by server.js.
+const liveReload = html => (process.env.LIVE_RELOAD ? html.replace('</body>', '<script src="/__livereload.js"></script>\n</body>') : html);
+
 const write = (route, p) => {
   const file = route === '404' ? path.join(OUT, '404.html') : path.join(OUT, route, 'index.html');
   fs.mkdirSync(path.dirname(file), { recursive: true });
-  fs.writeFileSync(file, rebase(page({ path: route === '404' ? '/' : '/' + route + (route ? '/' : ''), ...p })));
+  fs.writeFileSync(file, liveReload(rebase(page({ path: route === '404' ? '/' : '/' + route + (route ? '/' : ''), ...p }))));
 };
 
 write('', { doc: 'LT-0001 · Multimodal Clearing · Draft for comment', docShort: 'LT-0001 · Draft', active: 'home', ...home() });
 C.UC.forEach((u, i) => write(`use-cases/${u.slug}`, usecase(i)));
+write('foundation', other.foundation());
+write('roadmap', other.roadmap());
 write('signatories', other.signatories());
-write('about', other.about());
 write('press', other.press());
 write('get-involved', other.getInvolved());
 write('proposal', other.proposal());
 write('404', other.notFound());
 
 // Static redirects (the Node server also does these)
-for (const [from, to] of [['use-cases', '/use-cases/01/']]) {
+for (const [from, to] of [['use-cases', '/use-cases/01/'], ['about', '/foundation/']]) {
   fs.mkdirSync(path.join(OUT, from), { recursive: true });
   fs.writeFileSync(path.join(OUT, from, 'index.html'), redirect(to));
 }

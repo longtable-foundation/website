@@ -20,7 +20,7 @@ if (!password) {
 }
 
 if (!fs.existsSync(dist)) {
-  console.error('protect: dist/ missing — run the site build first.');
+  console.error('protect: dist/ missing; run the site build first.');
   process.exit(1);
 }
 
@@ -53,7 +53,7 @@ const args = [
   '--template-color-primary', '#111111',
   '--template-color-secondary', '#F6F6F5',
   '--template-button', 'Enter',
-  '--template-instructions', 'Draft site — enter the shared password to continue.',
+  '--template-instructions', 'Draft site. Enter the shared password to continue.',
   '--template-placeholder', 'Password',
   '--template-error', 'Wrong password.',
   '--config', '.staticrypt.json',

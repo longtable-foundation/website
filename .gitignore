@@ -2,6 +2,11 @@ node_modules/
 dist/
 data/
 .env
+.agents/
 
 # The proposal PDF must never be committed. It is emailed from Google Drive.
 *.pdf
+
+# Bun is used locally; CI uses npm + package-lock.json
+bun.lock
+bun.lockb

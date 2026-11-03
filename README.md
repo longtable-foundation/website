@@ -6,8 +6,17 @@ Static site, published with GitHub Pages. Built from the Claude Design mockups (
 
 ```sh
 npm install
-npm run dev        # builds to dist/ and serves on http://localhost:3000 (forms save to data/submissions.jsonl)
+npm run dev        # serves on http://localhost:3000, rebuilds + reloads the browser on save (forms save to data/submissions.jsonl)
 ```
+
+Or with [Bun](https://bun.sh) (`--bun` runs the scripts on Bun instead of Node):
+
+```sh
+bun install
+bun --bun run dev
+```
+
+CI still uses npm, so `package-lock.json` is the lockfile of record (`bun.lock` is gitignored). After changing dependencies, run `npm install` too so the npm lockfile stays current.
 
 ## Publish on GitHub Pages
 
@@ -25,7 +34,7 @@ STATICRYPT_PASSWORD='your-draft-password' npm run build:protected
 npm start
 ```
 
-Commit `.staticrypt.json` (salt only — not the password) so “Remember me” and share links stay valid across deploys.
+Commit `.staticrypt.json` (salt only, not the password) so “Remember me” and share links stay valid across deploys.
 
 **Limits:** GitHub Pages has no real server-side auth. StatiCrypt encrypts the HTML; `app.js`, CSS, and assets under `public/` are still fetchable. The GitHub **repo** also still shows source unless you make it private. When you are ready to go fully public, remove the `protect` step from the workflow (or stop setting the secret and revert to `npm run build`).
 

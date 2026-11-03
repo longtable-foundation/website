@@ -30,7 +30,7 @@ const SECURITY = {
   'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://i.ytimg.com; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'",
 };
 
-const REDIRECTS = { '/use-cases': '/use-cases/01/', '/use-cases/': '/use-cases/01/', '/github': 'https://github.com/longtable-foundation' };
+const REDIRECTS = { '/use-cases': '/use-cases/01/', '/use-cases/': '/use-cases/01/', '/about': '/foundation/', '/about/': '/foundation/', '/github': 'https://github.com/longtable-foundation' };
 
 /* ---------- storage ---------- */
 let pool = null;
@@ -140,10 +140,32 @@ function serveFile(req, res, file, code = 200) {
 }
 function notFound(req, res) { serveFile(req, res, path.join(ROOT, '404.html'), 404); }
 
+/* ---------- live reload (dev only: scripts/dev.js sets LIVE_RELOAD and sends 'reload' over IPC) ---------- */
+const LIVE_RELOAD = !!process.env.LIVE_RELOAD;
+const reloadClients = new Set();
+const RELOAD_CLIENT = `(() => {
+  let wasDown = false;
+  const es = new EventSource('/__livereload');
+  es.onmessage = () => location.reload();
+  es.onerror = () => { wasDown = true; };
+  es.onopen = () => { if (wasDown) location.reload(); };
+})();`;
+if (LIVE_RELOAD) {
+  process.on('message', m => { if (m === 'reload') for (const r of reloadClients) r.write('data: reload\n\n'); });
+}
+
 const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, 'http://x');
     let p = decodeURIComponent(url.pathname);
+
+    if (LIVE_RELOAD && p === '/__livereload.js') { res.writeHead(200, { 'Content-Type': TYPES['.js'], 'Cache-Control': 'no-store' }); return res.end(RELOAD_CLIENT); }
+    if (LIVE_RELOAD && p === '/__livereload') {
+      res.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-store', Connection: 'keep-alive' });
+      res.write(': connected\n\n');
+      reloadClients.add(res);
+      return req.on('close', () => reloadClients.delete(res));
+    }
 
     if (p === '/api/submit' && req.method === 'POST') return handleSubmit(req, res);
     if (p === '/api/submissions.csv' && req.method === 'GET') return handleExport(req, res, url);

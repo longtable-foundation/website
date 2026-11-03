@@ -106,7 +106,7 @@ ${u.video ? video({ id: videoId, label: `Use case ${u.n} bitesize explainer` }) 
 ${fig1[k](u)}
 <div class="blk" style="gap:18px"><span class="lab">§3.${k}.2 · The goal</span>${u.goal.map(g => `<p class="goal">${g}</p>`).join('')}</div>
 ${fig2[k] ? fig2[k](u) : ''}
-${u.mile ? `<a class="mile" href="/#roadmap"><span class="k">${u.mile[0]}</span><span><b>${u.mile[1]}</b><span class="d">${u.mile[2]}</span></span><span class="go">Roadmap →</span></a>` : ''}
+${u.mile ? `<a class="mile" href="/roadmap/"><span class="k">${u.mile[0]}</span><span><b>${u.mile[1]}</b><span class="d">${u.mile[2]}</span></span><span class="go">Roadmap →</span></a>` : ''}
 <div class="btn-row">${proposalBtn()}<a class="btn-o" href="/get-involved/">Get involved</a></div>
 <nav class="pn" aria-label="Previous and next">
 <a href="${prev ? `/use-cases/${prev.slug}/` : '/'}"><span class="k">← ${prev ? `PREVIOUS · §3.${k - 1}` : 'HOME'}</span><b>${prev ? `${prev.n} ${prev.t}` : 'Longtable Foundation'}</b></a>

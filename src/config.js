@@ -36,7 +36,7 @@ const cfg = {
   videos: {
     summitTalk: '',        // 7 min Alpaca Summit talk, homepage hero
     rollupInterview: '2peRyv_iX5A',   // The Rollup, live from DAS Asia 2026
-    // SIFMA Ops 2026 full panel — clips use start offsets (seconds) into this video
+    // SIFMA Ops 2026 full panel; clips use start offsets (seconds) into this video
     sifmaPanel: 'mX1syigQ0iY',
     sifmaClip1Start: 460,   // ~7:40 · transfer-agent / “nobody wants to pre-fund”
     sifmaClip2Start: 1922,  // ~32:02 · ITN / deep liquidity as TradFi
@@ -71,7 +71,7 @@ const cfg = {
   // 3D explainers: 'original' (token yellow, cash green, share blue) or 'greyscale'
   animColor: 'original',
   // Black document bar above the header
-  docBar: true,
+  docBar: false,
 };
 
 // What the pages render: the real list once confirmed, otherwise unnamed slots.
