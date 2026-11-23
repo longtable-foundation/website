@@ -12,7 +12,9 @@
     "protect": "node scripts/protect.js",
     "build:protected": "node build.js && node scripts/protect.js",
     "start": "node server.js",
-    "dev": "node scripts/dev.js"
+    "dev": "node scripts/dev.js",
+    "glass": "npm --prefix glass install --no-audit --no-fund && npm --prefix glass run dev",
+    "glass:build": "npm --prefix glass install --no-audit --no-fund && npm --prefix glass run build"
   },
   "dependencies": {
     "pg": "^8.13.1",
