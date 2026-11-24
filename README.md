@@ -60,3 +60,4 @@ Until it is set, the forms show "Sign-ups open soon".
 - `public/app.js` runs the interactive parts: 3D step-through explainers (`public/anim/`, three.js), sliders, accordion, forms, chapters.
 - Loading states use [Skullet](https://skullet.lochie.me/) (vendored into `dist/vendor/skullet/` at build time).
 - `server.js` is for local preview only: it serves `dist/` and takes form posts at `/api/submit`.
+- `crm/`: Next.js prospect pipeline CRM (Fluid Functionalism DataTable). Not part of the GitHub Pages build — see `crm/README.md`.
