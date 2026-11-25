@@ -23,8 +23,11 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            glass/package-lock.json
       - run: npm ci
-      - name: Build (password-protected)
+      - name: Build the glass site (password-protected)
         env:
           # With a custom domain (repo variable CUSTOM_DOMAIN), the site sits at the root.
           BASE_PATH: ${{ vars.CUSTOM_DOMAIN == '' && format('/{0}', github.event.repository.name) || '' }}
@@ -37,7 +40,7 @@ jobs:
             echo "::error::Set the STATICRYPT_PASSWORD Actions secret before deploying. The site must stay password-gated while it is a draft."
             exit 1
           fi
-          npm run build:protected
+          npm run glass:build:protected
           if [ -n "${{ vars.CUSTOM_DOMAIN }}" ]; then echo "${{ vars.CUSTOM_DOMAIN }}" > dist/CNAME; fi
       - uses: actions/upload-pages-artifact@v3
         with:

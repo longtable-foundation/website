@@ -1,0 +1,32 @@
+{
+  "name": "longtable-glass",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "content": "node scripts/content.mjs",
+    "dev": "npm run content && vite",
+    "build": "npm run content && vite build && node scripts/pages.mjs",
+    "preview": "vite preview",
+    "typecheck": "npm run content && tsc --noEmit"
+  },
+  "dependencies": {
+    "@ui-sdk/core": "0.1.0-beta.13",
+    "@ui-sdk/react": "0.1.0-beta.13",
+    "lucide-react": "^1.64.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.9.0",
+    "three": "^0.185.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@types/three": "^0.185.0",
+    "@vitejs/plugin-react": "^6.0.5",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.0",
+    "vite": "^8.2.1"
+  }
+}
