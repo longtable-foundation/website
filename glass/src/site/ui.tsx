@@ -16,13 +16,18 @@ export function Eyebrow({ children, className = '' }: { children: ReactNode; cla
   return <span className={`font-mono text-micro tracking-[0.06em] text-faint uppercase ${className}`}>{children}</span>
 }
 
-/** Display heading for a section. Cal Sans has one weight: never add font-semibold. */
-export function H2({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return <h2 className={`font-display text-[30px] leading-[1.08] tracking-[-0.02em] text-balance sm:text-[40px] ${className}`}>{children}</h2>
+/** Section heading. Cal Sans is kept for the h1; sections use the quieter sans, two-tone via `lead`. */
+export function H2({ children, lead, className = '' }: { children: ReactNode; lead?: ReactNode; className?: string }) {
+  return (
+    <h2 className={`max-w-[30ch] text-[28px] leading-[1.15] font-normal tracking-[-0.03em] text-balance sm:text-[38px] ${className}`}>
+      {lead && <span className="text-black/35">{lead} </span>}
+      {children}
+    </h2>
+  )
 }
 
 export function H3({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return <h3 className={`font-display text-title tracking-[-0.01em] ${className}`}>{children}</h3>
+  return <h3 className={`text-[20px] leading-tight font-medium tracking-[-0.02em] ${className}`}>{children}</h3>
 }
 
 export function Lead({ children, className = '' }: { children: ReactNode; className?: string }) {
@@ -65,7 +70,7 @@ export function PageHero({ eyebrow, title, lead, children }: { eyebrow: string; 
 }
 
 export function Tile({ children, className = '', dark = false }: { children: ReactNode; className?: string; dark?: boolean }) {
-  return <div className={`rounded-[28px] p-6 sm:p-8 ${dark ? 'bg-neutral-900 text-white' : 'bg-stage'} ${className}`}>{children}</div>
+  return <div className={`rounded-[28px] p-6 sm:p-8 ${dark ? 'card-dark text-white' : 'border border-black/[0.05] bg-stage'} ${className}`}>{children}</div>
 }
 
 export function Cap({ no, children }: { no: string; children: ReactNode }) {

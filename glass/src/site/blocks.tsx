@@ -2,6 +2,8 @@ import { ArrowRight, FileText } from 'lucide-react'
 
 import { GlassBadge } from '@/components/liquid-glass'
 import { D, cfg } from '@/data'
+import { Chips, CodeTabs, DarkCard, Frame, Kicker, LightCard, Two } from './frame'
+import { SOL_SOLVER } from './snippets'
 import { useProposal } from './forms'
 import { Cap, Eyebrow, H2, Sec, Tile } from './ui'
 
@@ -90,7 +92,7 @@ export function RoadmapBody({ heading = true }: { heading?: boolean }) {
       {heading && <H2>Five phases, from a reference implementation to clearinghouses worldwide</H2>}
       <ol className="flex flex-col gap-3">
         {D.PH.map((p) => (
-          <li key={p.n} className={`grid items-center gap-x-6 gap-y-3 rounded-[24px] p-5 sm:grid-cols-[110px_minmax(0,1fr)_150px_auto] sm:p-6 ${p.now ? 'bg-neutral-900 text-white' : 'bg-stage'}`}>
+          <li key={p.n} className={`grid items-center gap-x-6 gap-y-3 rounded-[24px] p-5 sm:grid-cols-[110px_minmax(0,1fr)_150px_auto] sm:p-6 ${p.now ? 'card-dark text-white' : 'border border-black/[0.05] bg-stage'}`}>
             <span className={`font-mono text-micro tracking-wide ${p.now ? 'text-white/55' : 'text-faint'}`}>PHASE {p.n}</span>
             <span className="flex flex-col gap-1">
               <span className="text-[17px] font-semibold tracking-[-0.01em]">{p.t}</span>
@@ -140,6 +142,21 @@ export function OpenSourceBlock({ no }: { no?: string }) {
           </ul>
         </div>
       </div>
+      <Frame>
+        <LightCard>
+          <Kicker>Solver adapter</Kicker>
+          <Two lead="Plug a solver into">the clearing cycle</Two>
+          <p className="text-body-sm text-muted-foreground">
+            Template contracts are interfaces first. A venue or RFQ solver quotes, fills against the clearinghouse backstop, and settles its legs at cycle close with the rest of the net.
+          </p>
+          <span className="mt-auto">
+            <Chips items={['Irrevocable license', 'Interfaces first', 'Planned']} />
+          </span>
+        </LightCard>
+        <DarkCard>
+          <CodeTabs label="Solver adapter code" tabs={[{ id: 'sol', label: 'ISolverAdapter.sol', code: SOL_SOLVER }]} />
+        </DarkCard>
+      </Frame>
     </Sec>
   )
 }
@@ -147,7 +164,7 @@ export function OpenSourceBlock({ no }: { no?: string }) {
 export function ProposalCard({ className = '' }: { className?: string }) {
   const open = useProposal()
   return (
-    <button type="button" onClick={open} className={`group press flex cursor-pointer flex-col justify-between gap-10 rounded-[28px] bg-neutral-900 p-6 text-left text-white sm:p-7 ${className}`}>
+    <button type="button" onClick={open} className={`group press flex cursor-pointer flex-col justify-between gap-10 rounded-[28px] card-dark p-6 text-left text-white sm:p-7 ${className}`}>
       <span className="flex items-start justify-between gap-4">
         <Eyebrow className="text-white/50">LT-0001 · External proposal</Eyebrow>
         <FileText className="size-5 text-white/40" />

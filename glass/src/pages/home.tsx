@@ -3,41 +3,39 @@ import { Link } from 'react-router-dom'
 
 import { GlassButton } from '@/components/liquid-glass'
 import { D, UC, cfg } from '@/data'
-import { FigBenchmark, FigCapital, FigExec, FigItn, FigUnbundle, HeroStage } from '@/figures/home-figs'
+import { FigBenchmark, FigCapital, FigExec, FigItn, FigModalities, FigUnbundle, HeroFrame } from '@/figures/home-figs'
 import { FoundationBody, OpenSourceBlock, ProposalCard, RoadmapBody } from '@/site/blocks'
 import { column } from '@/site/chrome'
-import { ProposalButton } from '@/site/forms'
 import { Body, Cap, Eyebrow, H2, H3, Lead, LinkTile, Sec, TextLink, Tile, Video } from '@/site/ui'
 
 function Hero() {
   return (
     <section>
-      <div className={`${column} px-4 pt-16 pb-14 sm:px-8 sm:pt-24 sm:pb-20`}>
-        <div className="mx-auto flex max-w-[980px] flex-col items-center gap-7 text-center">
+      <div className={`${column} px-4 pt-14 pb-10 sm:px-8 sm:pt-20 sm:pb-14`}>
+        <div className="flex flex-col gap-7">
           <Link
             to="/proposal/"
-            className="press group inline-flex h-8 items-center gap-2 rounded-full border border-border bg-surface pr-3 pl-1 text-ui text-muted-foreground hover:text-foreground"
+            className="press group inline-flex h-8 w-fit items-center gap-2 rounded-full border border-black/[0.06] bg-white pr-3 pl-1 text-ui text-muted-foreground shadow-[0_1px_2px_rgba(0,0,0,0.06)] hover:text-foreground"
           >
             <span className="rounded-full bg-muted px-2 py-0.5 font-mono text-micro text-foreground">LT-0001</span>
             {cfg.proposal.title.split(':')[0]} · {cfg.proposal.date}
             <ArrowRight className="size-3.5 motion-safe:transition-transform motion-safe:duration-150 motion-safe:group-hover:translate-x-0.5" />
           </Link>
-          <h1 className="font-display text-[48px] leading-[0.98] tracking-[-0.035em] text-balance sm:text-[76px] lg:text-[92px]">
-            Multimodal clearing is the missing infrastructure.
+          <h1 className="max-w-[16ch] font-display text-[46px] leading-[0.98] tracking-[-0.035em] text-balance sm:text-[72px] lg:text-[88px]">
+            <span className="text-black/30">Multimodal clearing</span> is the missing infrastructure.
           </h1>
-          <p className="max-w-[60ch] text-[18px] leading-relaxed text-muted-foreground text-pretty sm:text-[19px]">
-            Longtable is a foundation that stewards open source infrastructure to support multimodal clearing of tokenized assets by licensed clearinghouses worldwide.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <ProposalButton />
-            <GlassButton material="tinted" size="lg" asChild className="border border-black/15 bg-white text-neutral-900">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <p className="max-w-[58ch] text-[17px] leading-relaxed text-muted-foreground text-pretty sm:text-[18px]">
+              Longtable is a foundation that stewards open source infrastructure to support multimodal clearing of tokenized assets by licensed clearinghouses worldwide.
+            </p>
+            <GlassButton material="tinted" size="md" asChild className="shrink-0 border border-black/[0.06] bg-white text-neutral-900 shadow-[0_1px_2px_rgba(0,0,0,0.06)]">
               <Link to="/get-involved/#sign-up">Get progress updates</Link>
             </GlassButton>
           </div>
         </div>
       </div>
       <div className={`${column} px-3 pb-16 sm:px-6 sm:pb-24`}>
-        <HeroStage />
+        <HeroFrame />
       </div>
     </section>
   )
@@ -58,7 +56,7 @@ export function Home() {
           <Video id={v.summitTalk as string} label="Alpaca Summit 2026 talk" badge="7 MIN" />
           <figcaption className="flex flex-col gap-2">
             <span className="font-mono text-micro tracking-wide text-faint">FIG. 0 · The Alpaca Summit · October 2026</span>
-            <span className="font-display text-[26px] leading-tight">Multimodal Clearing</span>
+            <span className="text-[26px] leading-tight tracking-[-0.03em]">Multimodal Clearing</span>
             <span className="text-body-sm text-muted-foreground">
               {cfg.speaker.name}, {cfg.speaker.role}
             </span>
@@ -77,14 +75,15 @@ export function Home() {
         <Lead>
           This is achieved by venues and members subscribing to delayed settlement, netting, margin and risk management rules set by the clearinghouse (the NSCC) that essentially provides “slack” in the system to allow for liquidity to flow efficiently between clearing members and between venues.
         </Lead>
-        <p className="max-w-[40ch] font-display text-[26px] leading-tight tracking-[-0.01em] sm:text-[30px]">
-          Today, tokenized equities settlement is scattered across venues, chains, and token standards with <mark className="rounded-md bg-token px-1.5 text-foreground">no NSCC equivalent.</mark>
+        <p className="max-w-[40ch] text-[24px] leading-snug tracking-[-0.03em] sm:text-[30px]">
+          Today, tokenized equities settlement is scattered across venues, chains, and token standards with <mark className="rounded-md bg-token/70 px-1.5 text-foreground">no NSCC equivalent.</mark>
         </p>
       </Sec>
 
       <Sec id="multimodal-equities" no="§3" label="Multimodal equities">
         <H2>Multimodal equities require multimodal post-trade infra</H2>
-        <Lead>Today, tokenized security markets operate across several representations of the same economic exposure: the four modalities in Fig. 1, at the top of this page.</Lead>
+        <Lead>Today, tokenized security markets operate across several representations of the same economic exposure.</Lead>
+        <FigModalities />
         <FigUnbundle />
         <Cap no="FIG. 2">In DTCC terms: custody unbundled; clearing not yet rebuilt.</Cap>
       </Sec>
@@ -137,7 +136,7 @@ export function Home() {
             </Tile>
           ))}
         </div>
-        <blockquote className="rounded-[28px] bg-neutral-900 p-8 font-display text-[26px] leading-[1.2] tracking-[-0.01em] text-white text-balance sm:p-12 sm:text-[34px]">
+        <blockquote className="rounded-[28px] card-dark p-8 text-[24px] leading-[1.25] tracking-[-0.03em] text-white text-balance sm:p-12 sm:text-[34px]">
           There is no market utility today that can provide 24/7 continuous netting or a backstop for settlement across all modalities.
         </blockquote>
         <div className="grid gap-6 md:grid-cols-2">
@@ -172,7 +171,7 @@ export function Home() {
             ['03', 'Every new clearinghouse needs to beat the chicken & egg problem', 'Most fail due to not achieving critical mass. Alpaca’s ITN is the only example that has beaten the chicken & egg problem.'],
           ].map(([n, t, d]) => (
             <Tile key={n} className="flex flex-col gap-3">
-              <span className="font-display text-[40px] leading-none text-black/15">{n}</span>
+              <span className="font-mono text-micro tracking-wide text-faint">{n}</span>
               <span className="text-[17px] font-semibold tracking-[-0.01em] text-balance">{t}</span>
               <Body className="text-body-sm">{d}</Body>
             </Tile>

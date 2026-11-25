@@ -5,6 +5,8 @@ import { GlassButton } from '@/components/liquid-glass'
 import { UC, cfg } from '@/data'
 import { GoalFigure, ProblemFigure } from '@/figures/usecase-figs'
 import { column } from '@/site/chrome'
+import { CodeTabs, DarkCard, Frame, Kicker, LightCard, Two } from '@/site/frame'
+import { SOL_CLEARING, TS_RFQ } from '@/site/snippets'
 import { ProposalButton, ProposalLink } from '@/site/forms'
 import { Chip, Eyebrow, Go, Video } from '@/site/ui'
 
@@ -84,7 +86,7 @@ export function UseCasePage({ i }: { i: number }) {
           <div className="flex flex-col gap-5">
             <Eyebrow>§3.{k}.1 · Problem</Eyebrow>
             {u.quote ? (
-              <blockquote className="flex flex-col gap-5 rounded-[28px] bg-neutral-900 p-7 text-white sm:p-10">
+              <blockquote className="flex flex-col gap-5 rounded-[28px] card-dark p-7 text-white sm:p-10">
                 <p className="font-display text-[24px] leading-[1.25] tracking-[-0.01em] text-balance sm:text-[30px]">{u.prob}</p>
                 {qLink ? (
                   <a href={qLink} target="_blank" rel="noopener" className="font-mono text-micro tracking-wide text-white/60 uppercase hover:text-white">
@@ -109,6 +111,20 @@ export function UseCasePage({ i }: { i: number }) {
             ))}
           </div>
           <GoalFigure k={k} u={u} />
+          {u.n === '05' && (
+            <Frame>
+              <LightCard>
+                <Kicker>In code</Kicker>
+                <Two lead="Quote, mint at T,">settle from proceeds</Two>
+                <p className="text-body-sm text-muted-foreground">
+                  The solver quotes the taker, mints primary-issued tokens against the clearinghouse backstop, and pays the issuer post-trade from the proceeds. No inventory is pre-funded on the venue.
+                </p>
+              </LightCard>
+              <DarkCard>
+                <CodeTabs label="RFQ fill code" tabs={[{ id: 'ts', label: 'rfq-fill.ts', code: TS_RFQ }, { id: 'sol', label: 'Clearing.sol', code: SOL_CLEARING }]} />
+              </DarkCard>
+            </Frame>
+          )}
 
           {u.mile && (
             <Link to="/roadmap/" className="group press flex flex-wrap items-center justify-between gap-5 rounded-[28px] bg-stage p-6 hover:bg-[#e6e6e9] sm:p-7">

@@ -1,115 +1,83 @@
-import { useState, type CSSProperties } from 'react'
+import { ArrowRight, Loader } from 'lucide-react'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
-import { GlassCard, GlassTabs } from '@/components/liquid-glass'
+import { GlassButton, GlassTabs } from '@/components/liquid-glass'
+import { D } from '@/data'
+import { Chips, CodeTabs, DarkCard, Frame, Kicker, LightCard, StatusPill, Two } from '@/site/frame'
+import { useProposal } from '@/site/forms'
+import { SOL_CLEARING, TS_RFQ, cycleJson } from '@/site/snippets'
 import { Coin, Eyebrow, Hex, Share } from '@/site/ui'
 
-// ── Hero: four modalities of one share, as glass over the assets they represent. ──
-
-type Shape = { k: 'hex' | 'share' | 'coin'; x: string; y: string; s: number; dx?: number; dy?: number; dr?: number; t?: number; d?: number }
-
-const FIELD: Shape[] = [
-  { k: 'hex', x: '6%', y: '12%', s: 120, dx: 30, dy: 24, dr: 14, t: 16 },
-  { k: 'share', x: '22%', y: '58%', s: 150, dx: -26, dy: -20, dr: -6, t: 18, d: -4 },
-  { k: 'coin', x: '38%', y: '6%', s: 96, dx: 22, dy: 30, t: 14, d: -2 },
-  { k: 'hex', x: '52%', y: '62%', s: 140, dx: -30, dy: -22, dr: -12, t: 17, d: -6 },
-  { k: 'share', x: '66%', y: '10%', s: 130, dx: 28, dy: 26, dr: 8, t: 19, d: -3 },
-  { k: 'coin', x: '84%', y: '54%', s: 120, dx: -24, dy: -28, t: 15, d: -8 },
-  { k: 'hex', x: '90%', y: '4%', s: 80, dx: -18, dy: 22, dr: 20, t: 13, d: -5 },
-  { k: 'coin', x: '2%', y: '70%', s: 70, dx: 20, dy: -16, t: 12, d: -1 },
-]
-
-function FieldShape({ k, x, y, s, dx = 20, dy = -16, dr = 0, t = 14, d = 0 }: Shape) {
-  const style = { left: x, top: y, width: s, height: k === 'share' ? s * 0.66 : k === 'hex' ? s * 1.12 : s, '--dx': `${dx}px`, '--dy': `${dy}px`, '--dr': `${dr}deg`, '--t': `${t}s`, '--d': `${d}s` } as CSSProperties
-  const look =
-    k === 'hex'
-      ? 'bg-token [clip-path:polygon(50%_0,100%_25%,100%_75%,50%_100%,0_75%,0_25%)]'
-      : k === 'share'
-        ? 'rounded-[18px] bg-share'
-        : 'rounded-full bg-cash'
-  return <span aria-hidden className={`drift absolute ${look}`} style={style} />
-}
-
-const MODALITIES = [
-  { t: 'Traditional share', d: 'Regulated securities custody', icon: <Share className="!h-[22px] !w-8" /> },
-  { t: 'Issuer-sponsored token', d: 'Issuer-authorized register', icon: <Hex className="!h-[26px] !w-6" /> },
-  {
-    t: 'Custodial token',
-    d: 'Shares at a regulated custodian',
-    icon: (
-      <span className="flex items-center gap-1">
-        <Hex />
-        <Share />
-      </span>
-    ),
-  },
-  {
-    t: 'Linked security token',
-    d: 'SPV holds the underlying',
-    icon: (
-      <span className="flex size-8 items-center justify-center rounded-lg border-[1.5px] border-dashed border-black/45">
-        <Hex className="!h-[17px] !w-[15px]" />
-      </span>
-    ),
-  },
-]
-
-export function HeroStage() {
+/** The white pill on dark cards, as in the reference: glossy, arrow at the end. */
+export function WhitePill({ to, children }: { to: string; children: React.ReactNode }) {
   return (
-    <figure className="flex flex-col gap-4">
-      <div className="relative isolate overflow-hidden rounded-[32px] bg-stage px-4 py-12 sm:px-8 sm:py-20">
-        <div aria-hidden className="absolute inset-0 -z-10">
-          {FIELD.map((s, i) => (
-            <FieldShape key={i} {...s} />
-          ))}
-        </div>
-        <div className="mx-auto flex max-w-[1040px] flex-col items-center gap-6">
-          <span className="rounded-full bg-neutral-900 px-4 py-2 font-mono text-micro tracking-wide text-white uppercase">One economic exposure · the same underlying share</span>
-          <div className="grid w-full grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-8">
-            {MODALITIES.map((m, i) => (
-              <div key={m.t} className="relative">
-                {i > 0 && (
-                  <span aria-hidden className="absolute top-1/2 -left-4 z-10 hidden -translate-1/2 font-sans text-[26px] leading-none font-light text-neutral-900 lg:block">
-                    ≠
-                  </span>
-                )}
-                <GlassCard live className="flex h-full min-h-[168px] flex-col justify-between gap-6 p-4 sm:p-5">
-                  <span className="flex h-8 items-center">{m.icon}</span>
-                  <span className="flex flex-col gap-1">
-                    <span className="text-[15px] leading-tight font-semibold tracking-[-0.01em] text-neutral-900 sm:text-[17px]">{m.t}</span>
-                    <span className="text-caption text-neutral-700 sm:text-body-sm">{m.d}</span>
-                  </span>
-                </GlassCard>
-              </div>
-            ))}
-          </div>
-          <span className="rounded-full border border-dashed border-black/40 bg-white/70 px-4 py-2 text-center font-mono text-micro tracking-wide text-neutral-800 uppercase">
-            No common clearing mechanism · not automatically fungible
-          </span>
-        </div>
-      </div>
-      <figcaption className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 px-1 text-caption text-muted-foreground">
-        <span className="flex gap-3">
-          <span className="shrink-0 font-mono text-micro leading-[18px] tracking-wide whitespace-nowrap text-foreground">FIG. 1</span>
-          <span className="max-w-[80ch]">
-            These representations can trade on different venues and blockchain networks, but they do not share a common clearing mechanism. Bilateral agreements do not create general settlement interoperability.
-          </span>
-        </span>
-        <Legend items={[['hex', 'Token'], ['share', 'Share'], ['coin', 'Stablecoin']]} />
-      </figcaption>
-    </figure>
+    <GlassButton material="tinted" size="md" asChild className="border border-white/60 bg-gradient-to-b from-white to-neutral-200 text-neutral-900">
+      <Link to={to}>
+        {children}
+        <ArrowRight />
+      </Link>
+    </GlassButton>
   )
 }
 
-export function Legend({ items }: { items: [('hex' | 'share' | 'coin' | 'ch' | 'owed' | 'claim'), string][] }) {
+// ── Hero: the protocol, as a card pair. ──
+
+export function HeroFrame() {
+  const open = useProposal()
   return (
-    <span className="flex flex-wrap items-center gap-x-4 gap-y-1.5 font-mono text-micro tracking-wide text-muted-foreground uppercase">
+    <Frame>
+      <LightCard className="justify-between">
+        <div className="flex flex-col gap-4">
+          <Kicker>Open source · LT-0001</Kicker>
+          <Two lead="One clearing layer for">every modality of the same share</Two>
+          <p className="max-w-[46ch] text-body-sm text-muted-foreground">
+            Netting, a backstop at time T and post-trade settlement for tokenized equities, onchain and offchain, run by licensed clearinghouses on an open standard.
+          </p>
+          <Chips items={['Multilateral netting', 'Backstop at T', 'Post-trade settlement', 'Margincoins', '24/7 cycles']} />
+        </div>
+        <div className="flex flex-wrap items-center gap-3 pt-6">
+          <button
+            type="button"
+            onClick={open}
+            className="press inline-flex h-11 cursor-pointer items-center gap-2.5 rounded-full bg-gradient-to-b from-[#2b2b2b] to-[#0c0c0c] px-5 text-ui font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_6px_16px_-6px_rgba(0,0,0,0.5)]"
+          >
+            <Loader className="size-4 text-lime-300 motion-safe:animate-[spin_3s_linear_infinite]" />
+            Read the proposal
+          </button>
+          <Link to="/use-cases/01/" className="text-ui font-medium underline decoration-black/25 underline-offset-4 hover:decoration-black">
+            Six use cases
+          </Link>
+        </div>
+      </LightCard>
+      <DarkCard>
+        <CodeTabs
+          label="Example code"
+          tabs={[
+            { id: 'sol', label: 'Clearing.sol', code: SOL_CLEARING },
+            { id: 'ts', label: 'rfq-fill.ts', code: TS_RFQ },
+            { id: 'json', label: 'cycle.json', code: cycleJson(D.DUES) },
+          ]}
+        />
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-3">
+          <StatusPill>Backstopped at T</StatusPill>
+          <WhitePill to="/use-cases/05/">Atomic RFQ, settled post-trade</WhitePill>
+        </div>
+      </DarkCard>
+    </Frame>
+  )
+}
+
+export function Legend({ items, dark = false }: { items: [('hex' | 'share' | 'coin' | 'ch' | 'owed' | 'claim'), string][]; dark?: boolean }) {
+  return (
+    <span className={`flex flex-wrap items-center gap-x-4 gap-y-1.5 font-mono text-micro tracking-wide uppercase ${dark ? 'text-white/50' : 'text-muted-foreground'}`}>
       {items.map(([k, t]) => (
         <span key={t} className="flex items-center gap-1.5">
           {k === 'hex' && <Hex className="!h-[13px] !w-3" />}
           {k === 'share' && <Share className="!h-2.5 !w-[15px] !rounded-[2px]" />}
-          {k === 'coin' && <span className="size-3 rounded-full bg-cash" />}
+          {k === 'coin' && <span className="size-3 rounded-full bg-white shadow-[inset_0_0_0_1.5px_rgba(0,0,0,0.55)]" />}
           {k === 'ch' && <span className="h-3 w-4 rounded-[3px] border-[1.5px] border-neutral-900 bg-token" />}
-          {k === 'owed' && <span className="h-3 w-4 rounded-[3px] border-[1.5px] border-dashed border-neutral-900 bg-owed/40" />}
+          {k === 'owed' && <span className="h-3 w-4 rounded-[3px] border-[1.5px] border-dashed border-neutral-900 bg-owed" />}
           {k === 'claim' && <span className="h-3 w-4 rounded-[3px] border-[1.5px] border-neutral-900 bg-white" />}
           {t}
         </span>
@@ -122,23 +90,104 @@ export function Legend({ items }: { items: [('hex' | 'share' | 'coin' | 'ch' | '
 
 export function FigExec() {
   return (
-    <div className="grid gap-4 md:grid-cols-2">
-      <div className="flex flex-col gap-4 rounded-[28px] bg-stage p-6 sm:p-8">
+    <Frame>
+      <LightCard>
         <Eyebrow>Pre-funding</Eyebrow>
-        <p className="text-[17px] leading-relaxed text-foreground">
+        <Two lead="Atomic settlement,">pre-positioned before the trade</Two>
+        <p className="text-body text-muted-foreground">
           Atomic settlement requires participants to pre-position cash and securities before the trade. Pre-funding is balance sheet intensive and is rarely desired.
         </p>
-      </div>
-      <div className="flex flex-col gap-4 rounded-[28px] bg-neutral-900 p-6 text-white sm:p-8">
-        <span className="flex items-center gap-2 font-mono text-micro tracking-[0.06em] text-white uppercase">
-          <span aria-hidden className="size-2 rounded-full bg-token" />
+        <span className="mt-auto">
+          <Chips items={['Cash', 'Securities', 'Every venue', 'Before T']} />
+        </span>
+      </LightCard>
+      <DarkCard>
+        <span className="flex items-center gap-2 font-mono text-micro tracking-[0.06em] text-white/60 uppercase">
+          <span aria-hidden className="size-1.5 rounded-full bg-lime-300" />
           Multimodal clearing
         </span>
-        <p className="text-[17px] leading-relaxed text-white/90">
+        <Two dark lead="Liquidity that flows">across tradfi, defi and every venue</Two>
+        <p className="text-body text-white/60">
           A new kind of clearing which we believe is the missing infrastructure to enable liquidity to flow freely across tradfi to defi and across different flavors of tokens and venues worldwide.
         </p>
-      </div>
-    </div>
+        <span className="mt-auto">
+          <Chips dark items={['Tradfi', 'Defi', 'Tokens', 'Venues', 'Worldwide']} />
+        </span>
+      </DarkCard>
+    </Frame>
+  )
+}
+
+// ── §3: four modalities, no common clearing. ──
+
+const MODALITIES: [string, string][] = [
+  ['Traditional share', 'Regulated securities custody'],
+  ['Issuer-sponsored token', 'Issuer-authorized register'],
+  ['Custodial token', 'Shares at a regulated custodian'],
+  ['Linked security token', 'SPV holds the underlying'],
+]
+
+export function FigModalities() {
+  const [pick, setPick] = useState('0')
+  const m = MODALITIES[+pick]
+  return (
+    <figure className="flex flex-col gap-4">
+      <Frame>
+        <LightCard>
+          <Eyebrow>One economic exposure</Eyebrow>
+          <Two lead="The same underlying share,">four representations</Two>
+          <p className="text-body-sm text-muted-foreground">
+            These representations can trade on different venues and blockchain networks, but they do not share a common clearing mechanism. Bilateral agreements do not create general settlement interoperability.
+          </p>
+          <ul className="mt-auto flex flex-col divide-y divide-black/[0.06] rounded-2xl border border-black/[0.06] bg-white">
+            {MODALITIES.map(([t, d], i) => (
+              <li key={t} className={`flex items-center justify-between gap-4 px-4 py-3 ${String(i) === pick ? 'text-foreground' : 'text-muted-foreground'}`}>
+                <span className="text-body-sm font-medium">{t}</span>
+                <span className="text-caption">{d}</span>
+              </li>
+            ))}
+          </ul>
+        </LightCard>
+        <DarkCard>
+          <GlassTabs aria-label="Modality" size="sm" value={pick} onValueChange={setPick} options={['Share', 'Issuer', 'Custodial', 'Linked'].map((l, i) => ({ value: String(i), label: l }))} />
+          <div className="hairgrid relative grid flex-1 grid-cols-4 overflow-hidden rounded-[18px] border border-white/[0.07]">
+            {MODALITIES.map(([t], i) => (
+              <div key={t} className={`relative flex min-h-[190px] flex-col items-center justify-center gap-3 border-white/[0.07] ${i ? 'border-l' : ''}`}>
+                <span
+                  aria-hidden
+                  className={`size-[88px] rounded-full border transition-colors duration-300 ${String(i) === pick ? 'border-dashed border-lime-300/70' : 'border-white/10'}`}
+                />
+                <span
+                  className={`absolute rounded-full border px-2.5 py-1 text-caption transition-colors duration-300 ${String(i) === pick ? 'border-lime-300/30 bg-black/60 text-lime-300' : 'border-white/10 bg-black/60 text-white/55'}`}
+                >
+                  {['Share', 'IST', 'Custodial', 'Linked'][i]}
+                </span>
+                {i > 0 && (
+                  <span aria-hidden className="absolute top-1/2 left-0 -translate-1/2 bg-[#141414] px-0.5 text-[15px] leading-none text-white/40">
+                    ≠
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-col gap-1">
+            <span className="text-body-sm font-medium">{m[0]}</span>
+            <span className="text-caption text-white/50">{m[1]}. Trades on its own venues, settles on its own rails.</span>
+          </div>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <span className="inline-flex h-10 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 text-ui text-white/60">
+              <span aria-hidden className="size-1.5 rounded-full bg-white/40" />
+              No common clearing mechanism
+            </span>
+            <WhitePill to="/use-cases/01/">Share-for-token interop</WhitePill>
+          </div>
+        </DarkCard>
+      </Frame>
+      <figcaption className="flex gap-3 px-1 text-caption text-muted-foreground">
+        <span className="shrink-0 font-mono text-micro leading-[18px] tracking-wide whitespace-nowrap text-foreground">FIG. 1</span>
+        Not automatically fungible: one economic exposure, four ways to hold it, and no clearinghouse that spans them.
+      </figcaption>
+    </figure>
   )
 }
 

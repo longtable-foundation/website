@@ -122,7 +122,7 @@ export function Press() {
 
         <Chapters />
 
-        <blockquote className="flex flex-col gap-4 rounded-[28px] bg-neutral-900 p-7 text-white sm:p-10">
+        <blockquote className="flex flex-col gap-4 rounded-[28px] card-dark p-7 text-white sm:p-10">
           <Eyebrow className="text-white/50">SIFMA Ops 2026</Eyebrow>
           <p className="font-display text-[26px] leading-[1.2] tracking-[-0.01em] text-balance sm:text-[34px]">
             “Crypto technology allows pre-funded trades to settle atomically… but that’s not how trading works in the real world. Nobody wants to pre-fund their trades.”

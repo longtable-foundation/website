@@ -226,7 +226,7 @@ export function Stepper({ scene, fig, title, skip = 0 }: { scene: keyof typeof F
       role="group"
       aria-label={`${fig}: ${title}. Use the left and right arrow keys to step through.`}
       onKeyDown={onKey}
-      className="flex flex-col overflow-hidden rounded-[28px] bg-neutral-950 text-white outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="flex flex-col overflow-hidden rounded-[28px] card-dark text-white outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <div className="flex items-center justify-between gap-4 px-5 pt-4 pb-3 sm:px-6">
         <span className="flex min-w-0 items-baseline gap-2.5">

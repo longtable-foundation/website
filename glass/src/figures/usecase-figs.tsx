@@ -350,7 +350,7 @@ function Dues({ u }: { u: UseCase }) {
   const { cyc, close } = useCycle()
   return (
     <figure className="flex flex-col gap-8">
-      <div className="overflow-hidden rounded-[28px] bg-neutral-950 text-white">
+      <div className="overflow-hidden rounded-[28px] card-dark text-white">
         <div className="flex flex-wrap justify-between gap-2 border-b border-white/10 px-5 py-4 font-mono text-micro tracking-wide text-white/60 sm:px-7">
           <span>NET DUES · CYCLE {cyc} OF 3</span>
           <span>PUBLISHED {close} UTC · ILLUSTRATIVE</span>
