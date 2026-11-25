@@ -6,6 +6,7 @@ import { D, UC, cfg } from '@/data'
 import { FigBenchmark, FigCapital, FigExec, FigItn, FigModalities, FigUnbundle, HeroFrame } from '@/figures/home-figs'
 import { FoundationBody, OpenSourceBlock, ProposalCard, RoadmapBody } from '@/site/blocks'
 import { column } from '@/site/chrome'
+import { Pillar } from '@/site/frame'
 import { Body, Cap, Eyebrow, H2, H3, Lead, LinkTile, Sec, TextLink, Tile, Video } from '@/site/ui'
 
 function Hero() {
@@ -136,7 +137,8 @@ export function Home() {
             </Tile>
           ))}
         </div>
-        <blockquote className="rounded-[28px] card-dark p-8 text-[24px] leading-[1.25] tracking-[-0.03em] text-white text-balance sm:p-12 sm:text-[34px]">
+        <blockquote className="relative isolate overflow-hidden rounded-[28px] card-dark p-8 text-[24px] leading-[1.25] tracking-[-0.03em] text-white text-balance sm:p-12 sm:text-[34px]">
+          <Pillar pillarRotation={64} fade={0.7} style={{ left: '45%', width: '55%' }} />
           There is no market utility today that can provide 24/7 continuous netting or a backstop for settlement across all modalities.
         </blockquote>
         <div className="grid gap-6 md:grid-cols-2">

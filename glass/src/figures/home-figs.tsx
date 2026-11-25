@@ -50,7 +50,7 @@ export function HeroFrame() {
           </Link>
         </div>
       </LightCard>
-      <DarkCard>
+      <DarkCard glow>
         <CodeTabs
           label="Example code"
           tabs={[
