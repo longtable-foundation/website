@@ -18,9 +18,20 @@ bun --bun run dev
 
 CI still uses npm, so `package-lock.json` is the lockfile of record (`bun.lock` is gitignored). After changing dependencies, run `npm install` too so the npm lockfile stays current.
 
+## Published site (`glass/`)
+
+The deployed site is the React/Vite app in `glass/`. It reads the same `src/content.js` and `src/config.js` and shares `public/`.
+
+```sh
+npm run glass         # dev server on http://localhost:5173
+npm run glass:build   # production build, copied to dist/
+```
+
+`glass/scripts/pages.mjs` writes an `index.html` per route (GitHub Pages has no SPA fallback), plus `404.html` and the `/use-cases/` and `/about/` redirects. The original static site below still builds with `npm run build` but is no longer deployed.
+
 ## Publish on GitHub Pages
 
-`.github/workflows/pages.yml` builds and publishes the site on each push to `main`. **While the site is a draft, every HTML page is AES-encrypted with [StatiCrypt](https://github.com/robinmoisson/staticrypt)** before deploy. Visitors see a password prompt; decryption happens in the browser.
+`.github/workflows/pages.yml` builds the `glass/` site (`npm run glass:build:protected`) and publishes it on each push to `main`. **While the site is a draft, every HTML page is AES-encrypted with [StatiCrypt](https://github.com/robinmoisson/staticrypt)** before deploy. Visitors see a password prompt; decryption happens in the browser.
 
 1. Repo Settings → Secrets and variables → Actions → Secrets → add `STATICRYPT_PASSWORD` (the shared draft password).
 2. Repo Settings → Pages → Source: **GitHub Actions**.

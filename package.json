@@ -14,7 +14,8 @@
     "start": "node server.js",
     "dev": "node scripts/dev.js",
     "glass": "npm --prefix glass install --no-audit --no-fund && npm --prefix glass run dev",
-    "glass:build": "npm --prefix glass install --no-audit --no-fund && npm --prefix glass run build"
+    "glass:build": "npm --prefix glass ci --no-audit --no-fund && npm --prefix glass run build && node -e \"const fs=require('fs');fs.rmSync('dist',{recursive:true,force:true});fs.cpSync('glass/dist','dist',{recursive:true})\"",
+    "glass:build:protected": "npm run glass:build && node scripts/protect.js"
   },
   "dependencies": {
     "pg": "^8.13.1",

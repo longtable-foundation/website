@@ -5,7 +5,7 @@
   "scripts": {
     "content": "node scripts/content.mjs",
     "dev": "npm run content && vite",
-    "build": "npm run content && vite build",
+    "build": "npm run content && vite build && node scripts/pages.mjs",
     "preview": "vite preview",
     "typecheck": "npm run content && tsc --noEmit"
   },
