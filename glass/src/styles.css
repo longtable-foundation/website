@@ -191,3 +191,17 @@ dialog.pdlg::backdrop {
   background: rgba(11, 11, 12, 0.32);
   backdrop-filter: blur(6px);
 }
+
+/* As the page scrolls, the hero light dims and the light page takes over. */
+@supports (animation-timeline: scroll()) {
+  @keyframes hero-dim {
+    to {
+      opacity: 0.25;
+    }
+  }
+  .hero-beam {
+    animation: hero-dim linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 70vh;
+  }
+}

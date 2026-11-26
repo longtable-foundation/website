@@ -2,7 +2,7 @@ import { ArrowRight, FileText } from 'lucide-react'
 
 import { GlassBadge } from '@/components/liquid-glass'
 import { D, cfg } from '@/data'
-import { Chips, CodeTabs, DarkCard, Frame, Kicker, LightCard, Two } from './frame'
+import { Chips, CodeTabs, DarkCard, Frame, Kicker, LightCard, Pillar, Two } from './frame'
 import { SOL_SOLVER } from './snippets'
 import { useProposal } from './forms'
 import { Cap, Eyebrow, H2, Sec, Tile } from './ui'
@@ -164,7 +164,8 @@ export function OpenSourceBlock({ no }: { no?: string }) {
 export function ProposalCard({ className = '' }: { className?: string }) {
   const open = useProposal()
   return (
-    <button type="button" onClick={open} className={`group press flex cursor-pointer flex-col justify-between gap-10 rounded-[28px] card-dark p-6 text-left text-white sm:p-7 ${className}`}>
+    <button type="button" onClick={open} className={`group press relative isolate flex cursor-pointer flex-col justify-between gap-10 overflow-hidden rounded-[28px] card-dark p-6 text-left text-white sm:p-7 ${className}`}>
+      <Pillar pillarRotation={14} intensity={0.5} />
       <span className="flex items-start justify-between gap-4">
         <Eyebrow className="text-white/50">LT-0001 · External proposal</Eyebrow>
         <FileText className="size-5 text-white/40" />

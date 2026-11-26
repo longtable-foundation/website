@@ -4,37 +4,42 @@ import { Link } from 'react-router-dom'
 import { GlassButton } from '@/components/liquid-glass'
 import { D, UC, cfg } from '@/data'
 import { FigBenchmark, FigCapital, FigExec, FigItn, FigModalities, FigUnbundle, HeroFrame } from '@/figures/home-figs'
+import { LightBeam } from '@/figures/light-beam'
 import { FoundationBody, OpenSourceBlock, ProposalCard, RoadmapBody } from '@/site/blocks'
 import { column } from '@/site/chrome'
+import { Pillar } from '@/site/frame'
 import { Body, Cap, Eyebrow, H2, H3, Lead, LinkTile, Sec, TextLink, Tile, Video } from '@/site/ui'
 
 function Hero() {
   return (
-    <section>
-      <div className={`${column} px-4 pt-14 pb-10 sm:px-8 sm:pt-20 sm:pb-14`}>
-        <div className="flex flex-col gap-7">
-          <Link
-            to="/proposal/"
-            className="press group inline-flex h-8 w-fit items-center gap-2 rounded-full border border-black/[0.06] bg-white pr-3 pl-1 text-ui text-muted-foreground shadow-[0_1px_2px_rgba(0,0,0,0.06)] hover:text-foreground"
-          >
-            <span className="rounded-full bg-muted px-2 py-0.5 font-mono text-micro text-foreground">LT-0001</span>
-            {cfg.proposal.title.split(':')[0]} · {cfg.proposal.date}
-            <ArrowRight className="size-3.5 motion-safe:transition-transform motion-safe:duration-150 motion-safe:group-hover:translate-x-0.5" />
-          </Link>
-          <h1 className="max-w-[16ch] font-display text-[46px] leading-[0.98] tracking-[-0.035em] text-balance sm:text-[72px] lg:text-[88px]">
-            <span className="text-black/30">Multimodal clearing</span> is the missing infrastructure.
-          </h1>
-          <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-            <p className="max-w-[58ch] text-[17px] leading-relaxed text-muted-foreground text-pretty sm:text-[18px]">
-              Longtable is a foundation that stewards open source infrastructure to support multimodal clearing of tokenized assets by licensed clearinghouses worldwide.
-            </p>
-            <GlassButton material="tinted" size="md" asChild className="shrink-0 border border-black/[0.06] bg-white text-neutral-900 shadow-[0_1px_2px_rgba(0,0,0,0.06)]">
-              <Link to="/get-involved/#sign-up">Get progress updates</Link>
-            </GlassButton>
+    <section className="relative">
+      <div id="hero-dark" data-theme="dark" className="relative isolate overflow-hidden bg-[#070707] text-white">
+        <LightBeam className="hero-beam" />
+        <div className={`${column} !border-white/[0.06] flex min-h-[calc(100svh-4rem)] flex-col justify-center px-4 pt-14 pb-[280px] sm:px-8 sm:pt-16`}>
+          <div className="flex flex-col gap-7 [text-shadow:0_1px_24px_rgba(0,0,0,0.35)]">
+            <Link
+              to="/proposal/"
+              className="press group inline-flex h-8 w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] pr-3 pl-1 text-ui text-white/60 backdrop-blur hover:text-white"
+            >
+              <span className="rounded-full bg-white/10 px-2 py-0.5 font-mono text-micro text-white">LT-0001</span>
+              {cfg.proposal.title.split(':')[0]} · {cfg.proposal.date}
+              <ArrowRight className="size-3.5 motion-safe:transition-transform motion-safe:duration-150 motion-safe:group-hover:translate-x-0.5" />
+            </Link>
+            <h1 className="max-w-[16ch] font-display text-[46px] leading-[0.98] tracking-[-0.035em] text-balance sm:text-[72px] lg:text-[88px]">
+              <span className="text-white/55">Multimodal clearing</span> is the missing infrastructure.
+            </h1>
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+              <p className="max-w-[58ch] text-[17px] leading-relaxed text-white/75 text-pretty sm:text-[18px]">
+                Longtable is a foundation that stewards open source infrastructure to support multimodal clearing of tokenized assets by licensed clearinghouses worldwide.
+              </p>
+              <GlassButton material="tinted" size="md" asChild className="shrink-0 border border-white/60 bg-gradient-to-b from-white to-neutral-200 text-neutral-900">
+                <Link to="/get-involved/#sign-up">Get progress updates</Link>
+              </GlassButton>
+            </div>
           </div>
         </div>
       </div>
-      <div className={`${column} px-3 pb-16 sm:px-6 sm:pb-24`}>
+      <div className={`${column} relative z-10 -mt-[240px] px-3 pb-16 sm:px-6 sm:pb-24`}>
         <HeroFrame />
       </div>
     </section>
@@ -136,7 +141,8 @@ export function Home() {
             </Tile>
           ))}
         </div>
-        <blockquote className="rounded-[28px] card-dark p-8 text-[24px] leading-[1.25] tracking-[-0.03em] text-white text-balance sm:p-12 sm:text-[34px]">
+        <blockquote className="relative isolate overflow-hidden rounded-[28px] card-dark p-8 text-[24px] leading-[1.25] tracking-[-0.03em] text-white text-balance sm:p-12 sm:text-[34px]">
+          <Pillar pillarRotation={64} fade={0.7} style={{ left: '45%', width: '55%' }} />
           There is no market utility today that can provide 24/7 continuous netting or a backstop for settlement across all modalities.
         </blockquote>
         <div className="grid gap-6 md:grid-cols-2">

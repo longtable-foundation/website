@@ -2,6 +2,7 @@ import { BadgeCheck } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 
 import { GlassTabs } from '@/components/liquid-glass'
+import LightPillar, { type LightPillarProps } from '@/components/react-bits/LightPillar'
 
 // The product-card language: a white device frame holding a quiet light card and a dark card.
 // Colour is limited to one lime status accent; everything else is greys.
@@ -20,11 +21,35 @@ export function LightCard({ children, className = '' }: { children: ReactNode; c
   return <div className={`flex min-w-0 flex-col gap-5 rounded-[22px] border border-black/[0.06] bg-[#f6f6f6] p-6 sm:p-7 ${className}`}>{children}</div>
 }
 
-export function DarkCard({ children, className = '' }: { children: ReactNode; className?: string }) {
+export function DarkCard({ children, className = '', glow = false }: { children: ReactNode; className?: string; glow?: boolean }) {
   return (
-    <div data-theme="dark" className={`card-dark flex min-w-0 flex-col gap-5 rounded-[22px] p-6 text-white sm:p-7 ${className}`}>
+    <div data-theme="dark" className={`card-dark relative isolate flex min-w-0 flex-col gap-5 overflow-hidden rounded-[22px] p-6 text-white sm:p-7 ${className}`}>
+      {glow && <Pillar />}
       {children}
     </div>
+  )
+}
+
+/** The React Bits light pillar in house colours: lime fading to grey, quiet, behind the content. */
+export function Pillar({ className = '', ...props }: LightPillarProps) {
+  return (
+    <LightPillar
+      topColor="#bef264"
+      bottomColor="#a3a3a3"
+      intensity={0.6}
+      glowAmount={0.0016}
+      bloom={0.35}
+      pillarWidth={2.4}
+      pillarHeight={0.35}
+      pillarRotation={-24}
+      rotationSpeed={0.2}
+      noiseIntensity={0.3}
+      fade={0.55}
+      quality="medium"
+      clickPulse={false}
+      className={`pointer-events-none -z-10 ${className}`}
+      {...props}
+    />
   )
 }
 
