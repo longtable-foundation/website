@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { GlassButton } from '@/components/liquid-glass'
 import { D, UC, cfg } from '@/data'
 import { FigBenchmark, FigCapital, FigExec, FigItn, FigModalities, FigUnbundle, HeroFrame } from '@/figures/home-figs'
+import { LightBeam } from '@/figures/light-beam'
 import { FoundationBody, OpenSourceBlock, ProposalCard, RoadmapBody } from '@/site/blocks'
 import { column } from '@/site/chrome'
 import { Pillar } from '@/site/frame'
@@ -13,18 +14,9 @@ function Hero() {
   return (
     <section className="relative">
       <div id="hero-dark" data-theme="dark" className="relative isolate overflow-hidden bg-[#070707] text-white">
-        <Pillar
-          className="hero-pillar"
-          bottomColor="#d4d4d4"
-          intensity={0.9}
-          glowAmount={0.0018}
-          bloom={0.45}
-          pillarWidth={2.8}
-          pillarRotation={-26}
-          fade={0.3}
-        />
+        <LightBeam className="hero-beam" />
         <div className={`${column} !border-white/[0.06] flex min-h-[calc(100svh-4rem)] flex-col justify-center px-4 pt-14 pb-[280px] sm:px-8 sm:pt-16`}>
-          <div className="flex flex-col gap-7">
+          <div className="flex flex-col gap-7 [text-shadow:0_1px_24px_rgba(0,0,0,0.35)]">
             <Link
               to="/proposal/"
               className="press group inline-flex h-8 w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] pr-3 pl-1 text-ui text-white/60 backdrop-blur hover:text-white"
@@ -34,10 +26,10 @@ function Hero() {
               <ArrowRight className="size-3.5 motion-safe:transition-transform motion-safe:duration-150 motion-safe:group-hover:translate-x-0.5" />
             </Link>
             <h1 className="max-w-[16ch] font-display text-[46px] leading-[0.98] tracking-[-0.035em] text-balance sm:text-[72px] lg:text-[88px]">
-              <span className="text-white/40">Multimodal clearing</span> is the missing infrastructure.
+              <span className="text-white/55">Multimodal clearing</span> is the missing infrastructure.
             </h1>
             <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-              <p className="max-w-[58ch] text-[17px] leading-relaxed text-white/60 text-pretty sm:text-[18px]">
+              <p className="max-w-[58ch] text-[17px] leading-relaxed text-white/75 text-pretty sm:text-[18px]">
                 Longtable is a foundation that stewards open source infrastructure to support multimodal clearing of tokenized assets by licensed clearinghouses worldwide.
               </p>
               <GlassButton material="tinted" size="md" asChild className="shrink-0 border border-white/60 bg-gradient-to-b from-white to-neutral-200 text-neutral-900">
