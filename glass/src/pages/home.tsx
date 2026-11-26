@@ -11,31 +11,43 @@ import { Body, Cap, Eyebrow, H2, H3, Lead, LinkTile, Sec, TextLink, Tile, Video 
 
 function Hero() {
   return (
-    <section>
-      <div className={`${column} px-4 pt-14 pb-10 sm:px-8 sm:pt-20 sm:pb-14`}>
-        <div className="flex flex-col gap-7">
-          <Link
-            to="/proposal/"
-            className="press group inline-flex h-8 w-fit items-center gap-2 rounded-full border border-black/[0.06] bg-white pr-3 pl-1 text-ui text-muted-foreground shadow-[0_1px_2px_rgba(0,0,0,0.06)] hover:text-foreground"
-          >
-            <span className="rounded-full bg-muted px-2 py-0.5 font-mono text-micro text-foreground">LT-0001</span>
-            {cfg.proposal.title.split(':')[0]} · {cfg.proposal.date}
-            <ArrowRight className="size-3.5 motion-safe:transition-transform motion-safe:duration-150 motion-safe:group-hover:translate-x-0.5" />
-          </Link>
-          <h1 className="max-w-[16ch] font-display text-[46px] leading-[0.98] tracking-[-0.035em] text-balance sm:text-[72px] lg:text-[88px]">
-            <span className="text-black/30">Multimodal clearing</span> is the missing infrastructure.
-          </h1>
-          <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-            <p className="max-w-[58ch] text-[17px] leading-relaxed text-muted-foreground text-pretty sm:text-[18px]">
-              Longtable is a foundation that stewards open source infrastructure to support multimodal clearing of tokenized assets by licensed clearinghouses worldwide.
-            </p>
-            <GlassButton material="tinted" size="md" asChild className="shrink-0 border border-black/[0.06] bg-white text-neutral-900 shadow-[0_1px_2px_rgba(0,0,0,0.06)]">
-              <Link to="/get-involved/#sign-up">Get progress updates</Link>
-            </GlassButton>
+    <section className="relative">
+      <div id="hero-dark" data-theme="dark" className="relative isolate overflow-hidden bg-[#070707] text-white">
+        <Pillar
+          className="hero-pillar"
+          bottomColor="#d4d4d4"
+          intensity={0.9}
+          glowAmount={0.0018}
+          bloom={0.45}
+          pillarWidth={2.8}
+          pillarRotation={-26}
+          fade={0.3}
+        />
+        <div className={`${column} !border-white/[0.06] flex min-h-[calc(100svh-4rem)] flex-col justify-center px-4 pt-14 pb-[280px] sm:px-8 sm:pt-16`}>
+          <div className="flex flex-col gap-7">
+            <Link
+              to="/proposal/"
+              className="press group inline-flex h-8 w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] pr-3 pl-1 text-ui text-white/60 backdrop-blur hover:text-white"
+            >
+              <span className="rounded-full bg-white/10 px-2 py-0.5 font-mono text-micro text-white">LT-0001</span>
+              {cfg.proposal.title.split(':')[0]} · {cfg.proposal.date}
+              <ArrowRight className="size-3.5 motion-safe:transition-transform motion-safe:duration-150 motion-safe:group-hover:translate-x-0.5" />
+            </Link>
+            <h1 className="max-w-[16ch] font-display text-[46px] leading-[0.98] tracking-[-0.035em] text-balance sm:text-[72px] lg:text-[88px]">
+              <span className="text-white/40">Multimodal clearing</span> is the missing infrastructure.
+            </h1>
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+              <p className="max-w-[58ch] text-[17px] leading-relaxed text-white/60 text-pretty sm:text-[18px]">
+                Longtable is a foundation that stewards open source infrastructure to support multimodal clearing of tokenized assets by licensed clearinghouses worldwide.
+              </p>
+              <GlassButton material="tinted" size="md" asChild className="shrink-0 border border-white/60 bg-gradient-to-b from-white to-neutral-200 text-neutral-900">
+                <Link to="/get-involved/#sign-up">Get progress updates</Link>
+              </GlassButton>
+            </div>
           </div>
         </div>
       </div>
-      <div className={`${column} px-3 pb-16 sm:px-6 sm:pb-24`}>
+      <div className={`${column} relative z-10 -mt-[240px] px-3 pb-16 sm:px-6 sm:pb-24`}>
         <HeroFrame />
       </div>
     </section>

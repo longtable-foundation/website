@@ -44,9 +44,9 @@ export function Mark({ className = 'size-6' }: { className?: string }) {
   return (
     <svg viewBox="0 0 32 32" aria-hidden className={className}>
       <rect width="32" height="32" rx="8" fill="currentColor" />
-      <rect x="6" y="10" width="20" height="4" rx="1" fill="var(--background)" />
-      <rect x="9" y="14" width="2.5" height="8" fill="var(--background)" />
-      <rect x="20.5" y="14" width="2.5" height="8" fill="var(--background)" />
+      <rect x="6" y="10" width="20" height="4" rx="1" fill="var(--mark-ink, var(--background))" />
+      <rect x="9" y="14" width="2.5" height="8" fill="var(--mark-ink, var(--background))" />
+      <rect x="20.5" y="14" width="2.5" height="8" fill="var(--mark-ink, var(--background))" />
     </svg>
   )
 }
@@ -71,6 +71,27 @@ function isActive(pathname: string, to: string) {
   return to.startsWith('/use-cases') ? pathname.startsWith('/use-cases') : pathname.replace(/\/?$/, '/') === to
 }
 
+/** True while the header sits over the home page's dark hero band (`#hero-dark`). */
+function useOverDark(pathname: string) {
+  const [over, setOver] = useState(false)
+  useEffect(() => {
+    const check = () => {
+      const el = document.getElementById('hero-dark')
+      setOver(!!el && el.getBoundingClientRect().bottom > 64)
+    }
+    check()
+    const raf = requestAnimationFrame(check)
+    window.addEventListener('scroll', check, { passive: true })
+    window.addEventListener('resize', check)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('scroll', check)
+      window.removeEventListener('resize', check)
+    }
+  }, [pathname])
+  return over
+}
+
 export function Header() {
   const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
@@ -81,26 +102,33 @@ export function Header() {
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
   }, [open])
+  const dark = useOverDark(pathname) && !open
 
   return (
-    <header className="sticky top-0 z-40 bg-background">
-      <div className={`${column} flex h-16 items-center justify-between gap-4 px-4 sm:px-6`}>
+    <header data-theme={dark ? 'dark' : undefined} className={`sticky top-0 z-40 transition-colors duration-300 ${dark ? 'bg-[#070707] text-white' : 'bg-background'}`}>
+      <div className={`${column} ${dark ? 'border-white/[0.06]' : ''} flex h-16 items-center justify-between gap-4 px-4 sm:px-6`}>
         <Link to="/" aria-label="Longtable Foundation home" className="press flex items-center gap-2.5 rounded-full">
-          <Mark className="size-7 text-foreground" />
+          <Mark className={`size-7 ${dark ? 'text-white [--mark-ink:#070707]' : 'text-foreground'}`} />
           <span className="flex items-baseline gap-1.5">
             <span className="font-display text-[19px] leading-none tracking-[-0.01em]">Longtable</span>
-            <span className="hidden font-mono text-micro tracking-wide text-faint uppercase sm:inline">Foundation</span>
+            <span className={`hidden font-mono text-micro tracking-wide uppercase sm:inline ${dark ? 'text-white/45' : 'text-faint'}`}>Foundation</span>
           </span>
         </Link>
 
-        <nav aria-label="Main" className="absolute left-1/2 hidden -translate-x-1/2 items-center rounded-full border border-border bg-surface p-1 lg:flex">
+        <nav aria-label="Main" className={`absolute left-1/2 hidden -translate-x-1/2 items-center rounded-full border p-1 transition-colors duration-300 lg:flex ${dark ? 'border-white/10 bg-white/[0.05] backdrop-blur' : 'border-border bg-surface'}`}>
           {NAV.map(([label, to]) => (
             <NavLink
               key={to}
               to={to}
               aria-current={isActive(pathname, to) ? 'page' : undefined}
               className={`press flex h-8 items-center rounded-full px-3.5 text-ui font-medium ${
-                isActive(pathname, to) ? 'bg-muted text-foreground' : 'text-muted-foreground hover:text-foreground'
+                isActive(pathname, to)
+                  ? dark
+                    ? 'bg-white/10 text-white'
+                    : 'bg-muted text-foreground'
+                  : dark
+                    ? 'text-white/60 hover:text-white'
+                    : 'text-muted-foreground hover:text-foreground'
               }`}
             >
               {label}
@@ -114,13 +142,13 @@ export function Header() {
             target="_blank"
             rel="noopener"
             aria-label="Longtable on GitHub"
-            className="press hidden size-9 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground sm:flex"
+            className={`press hidden size-9 items-center justify-center rounded-full sm:flex ${dark ? 'text-white/60 hover:bg-white/10 hover:text-white' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}`}
           >
             <GitHubMark />
           </a>
           <Link
             to="/get-involved/"
-            className="press hidden h-9 items-center rounded-full bg-foreground px-4 text-ui font-medium text-background hover:bg-foreground/85 sm:flex"
+            className={`press hidden h-9 items-center rounded-full px-4 text-ui font-medium sm:flex ${dark ? 'bg-white text-neutral-900 hover:bg-white/85' : 'bg-foreground text-background hover:bg-foreground/85'}`}
           >
             Get involved
           </Link>
@@ -130,13 +158,13 @@ export function Header() {
             aria-controls="mnav"
             aria-label={open ? 'Close menu' : 'Open menu'}
             onClick={() => setOpen((o) => !o)}
-            className="press flex size-9 items-center justify-center rounded-full text-foreground hover:bg-muted lg:hidden"
+            className={`press flex size-9 items-center justify-center rounded-full lg:hidden ${dark ? 'text-white hover:bg-white/10' : 'text-foreground hover:bg-muted'}`}
           >
             {open ? <X className="size-4.5" /> : <Menu className="size-4.5" />}
           </button>
         </div>
       </div>
-      <div className="border-b border-rail" />
+      <div className={`border-b ${dark ? 'border-white/[0.06]' : 'border-rail'}`} />
 
       {open && (
         <nav id="mnav" aria-label="Main" className="border-b border-rail bg-background lg:hidden">
